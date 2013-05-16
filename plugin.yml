@@ -1,5 +1,5 @@
-name: HungerAddon
-main: me.libraryaddict.Hunger.Addon
+name: LibsMcpvp
+main: me.libraryaddict.librarys.McPvP
 author: libraryaddict
 version: 1.0
 depend: [LibsHungergames]
