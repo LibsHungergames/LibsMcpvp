@@ -1,0 +1,5 @@
+name: HungerAddon
+main: me.libraryaddict.Hunger.Addon
+author: libraryaddict
+version: 1.0
+depend: [LibsHungergames]
