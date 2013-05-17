@@ -5,6 +5,10 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.NameManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.DisguiseTypes.Disguise;
+import me.libraryaddict.disguise.DisguiseTypes.DisguiseType;
+import me.libraryaddict.disguise.DisguiseTypes.MobDisguise;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,11 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import de.robingrether.idisguise.api.Disguise;
-import de.robingrether.idisguise.api.DisguiseAPI;
-import de.robingrether.idisguise.api.DisguiseType;
-import de.robingrether.idisguise.api.MobDisguise;
 
 public class Chameleon extends AbilityListener implements Disableable {
 
@@ -41,7 +40,7 @@ public class Chameleon extends AbilityListener implements Disableable {
         if ((entity instanceof Animals && disguiseAsAnimal) || (entity instanceof Monster && disguiseAsMonster)) {
             if (hasAbility(p)) {
                 if (!DisguiseAPI.isDisguised(p))
-                    DisguiseAPI.disguiseToAll(p, new MobDisguise(DisguiseType.valueOf(entity.getType().name()), true));
+                    DisguiseAPI.disguiseToAll(p, new MobDisguise(DisguiseType.getType(entity.getType()), true));
                 else {
                     Disguise disguise = DisguiseAPI.getDisguise(p);
                     if (disguise.getType() == DisguiseType.valueOf(entity.getType().name()))

@@ -56,10 +56,10 @@
 			<version>1.5.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>idisguise</groupId>
-			<artifactId>idisguise</artifactId>
-			<version>v2.0pre</version>
-		</dependency>		
+			<groupId>libsdisguises</groupId>
+			<artifactId>libsdisguises</artifactId>
+			<version>v1.0</version>
+		</dependency>	
 		<dependency>
 			<groupId>libshungergames</groupId>
 			<artifactId>libshungergames</artifactId>

@@ -1,5 +1,6 @@
 name: LibsMcpvp
 main: me.libraryaddict.librarys.McPvP
 author: libraryaddict
-version: 1.0
+version: ${project.version}
 depend: [LibsHungergames]
+softdepend: [LibsDisguises]
