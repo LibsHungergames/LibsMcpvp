@@ -9,7 +9,7 @@ public class McPvP extends JavaPlugin {
 
     public void onEnable() {
         saveDefaultConfig();
-        HungergamesApi.getAbilityManager().initializeAllAbilitiesInPackage(this, "me.libraryaddict.Hunger.Abilities");
+        HungergamesApi.getAbilityManager().initializeAllAbilitiesInPackage(this, "me.libraryaddict.librarys.Abilities");
         for (String string : getConfig().getConfigurationSection("Kits").getKeys(false)) {
             if (getConfig().contains("BadKits") && getConfig().getStringList("BadKits").contains(string))
                 continue;
