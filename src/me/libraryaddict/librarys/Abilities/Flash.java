@@ -69,7 +69,7 @@ public class Flash extends AbilityListener {
                             .sendMessage(
                                     String.format(cooldownMessage,
                                             (-(HungergamesApi.getHungergames().currentTime - cooldown.get(item)))));
-                } else if (item.getType() == Material.REDSTONE_TORCH_ON) {
+                } else if (item.getTypeId() == flashOnItemId) {
                     List<Block> b = event.getPlayer().getLastTwoTargetBlocks(ignoreBlockTypes, maxTeleportDistance);
                     if (b.size() > 1 && b.get(1).getType() != Material.AIR) {
                         double dist = event.getPlayer().getLocation().distance(b.get(0).getLocation());

@@ -22,28 +22,12 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Gambler extends AbilityListener implements Disableable {
-    public int chanceHeal = 100;
-    public int chanceHunger = 100;
-    public String foodName = "&2Full hunger";
-    public String healthName = "&2Full health";
-    private transient KitManager kits = HungergamesApi.getKitManager();
-    public String[] potionEffects = new String[] { "1000 &cInstant_Death HARM 2 1000", "1 &cSlowness_Effect SLOW 1200 1",
-            "1 &2Speed_Effect SPEED 1200 1", "1 &cPoison_Effect POISON 200 0", "1 &cHunger_Effect HUNGER 1200 1",
-            "1 &2Strength_Boost INCREASE_DAMAGE 1200 1", "1 &cWeakness_Effect WEAKNESS 1200 1",
-            "1 &2Regeneration_Effect REGENERATION 1200 0" };
-    public boolean potionEffectsDurationsStack = true;
-    public String[] randomItems = new String[] { "250 &2Diamond_Helmet DIAMOND_HELMET 0 1",
-            "250 &2Diamond_Chestplate DIAMOND_CHESTPLATE 0 1", "250 &2Diamond_Leggings DIAMOND_LEGGINGS 0 1",
-            "250 &2Diamond_Boots DIAMOND_BOOTS 0 1", "250 &2Diamond_Sword DIAMOND_SWORD 0 1" };
-    public String whatYouWon = ChatColor.BLUE + "You won: " + ChatColor.AQUA + "%s";
-    private transient ArrayList<WonItem> itemsToWin = new ArrayList<WonItem>();
-
     private class WonItem {
-        private String message;
-        private Object wonObject;
+        private int chance;
         private boolean isHealth;
         private boolean isHunger;
-        private int chance;
+        private String message;
+        private Object wonObject;
 
         public WonItem(int newChance, String message) {
             this.message = message;
@@ -56,32 +40,20 @@ public class Gambler extends AbilityListener implements Disableable {
             chance = newChance;
         }
 
-        public void setHunger(boolean setHunger) {
-            isHunger = setHunger;
-        }
-
-        public void setHealth(boolean setHealth) {
-            isHealth = setHealth;
-        }
-
         public int getChance() {
             return chance;
-        }
-
-        public PotionEffect getPotionEffect() {
-            return (PotionEffect) wonObject;
         }
 
         public ItemStack[] getItemStack() {
             return (ItemStack[]) wonObject;
         }
 
-        public boolean isItemStack() {
-            return wonObject instanceof ItemStack[];
+        public String getMessage() {
+            return message;
         }
 
-        public boolean isPotionEffect() {
-            return wonObject instanceof PotionEffect;
+        public PotionEffect getPotionEffect() {
+            return (PotionEffect) wonObject;
         }
 
         public boolean isHealth() {
@@ -92,8 +64,49 @@ public class Gambler extends AbilityListener implements Disableable {
             return isHunger;
         }
 
-        public String getMessage() {
-            return message;
+        public boolean isItemStack() {
+            return wonObject instanceof ItemStack[];
+        }
+
+        public boolean isPotionEffect() {
+            return wonObject instanceof PotionEffect;
+        }
+
+        public void setHealth(boolean setHealth) {
+            isHealth = setHealth;
+        }
+
+        public void setHunger(boolean setHunger) {
+            isHunger = setHunger;
+        }
+    }
+    public int chanceHeal = 100;
+    public int chanceHunger = 100;
+    public String foodName = "&2Full hunger";
+    public String healthName = "&2Full health";
+    private transient ArrayList<WonItem> itemsToWin = new ArrayList<WonItem>();
+    private transient KitManager kits = HungergamesApi.getKitManager();
+    public String[] potionEffects = new String[] { "1000 &cInstant_Death HARM 2 1000", "1 &cSlowness_Effect SLOW 1200 1",
+            "1 &2Speed_Effect SPEED 1200 1", "1 &cPoison_Effect POISON 200 0", "1 &cHunger_Effect HUNGER 1200 1",
+            "1 &2Strength_Boost INCREASE_DAMAGE 1200 1", "1 &cWeakness_Effect WEAKNESS 1200 1",
+            "1 &2Regeneration_Effect REGENERATION 1200 0" };
+    public boolean potionEffectsDurationsStack = true;
+    public String[] randomItems = new String[] { "250 &2Diamond_Helmet DIAMOND_HELMET 0 1",
+            "250 &2Diamond_Chestplate DIAMOND_CHESTPLATE 0 1", "250 &2Diamond_Leggings DIAMOND_LEGGINGS 0 1",
+            "250 &2Diamond_Boots DIAMOND_BOOTS 0 1", "250 &2Diamond_Sword DIAMOND_SWORD 0 1" };
+
+    public String whatYouWon = ChatColor.BLUE + "You won: " + ChatColor.AQUA + "%s";
+
+    public WonItem getRandom() {
+        Collections.shuffle(itemsToWin, new Random());
+        while (true) {
+            Iterator<WonItem> itel = itemsToWin.iterator();
+            while (itel.hasNext()) {
+                WonItem item = itel.next();
+                if (item.getChance() != 0)
+                    if (new Random().nextInt(item.getChance()) == 0)
+                        return item;
+            }
         }
     }
 
@@ -121,19 +134,6 @@ public class Gambler extends AbilityListener implements Disableable {
             WonItem itemPrize = new WonItem(chance, name, kits.parseItem(string.substring(split[0].length() + split[1].length()
                     + 2)));
             itemsToWin.add(itemPrize);
-        }
-    }
-
-    public WonItem getRandom() {
-        Collections.shuffle(itemsToWin, new Random());
-        while (true) {
-            Iterator<WonItem> itel = itemsToWin.iterator();
-            while (itel.hasNext()) {
-                WonItem item = itel.next();
-                if (item.getChance() != 0)
-                    if (new Random().nextInt(item.getChance()) == 0)
-                        return item;
-            }
         }
     }
 

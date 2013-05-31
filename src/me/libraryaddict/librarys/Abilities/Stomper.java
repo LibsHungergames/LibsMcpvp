@@ -22,8 +22,8 @@ public class Stomper extends AbilityListener implements Disableable {
     public boolean changeStomperFallDamage = true;
     public boolean reduceStompDamageByDistance = true;
     public String stompedMessage = "%1$2s was stomped by %2$2s";
-    public int stomperFallDamage = 4;
     public boolean stomperBlocksFall = true;
+    public int stomperFallDamage = 4;
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {

@@ -422,6 +422,13 @@ Kits:
     Icon: WEB 0 1
     Ability:
       - Snail
+  Spectre:
+    Description: 'Use your redstone dust to become invisible for 20 seconds. Taking or giving damage reveals you and nearby players can hear your ripples in space. Once the redstone has been consumed, it turns into suger. After 3 minutes it turns back into redstone dust.'
+    Free: true
+    Price: 0
+    Icon: SUGAR 0 1
+    Items:
+      - REDSTONE 0 1 Unlootable 1 Name=Spectre_Dust
   Spiderman:
     Description: 'You start with 6 snowballs (You can replenish them) which create a 2x2 spider web where they land. You can only throw 3 snowballs until your web shooters demand a cooldown of 30 seconds. While in cobwebs you gain a speed II boost'
     Free: true
