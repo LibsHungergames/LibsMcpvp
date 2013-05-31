@@ -31,10 +31,12 @@ public class Chameleon extends AbilityListener implements Disableable {
     private NameManager names = HungergamesApi.getNameManager();
 
     public Chameleon() throws Exception {
-        if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null
-                || !Bukkit.getPluginManager().getPlugin("LibsDisguises").isEnabled())
+        if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
             throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
                     "Plugin LibsDisguises"));
+        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
+            throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
+                    "Plugin ProtocolLib"));
     }
 
     private void disguise(Entity entity, Player p) {
