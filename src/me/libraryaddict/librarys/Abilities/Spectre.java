@@ -17,8 +17,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Types.Gamer;
@@ -29,16 +34,17 @@ import net.minecraft.server.v1_5_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_5_R3.WorldServer;
 
 public class Spectre extends AbilityListener {
+    public boolean addInvisToSpectre = true;
     private transient HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.BLUE + "You can use this again in %s seconds!";
     public int cooldownTime = 180;
-    public String flashItemName = ChatColor.WHITE + "Spectre Dust";
     private transient HashMap<Player, Integer> invis = new HashMap<Player, Integer>();
     public int invisLength = 20;
     public boolean playSound = true;
     public String soundName = Sound.SPLASH.name();
-    public int spectreOffItemId = Material.REDSTONE_TORCH_OFF.getId();
-    public int spectreOnItemId = Material.REDSTONE_TORCH_ON.getId();
+    public String spectreItemName = ChatColor.WHITE + "Spectre Dust";
+    public int spectreOffItemId = Material.SUGAR.getId();
+    public int spectreOnItemId = Material.REDSTONE.getId();
 
     private EntityPlayer getHandle(Player p) {
         return ((CraftPlayer) p).getHandle();
@@ -74,10 +80,36 @@ public class Spectre extends AbilityListener {
     }
 
     @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+        if (event.isCancelled())
+            return;
+        if (invis.containsKey(event.getDamager())) {
+            invis.remove(event.getDamager());
+            Player p = (Player) event.getDamager();
+            if (addInvisToSpectre)
+                p.removePotionEffect(PotionEffectType.INVISIBILITY);
+            showPlayer(p);
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        if (event.isCancelled())
+            return;
+        if (invis.containsKey(event.getEntity())) {
+            invis.remove(event.getEntity());
+            Player p = (Player) event.getEntity();
+            if (addInvisToSpectre)
+                p.removePotionEffect(PotionEffectType.INVISIBILITY);
+            showPlayer(p);
+        }
+    }
+
+    @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         if (item != null && item.hasItemMeta() && event.getAction().name().contains("RIGHT")) {
-            if (isSpecialItem(item, flashItemName)) {
+            if (isSpecialItem(item, spectreItemName)) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
                 p.updateInventory();
@@ -88,6 +120,8 @@ public class Spectre extends AbilityListener {
                     item.setTypeId(spectreOffItemId);
                     cooldown.put(item, cooldownTime + currentTime);
                     invis.put(p, currentTime + invisLength);
+                    if (addInvisToSpectre)
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, invisLength * 20, 0), true);
                     hidePlayer(p);
                 }
             }
