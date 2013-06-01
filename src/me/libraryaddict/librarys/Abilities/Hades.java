@@ -96,12 +96,14 @@ public class Hades extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
-        Iterator<Zombie> itel = tamed.keySet().iterator();
-        while (itel.hasNext()) {
-            LivingEntity entity = tamed.get(itel.next());
-            if (tamed.get(entity) == event.getKilled().getPlayer()) {
-                itel.remove();
-                entity.remove();
+        if (hasAbility(event.getKilled().getPlayer())) {
+            Iterator<Zombie> itel = tamed.keySet().iterator();
+            while (itel.hasNext()) {
+                Zombie zombie = itel.next();
+                if (tamed.get(zombie) == event.getKilled().getPlayer()) {
+                    itel.remove();
+                    zombie.damage(999);
+                }
             }
         }
     }
