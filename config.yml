@@ -568,7 +568,7 @@ Kits:
     Ability:
       - Werewolf
   Worm:
-    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little.
+    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little.'
     Free: true
     Icon: DIRT 0 1
     Ability:

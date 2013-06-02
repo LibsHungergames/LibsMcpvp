@@ -40,7 +40,7 @@ public class Chameleon extends AbilityListener implements Disableable {
     }
 
     private void disguise(Entity entity, Player p) {
-        if ((entity instanceof Animals && disguiseAsAnimal) || (entity instanceof Monster && disguiseAsMonster)) {
+        if ((entity instanceof Animals && disguiseAsAnimal) || (entity instanceof org.bukkit.entity.Monster && disguiseAsMonster)) {
             if (hasAbility(p)) {
                 if (!DisguiseAPI.isDisguised(p))
                     DisguiseAPI.disguiseToAll(p, new MobDisguise(DisguiseType.getType(entity.getType()), true));

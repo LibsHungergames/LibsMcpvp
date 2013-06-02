@@ -11,39 +11,42 @@ import org.bukkit.potion.PotionEffectType;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Madman extends AbilityListener implements Disableable {
     public int radius = 20;
+    public int rateOfMadness = 5;
 
     @EventHandler
     public void onSecond(TimeSecondEvent event) {
-        for (Player p : getMyPlayers()) {
-            ArrayList<Player> nearby = new ArrayList<Player>();
-            for (Entity e : p.getNearbyEntities(radius, radius, radius)) {
-                if (e instanceof Player) {
-                    nearby.add((Player) e);
+        if (HungergamesApi.getHungergames().currentTime > HungergamesApi.getConfigManager().getInvincibilityTime())
+            for (Player p : getMyPlayers()) {
+                ArrayList<Player> nearby = new ArrayList<Player>();
+                for (Entity e : p.getNearbyEntities(radius, radius, radius)) {
+                    if (e instanceof Player && HungergamesApi.getPlayerManager().getGamer(e).isAlive()) {
+                        nearby.add((Player) e);
+                    }
                 }
-            }
-            if (nearby.size() > 1) {
-                for (Player player : nearby) {
-                    int currentTicks = 0;
-                    int amp = 0;
-                    for (PotionEffect effect : player.getActivePotionEffects()) {
-                        if (effect.getType() == PotionEffectType.WEAKNESS) {
-                            amp = effect.getAmplifier();
-                            currentTicks = effect.getDuration();
-                            break;
+                if (nearby.size() > 1) {
+                    for (Player player : nearby) {
+                        int currentTicks = 0;
+                        int amp = 0;
+                        for (PotionEffect effect : player.getActivePotionEffects()) {
+                            if (effect.getType().equals(PotionEffectType.WEAKNESS)) {
+                                amp = effect.getAmplifier();
+                                currentTicks = effect.getDuration();
+                                break;
+                            }
                         }
+                        if (currentTicks >= 300) {
+                            currentTicks -= 200;
+                            amp++;
+                        }
+                        currentTicks += (20 + (nearby.size() * rateOfMadness));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, currentTicks, amp), true);
                     }
-                    if (currentTicks >= 300) {
-                        currentTicks -= 200;
-                        amp++;
-                    }
-                    currentTicks += (20 + (nearby.size() * 4));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, currentTicks, amp), true);
                 }
             }
-        }
     }
 
 }

@@ -23,10 +23,10 @@ public class Worm extends AbilityListener implements Disableable {
                 p.setFoodLevel(p.getFoodLevel() + 1);
                 drop = false;
             }
+            event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
             if (drop)
                 event.setInstaBreak(true);
             else {
-                event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
                 event.getBlock().setType(Material.AIR);
             }
         }

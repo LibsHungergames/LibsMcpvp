@@ -9,6 +9,7 @@ import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Tank extends AbilityListener {
+    public float explosionSize = 2F;
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
@@ -21,7 +22,7 @@ public class Tank extends AbilityListener {
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
         if (event.getKillerPlayer() != null && hasAbility(event.getKillerPlayer().getPlayer())) {
-            event.getKilled().getPlayer().getWorld().createExplosion(event.getKilled().getPlayer().getLocation(), 1.5F);
+            event.getKilled().getPlayer().getWorld().createExplosion(event.getKilled().getPlayer().getLocation(), explosionSize);
         }
     }
 }
