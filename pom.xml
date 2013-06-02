@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>libshungergames</groupId>
 			<artifactId>libshungergames</artifactId>
-			<version>v2.3</version>
+			<version>v3.4</version>
 		</dependency>
 	</dependencies>
 </project>
