@@ -1,3 +1,9 @@
+# This sends the players with the perm 'hungergames.respawn' back to spawn
+# Set it less then 0 to disable
+RespawnDuration: 300
+# This lets them join after the game started. Set it less then 0 to disable
+JoinDuration: 300
+
 BadKits:
   - Barbarian
   - DiamondWarrior
@@ -428,7 +434,7 @@ Kits:
     Price: 0
     Icon: SUGAR 0 1
     Items:
-      - REDSTONE 0 1 Unlootable 1 Name=Spectre_Dust
+      - REDSTONE 0 1 Unlootable 1 Name=Spectre_Dust UniqueItem
   Spiderman:
     Description: 'You start with 6 snowballs (You can replenish them) which create a 2x2 spider web where they land. You can only throw 3 snowballs until your web shooters demand a cooldown of 30 seconds. While in cobwebs you gain a speed II boost'
     Free: true
