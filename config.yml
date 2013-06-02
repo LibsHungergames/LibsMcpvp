@@ -299,6 +299,13 @@ Kits:
       - WOOD_AXE 0 1
     Ability:
       - Lumberjack
+  Madman:
+    Description: 'Ever in a fight with more then one person? Thats ok. When scared you excrete a odor which is undetectable. But it has the nasty side effect of weakning the players around you. The longer it lasts, the weaker they get. The more players there are, the more terrified you are and well. You can guess the rest!'
+    Free: true
+    Price: 0
+    Icon: FERMENTED_SPIDER_EYE 0 1
+    Ability:
+      - Madman
   Milkman:
     Description: 'The milkman kit gives you a special 5 use bucket of milk, the milk in this bucket is granted mystic powers to those who drink it. After thanking the milk god by saying "I am the milkman, my milk is delicious" you gain 45 seconds of Regeneration I, Fire Resistance I and Speed I!'
     Free: true
@@ -460,6 +467,21 @@ Kits:
       - EGG 0 3
     Ability:
       - Summoner
+  Switcher:
+    Description: 'Spawn with 10 special snowballs you can throw at someone to switch positions with them! The snowballs have a 10 second cooldown after each one. Great for getting that guy off the tower!'
+    Free: true
+    Price: 0
+    Icon: SNOW_BALL 0 1 Unlootable 1
+    Items:
+      - SNOW_BALL 0 10 Unlootable 1 Name=Switcher_Snowball
+    Ability:
+      - Switcher
+  Tank:
+    Description: 'You take no damage from explosions, and as you kill people. They explode! How cool is that! A great kit for taking on a team!'
+    Free: true
+    Icon: TNT 0 1
+    Ability:
+      - Tank
   Tarzan:
     Description: '"YOLO! I have SWAG!" you screamed as you jumped off the cliff. Hearing the gasps of wonder from above, you smile to yourself. How could they possibly know you are tarzan? You whip out your vine and instantly all areas around you are now covered in vines! You climb back up to be carried on the shoulders of your imaginary fans'
     Free: true
@@ -485,6 +507,13 @@ Kits:
     Icon: COMPASS 0 1
     Ability:
       - Tracker
+  Trapper:
+    Description: 'You spawn with 10 trappers string which you can place to create a trap. If someone steps on your trap, Watch out! The trap will turn into web! You are NOT immune to your own traps!'
+    Free: true
+    Price: 0
+    Icon: STRING 0 1
+    Items:
+      - 'STRING 0 10 Name=Trapper''s_String Unlootable 1'
   Turtle:
     Description: 'You found your ultimate defense, Just by crouching and blocking with a sword. You only take half a heart of damage! However you find this position awkward to attack with when you are crouching.'
     Free: true
@@ -508,6 +537,13 @@ Kits:
     Icon: Potion 16421 1
     Ability:
       - Vampire
+  Viking:
+    Description: 'You roar with unrestrained fury as you storm down the path! Your axe held tightly in one hand and a players head in the other! Your axe does a heart more damage then a sword of the same type. DESTROY! PILLAGE! KILL!'
+    Free: true
+    Price: 0
+    Icon: IRON_AXE 0 1
+    Ability:
+      - Viking
   Viper:
     Description: 'You coated your sword in your saliva, strangely people seem to randomly have adverse reactions to it. You have a 1/3 chance of poisoning your foe!'
     Free: true
@@ -523,7 +559,7 @@ Kits:
     Items:
       - BOOK 0 1 Unlootable 1 Name=Tome_of_Protection UniqueItem
   Werewolf:
-    Description: 'he Nightwalker kit is given constant Strength I and Speed I effect at night, however during the day is given Weakness I. Wolves will also avoid attacking you. Spawn with a clock to check if it is night or day.'
+    Description: 'The Nightwalker kit is given constant Strength I and Speed I effect at night, however during the day is given Weakness I. Wolves will also avoid attacking you. Spawn with a clock to check if it is night or day.'
     Free: true
     Price: 0
     Icon: WATCH 0 1
@@ -531,3 +567,9 @@ Kits:
       - WATCH 0 1 Unlootable 1
     Ability:
       - Werewolf
+  Worm:
+    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little.
+    Free: true
+    Icon: DIRT 0 1
+    Ability:
+      - Worm

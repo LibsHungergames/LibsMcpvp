@@ -116,7 +116,7 @@ public class Spectre extends AbilityListener {
                 int currentTime = HungergamesApi.getHungergames().currentTime;
                 if (item.getTypeId() == spectreOffItemId) {
                     p.sendMessage(String.format(cooldownMessage, (-(currentTime - cooldown.get(item)))));
-                } else if (item.getType() == Material.REDSTONE_TORCH_ON) {
+                } else if (item.getTypeId() == spectreOnItemId) {
                     item.setTypeId(spectreOffItemId);
                     cooldown.put(item, cooldownTime + currentTime);
                     invis.put(p, currentTime + invisLength);

@@ -1,7 +1,5 @@
 package me.libraryaddict.librarys;
 
-import java.util.ArrayList;
-
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Types.Gamer;
