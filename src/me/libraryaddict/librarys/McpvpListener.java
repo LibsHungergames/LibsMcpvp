@@ -7,30 +7,33 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 public class McpvpListener implements Listener {
     private Hungergames hg = HungergamesApi.getHungergames();
     private int respawnUntil;
-    private int joinUtil;
+    //private int joinUtil;
     private McPvP mcpvp;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;
         this.respawnUntil = mcpvp.getConfig().getInt("RespawnDuration");
-        this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
+       // this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
 
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onJoin(PlayerJoinEvent event) {
+    /*@EventHandler(priority = EventPriority.HIGH)
+    public void onJoin(final PlayerJoinEvent event) {
         if (hg.currentTime >= 0 && hg.currentTime < joinUtil && event.getPlayer().hasPermission("hungergames.vip.rejoin")) {
-            Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
-            gamer.setAlive(true);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
+                public void run() {
+                    Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
+                    if (gamer != null)
+                        gamer.setAlive(true);
+                }
+            }, 2);
         }
-    }
+    }*/
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {

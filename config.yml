@@ -1,8 +1,6 @@
 # This sends the players with the perm 'hungergames.respawn' back to spawn
 # Set it less then 0 to disable
 RespawnDuration: 300
-# This lets them join after the game started. Set it less then 0 to disable
-JoinDuration: 300
 
 BadKits:
   - Barbarian
