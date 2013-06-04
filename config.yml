@@ -8,7 +8,6 @@ BadKits:
   - Endermage
   - Explorer
   - Hermit
-  - Reaper
   - Rider
 Kits:
   Archer:
@@ -372,8 +371,6 @@ Kits:
     Icon: WOOD_HOE 0 1
     Items:
       - WOOD_HOE -1000 1 Name=Death_Scythe Unlootable 1
-    Ability:
-      - Reaper
   Rider:
     Description: 'cba'
     Free: true
