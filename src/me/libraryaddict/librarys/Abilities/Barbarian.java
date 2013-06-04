@@ -28,6 +28,8 @@ public class Barbarian extends AbilityListener {
         if (event.getKillerPlayer() != null) {
             ItemStack item = event.getKillerPlayer().getPlayer().getItemInHand();
             if (isSpecialItem(item, swordName)) {
+                if (!kills.containsKey(item))
+                    kills.put(item, 0);
                 kills.put(item, kills.get(item) + 1);
                 if (kills.get(item) % 3 == 0) {
                     int level = (kills.get(item) / 3) - 1;
