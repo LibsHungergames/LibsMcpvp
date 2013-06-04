@@ -1,0 +1,63 @@
+package me.libraryaddict.librarys.Abilities;
+
+import java.util.HashMap;
+
+import net.minecraft.server.v1_5_R3.EntityPlayer;
+import net.minecraft.server.v1_5_R3.Packet103SetSlot;
+
+import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_5_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_5_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
+
+import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Types.AbilityListener;
+
+public class Barbarian extends AbilityListener {
+    private HashMap<ItemStack, Integer> kills = new HashMap<ItemStack, Integer>();
+    public String swordName = "Bloody Bane";
+    public int killsPerLevel = 3;
+    private Material[] updates = new Material[] { Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD };
+
+    @EventHandler
+    public void onKilled(PlayerKilledEvent event) {
+        if (event.getKillerPlayer() != null) {
+            ItemStack item = event.getKillerPlayer().getPlayer().getItemInHand();
+            if (isSpecialItem(item, swordName)) {
+                kills.put(item, kills.get(item) + 1);
+                if (kills.get(item) % 3 == 0) {
+                    int level = (kills.get(item) / 3) - 1;
+                    item.setType(updates[level]);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDamageByEntity(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player) {
+            Player p = (Player) event.getDamager();
+            if (isSpecialItem(p.getItemInHand(), swordName)) {
+                p.getItemInHand().setDurability((short) 0);
+                EntityPlayer eP = ((CraftPlayer) p).getHandle();
+                eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, p.getInventory()
+                        .getHeldItemSlot(), CraftItemStack.asNMSCopy(p.getItemInHand())));
+            }
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player p = (Player) event.getPlayer();
+        if (isSpecialItem(p.getItemInHand(), swordName)) {
+            p.getItemInHand().setDurability((short) 0);
+            EntityPlayer eP = ((CraftPlayer) p).getHandle();
+            eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, p.getInventory().getHeldItemSlot(),
+                    CraftItemStack.asNMSCopy(p.getItemInHand())));
+        }
+    }
+}

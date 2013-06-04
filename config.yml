@@ -3,13 +3,11 @@
 RespawnDuration: 300
 
 BadKits:
-  - Barbarian
   - DiamondWarrior
   #Remove endermage from this list to enable it. It does work. But its not balanced and isnt enabled by default.
   - Endermage
   - Explorer
   - Hermit
-  - Miner
   - Reaper
   - Rider
 Kits:
@@ -43,9 +41,7 @@ Kits:
     Price: 0
     Icon: WOOD_SWORD 0 1
     Items:
-      - WOOD_SWORD 0 1 Name=Bloody_Bane Unlootable 1
-    Ability:
-      - Barbarian
+      - WOOD_SWORD 0 1 Name=Bloody_Bane Unlootable 1 UniqueItem
   Beastmaster:
     Description: 'The Beastmaster kit allows you to instantly tame the 3 wolves you spawn. As well as 4 bones. The wolves can be very useful when in 1 vs 1 combat, and often gives you that winning edge over your enemy in fights! You also have a 100% chance to tame any wolf, so no bone shall be wasted!'
     Free: true
@@ -314,12 +310,12 @@ Kits:
     Ability:
       - Milkman
   Miner:
-    Description: 'You decided to try out this new thing called mining and you think you like it! You even took a stone pickaxe with you to the battle ground! Eating a apple sure does perk you up while mining!'
+    Description: 'You decided to try out this new thing called mining and you think you like it! You even took a stone pickaxe with you to the battle ground! With unbreaking I and efficency II you are fairly sure you are going to get that tunnel done in no time!'
     Free: true
     Price: 0
     Icon: STONE_PICKAXE 0 1
     Items:
-      - STONE_PICKAXE 0 1
+      - STONE_PICKAXE 0 1 DURABILITY 1 DIG_SPEED 2
     Ability:
       - Miner
   Monk:

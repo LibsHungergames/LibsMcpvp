@@ -153,6 +153,8 @@ public class Spectre extends AbilityListener {
                                     break;
                                 }
                             }
+                            if (carryOn)
+                                break;
                         }
                         if (gamer.getPlayer().getItemOnCursor() != null && gamer.getPlayer().getItemOnCursor().equals(item)) {
                             gamer.getPlayer().getItemOnCursor().setTypeId(spectreOnItemId);
@@ -166,6 +168,7 @@ public class Spectre extends AbilityListener {
                         if (itemEntity.getItemStack().equals(item)) {
                             itel.remove();
                             itemEntity.getItemStack().setTypeId(spectreOnItemId);
+                            carryOn = true;
                             break;
                         }
                     }

@@ -119,6 +119,8 @@ public class Flash extends AbilityListener {
                                     break;
                                 }
                             }
+                            if (carryOn)
+                                break;
                         }
                         if (gamer.getPlayer().getItemOnCursor() != null && gamer.getPlayer().getItemOnCursor().equals(item)) {
                             gamer.getPlayer().getItemOnCursor().setTypeId(flashOnItemId);
@@ -132,6 +134,7 @@ public class Flash extends AbilityListener {
                         if (itemEntity.getItemStack().equals(item)) {
                             itel.remove();
                             itemEntity.getItemStack().setTypeId(flashOnItemId);
+                            carryOn = true;
                             break;
                         }
                     }
