@@ -47,6 +47,7 @@ public class McPvP extends JavaPlugin implements Listener {
                 }
             });
         Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(new McpvpListener(this), this);
     }
 
     @EventHandler
