@@ -65,8 +65,10 @@ public class Stomper extends AbilityListener implements Disableable {
                         if (entity.getLocation().getBlockY() - 1 > center.getBlockY())
                             continue;
                         if (entity instanceof Player) {
-                            if (((Player) entity).isSneaking())
-                                hisDmg /= 2;
+                            if (((Player) entity).isSneaking()) {
+                                if (hisDmg > 4)
+                                    hisDmg = 4;
+                            }
                             Gamer gamer = HungergamesApi.getPlayerManager().getGamer(entity);
                             if (!gamer.isAlive())
                                 continue;
