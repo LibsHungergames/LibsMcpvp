@@ -89,6 +89,7 @@ public class Backpacker extends AbilityListener implements Disableable {
             item.setItemMeta(meta);
             backpack.put(p, Bukkit.createInventory(null, backpackInventoryRows * 9, backPackItemName));
             p.getInventory().setItem(9, item);
+            p.updateInventory();
         }
     }
 }
