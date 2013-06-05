@@ -46,8 +46,8 @@ public class Barbarian extends AbilityListener {
             if (isSpecialItem(p.getItemInHand(), swordName)) {
                 p.getItemInHand().setDurability((short) 0);
                 EntityPlayer eP = ((CraftPlayer) p).getHandle();
-                eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, p.getInventory()
-                        .getHeldItemSlot(), CraftItemStack.asNMSCopy(p.getItemInHand())));
+                eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
+                        .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
             }
         }
     }
@@ -58,8 +58,8 @@ public class Barbarian extends AbilityListener {
         if (isSpecialItem(p.getItemInHand(), swordName)) {
             p.getItemInHand().setDurability((short) 0);
             EntityPlayer eP = ((CraftPlayer) p).getHandle();
-            eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, p.getInventory().getHeldItemSlot(),
-                    CraftItemStack.asNMSCopy(p.getItemInHand())));
+            eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
+                    .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
         }
     }
 }
