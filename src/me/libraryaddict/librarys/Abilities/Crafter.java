@@ -1,7 +1,9 @@
 package me.libraryaddict.librarys.Abilities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
@@ -56,16 +58,18 @@ public class Crafter extends AbilityListener {
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
         Iterator<ItemStack> itel = event.getDrops().iterator();
+        List<ItemStack> drops = new ArrayList<ItemStack>();
         while (itel.hasNext()) {
             ItemStack item = itel.next();
             if (item != null && furnaces.containsKey(item)) {
                 FakeFurnace furnace = furnaces.remove(item);
                 if (furnace != null) {
                     for (net.minecraft.server.v1_5_R3.ItemStack i : furnace.getContents())
-                        event.getDrops().add(CraftItemStack.asBukkitCopy(i));
+                        drops.add(CraftItemStack.asBukkitCopy(i));
                 }
             }
         }
+        event.getDrops().addAll(drops);
     }
 
 }

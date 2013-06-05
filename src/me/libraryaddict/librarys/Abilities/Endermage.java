@@ -8,7 +8,6 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.Gamer;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,7 +26,7 @@ public class Endermage extends AbilityListener {
     public boolean doInstantKO = true;
     public int endermagePortalBlockId = Material.ENDER_PORTAL.getId();
     public int endermagePortalId = Material.ENDER_PORTAL.getId();
-    public String endermagePortalName = ChatColor.WHITE + "Endermage Portal";
+    public String endermagePortalName = "Endermage Portal";
     private transient ArrayList<Block> endermages = new ArrayList<Block>();
     public int instanceKOExpires = 5;
     public int invincibleTicks = 100;
