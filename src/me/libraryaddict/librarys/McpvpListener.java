@@ -7,19 +7,23 @@ import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 public class McpvpListener implements Listener {
     private Hungergames hg = HungergamesApi.getHungergames();
     private int respawnUntil;
     // private int joinUtil;
     private McPvP mcpvp;
+    private boolean respawnItems;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;
         this.respawnUntil = mcpvp.getConfig().getInt("RespawnDuration");
+        this.respawnItems = mcpvp.getConfig().getBoolean("RespawnItems");
         // this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
 
     }
@@ -49,8 +53,10 @@ public class McpvpListener implements Listener {
                         gamer.setAlive(true);
                         KitManager kits = HungergamesApi.getKitManager();
                         Player p = gamer.getPlayer();
+                        p.getInventory().addItem(new ItemStack(Material.COMPASS));
                         kits.setKit(p, kits.getKitByPlayer(p).getName());
-                        kits.getKitByPlayer(p).giveKit(p);
+                        if (respawnItems)
+                            kits.getKitByPlayer(p).giveKit(p);
                     }
                 }
             });
