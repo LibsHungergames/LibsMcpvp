@@ -30,7 +30,7 @@ public class Tracker extends AbilityListener implements CommandExecutor {
     public String noLongerLockedMessage = ChatColor.GOLD + "No longer locked on target";
     public String notATracker = ChatColor.RED + "You are not kit Tracker!";
     public String trackerTrackingMessage = ChatColor.GOLD
-            + "Compass pointing at %1$2s who is %2$2s blocks away at location (%3$2s, %4$2s, %5$2s)";
+            + "Compass pointing at %s who is %s blocks away at location (%s, %s, %s)";
     private transient HashMap<Player, Player> tracking = new HashMap<Player, Player>();
 
     @Override
