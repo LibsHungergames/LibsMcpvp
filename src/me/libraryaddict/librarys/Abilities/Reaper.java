@@ -15,11 +15,13 @@ public class Reaper extends AbilityListener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && isSpecialItem(((Player) event.getDamager()).getItemInHand(), reaperItemName)) {
-            if (event.getEntity() instanceof LivingEntity) {
-                ((LivingEntity) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER,
-                        reaperEffectLastsSeconds * 20, 0), true);
+        if (!event.isCancelled())
+            if (event.getDamager() instanceof Player
+                    && isSpecialItem(((Player) event.getDamager()).getItemInHand(), reaperItemName)) {
+                if (event.getEntity() instanceof LivingEntity) {
+                    ((LivingEntity) event.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER,
+                            reaperEffectLastsSeconds * 20, 0), true);
+                }
             }
-        }
     }
 }

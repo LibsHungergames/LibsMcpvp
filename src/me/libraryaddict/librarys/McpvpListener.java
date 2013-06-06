@@ -12,13 +12,13 @@ import org.bukkit.event.Listener;
 public class McpvpListener implements Listener {
     private Hungergames hg = HungergamesApi.getHungergames();
     private int respawnUntil;
-    //private int joinUtil;
+    // private int joinUtil;
     private McPvP mcpvp;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;
         this.respawnUntil = mcpvp.getConfig().getInt("RespawnDuration");
-       // this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
+        // this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
 
     }
 
@@ -45,6 +45,7 @@ public class McpvpListener implements Listener {
                     if (gamer != null) {
                         HungergamesApi.getPlayerManager().sendToSpawn(gamer);
                         gamer.setAlive(true);
+                        HungergamesApi.getKitManager().getKitByPlayer(gamer.getPlayer()).addPlayer(gamer.getPlayer());
                     }
                 }
             });
