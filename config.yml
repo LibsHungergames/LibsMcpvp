@@ -1,6 +1,6 @@
 # This sends the players with the perm 'hungergames.respawn' back to spawn
 # Set it less then 0 to disable
-RespawnDuration: 300
+RespawnDuration: -1
 
 BadKits:
   - DiamondWarrior
