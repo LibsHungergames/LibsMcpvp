@@ -2,10 +2,12 @@ package me.libraryaddict.librarys;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -45,7 +47,10 @@ public class McpvpListener implements Listener {
                     if (gamer != null) {
                         HungergamesApi.getPlayerManager().sendToSpawn(gamer);
                         gamer.setAlive(true);
-                        HungergamesApi.getKitManager().getKitByPlayer(gamer.getPlayer()).addPlayer(gamer.getPlayer());
+                        KitManager kits = HungergamesApi.getKitManager();
+                        Player p = gamer.getPlayer();
+                        kits.setKit(p, kits.getKitByPlayer(p).getName());
+                        kits.getKitByPlayer(p).giveKit(p);
                     }
                 }
             });
