@@ -1,6 +1,8 @@
 # This sends the players with the perm 'hungergames.respawn' back to spawn
 # Set it less then 0 to disable
 RespawnDuration: -1
+# Does his items regenerate as well
+RespawnItems: true
 
 BadKits:
   - DiamondWarrior
