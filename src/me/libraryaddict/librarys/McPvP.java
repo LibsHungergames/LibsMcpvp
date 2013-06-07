@@ -24,13 +24,13 @@ public class McPvP extends JavaPlugin implements Listener {
             Kit kit = HungergamesApi.getKitManager().parseKit(getConfig().getConfigurationSection("Kits." + string));
             HungergamesApi.getKitManager().addKit(kit);
         }
+        currentVersion = "v" + Bukkit.getPluginManager().getPlugin("LibsMcpvp").getDescription().getVersion();
         if (HungergamesApi.getHungergames().getConfig().getBoolean("CheckUpdates"))
             Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
                 public void run() {
                     try {
                         UpdateChecker updateChecker = new UpdateChecker();
-                        updateChecker.checkUpdate("v"
-                                + Bukkit.getPluginManager().getPlugin("LibsMcpvp").getDescription().getVersion());
+                        updateChecker.checkUpdate(currentVersion);
                         latestVersion = updateChecker.getLatestVersion();
                         if (latestVersion != null) {
                             latestVersion = "v" + latestVersion;
