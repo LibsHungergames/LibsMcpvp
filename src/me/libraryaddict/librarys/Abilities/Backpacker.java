@@ -77,19 +77,31 @@ public class Backpacker extends AbilityListener implements Disableable {
         }
     }
 
+    @Override
+    public void registerPlayer(Player p) {
+        super.registerPlayer(p);
+        if (HungergamesApi.getHungergames().currentTime >= 0) {
+            setBackpack(p);
+        }
+    }
+
+    private void setBackpack(Player p) {
+        ItemStack item = new ItemStack(backpackItem);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(backPackItemName);
+        List<String> lore = new ArrayList<String>();
+        lore.add(backPackItemDescription);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        backpack.put(p, Bukkit.createInventory(null, backpackInventoryRows * 9, backPackItemName));
+        p.getInventory().setItem(9, item);
+        p.updateInventory();
+    }
+
     @EventHandler
     public void onGameStart(GameStartEvent event) {
         for (Player p : getMyPlayers()) {
-            ItemStack item = new ItemStack(backpackItem);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(backPackItemName);
-            List<String> lore = new ArrayList<String>();
-            lore.add(backPackItemDescription);
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            backpack.put(p, Bukkit.createInventory(null, backpackInventoryRows * 9, backPackItemName));
-            p.getInventory().setItem(9, item);
-            p.updateInventory();
+            setBackpack(p);
         }
     }
 }

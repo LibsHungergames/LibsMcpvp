@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -15,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import me.libraryaddict.Hungergames.Events.GameStartEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
@@ -80,6 +80,7 @@ public class Gambler extends AbilityListener implements Disableable {
             isHunger = setHunger;
         }
     }
+
     public int chanceHeal = 100;
     public int chanceHunger = 100;
     public String foodName = "&2Full hunger";
@@ -99,6 +100,8 @@ public class Gambler extends AbilityListener implements Disableable {
 
     public WonItem getRandom() {
         Collections.shuffle(itemsToWin, new Random());
+        if (itemsToWin.size() == 0)
+            return null;
         while (true) {
             Iterator<WonItem> itel = itemsToWin.iterator();
             while (itel.hasNext()) {
@@ -110,14 +113,16 @@ public class Gambler extends AbilityListener implements Disableable {
         }
     }
 
-    @EventHandler
-    public void onGameStart(GameStartEvent event) {
+    public boolean load(ConfigurationSection section, boolean isNewFile) {
+        boolean returns = super.load(section, isNewFile);
         WonItem health = new WonItem(chanceHeal, healthName);
         health.setHealth(true);
-        itemsToWin.add(health);
+        if (health.getChance() != 0)
+            itemsToWin.add(health);
         WonItem hunger = new WonItem(chanceHunger, foodName);
         hunger.setHunger(true);
-        itemsToWin.add(hunger);
+        if (hunger.getChance() != 0)
+            itemsToWin.add(hunger);
         for (String string : potionEffects) {
             String[] split = string.split(" ");
             int chance = Integer.parseInt(split[0]);
@@ -125,7 +130,8 @@ public class Gambler extends AbilityListener implements Disableable {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.getByName(split[2].toUpperCase()),
                     Integer.parseInt(split[3]), Integer.parseInt(split[4]));
             WonItem potionPrize = new WonItem(chance, name, potionEffect);
-            itemsToWin.add(potionPrize);
+            if (potionPrize.getChance() != 0)
+                itemsToWin.add(potionPrize);
         }
         for (String string : randomItems) {
             String[] split = string.split(" ");
@@ -133,8 +139,10 @@ public class Gambler extends AbilityListener implements Disableable {
             String name = ChatColor.translateAlternateColorCodes('&', split[1]);
             WonItem itemPrize = new WonItem(chance, name, kits.parseItem(string.substring(split[0].length() + split[1].length()
                     + 2)));
-            itemsToWin.add(itemPrize);
+            if (itemPrize.getChance() != 0)
+                itemsToWin.add(itemPrize);
         }
+        return returns;
     }
 
     @EventHandler

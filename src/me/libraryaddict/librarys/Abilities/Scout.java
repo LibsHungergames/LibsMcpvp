@@ -17,15 +17,32 @@ import org.bukkit.potion.PotionEffectType;
 public class Scout extends AbilityListener implements Disableable {
     public boolean cancelFall = true;
     public int givePotionsEverySoSeconds = 600;
+    private int scheduler = -1;
 
-    @EventHandler
-    public void gameStartEvent(GameStartEvent event) {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), new Runnable() {
+    public void registerPlayer(Player player) {
+        super.registerPlayer(player);
+        if (scheduler < 0 && HungergamesApi.getHungergames().currentTime >= 0) {
+            int toTake = HungergamesApi.getHungergames().currentTime;
+            if (toTake > givePotionsEverySoSeconds * 20)
+                toTake = givePotionsEverySoSeconds * 20;
+            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(),
+                    Math.abs(givePotionsEverySoSeconds * 20) - toTake, givePotionsEverySoSeconds * 20);
+        }
+    }
+
+    private Runnable getRunnable() {
+        return new Runnable() {
             public void run() {
                 for (Player p : getMyPlayers())
                     HungergamesApi.getKitManager().addItem(p, new ItemStack(Material.POTION, 2, (short) 16418));
             }
-        }, givePotionsEverySoSeconds * 20, givePotionsEverySoSeconds * 20);
+        };
+    }
+
+    @EventHandler
+    public void gameStartEvent(GameStartEvent event) {
+        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(),
+                givePotionsEverySoSeconds * 20, givePotionsEverySoSeconds * 20);
     }
 
     @EventHandler

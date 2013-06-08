@@ -16,10 +16,17 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 public class Werewolf extends AbilityListener implements Disableable {
     public String[] potionEffectsDay = new String[] { "WEAKNESS 12000 0" };
     public String[] potionEffectsNight = new String[] { "SPEED 12000 0", "INCREASE_DAMAGE 12000 0" };
+    private int scheduler = -1;
 
-    @EventHandler
-    public void gameStartEvent(GameStartEvent event) {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), new Runnable() {
+    public void registerPlayer(Player player) {
+        super.registerPlayer(player);
+        if (scheduler < 0 && HungergamesApi.getHungergames().currentTime >= 0)
+            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0,
+                    12000 - (HungergamesApi.getHungergames().world.getTime() % 12000));
+    }
+
+    private Runnable getRunnable() {
+        return new Runnable() {
             public void run() {
                 for (Player p : getMyPlayers()) {
                     if (HungergamesApi.getHungergames().world.getTime() > 0
@@ -40,7 +47,12 @@ public class Werewolf extends AbilityListener implements Disableable {
                     }
                 }
             }
-        }, 0, 12000);
+        };
+    }
+
+    @EventHandler
+    public void gameStartEvent(GameStartEvent event) {
+        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 12000);
     }
 
     @EventHandler
