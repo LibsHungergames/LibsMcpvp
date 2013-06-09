@@ -8,6 +8,7 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.Gamer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -93,6 +94,8 @@ public class Endermage extends AbilityListener {
                             if (mager.isAlive()) {
                                 ItemStack item = new ItemStack(endermagePortalId);
                                 ItemMeta meta = item.getItemMeta();
+                                if (endermagePortalName.equals(ChatColor.stripColor(endermagePortalName)))
+                                    endermagePortalName = ChatColor.WHITE + endermagePortalName;
                                 meta.setDisplayName(endermagePortalName);
                                 item.setItemMeta(meta);
                                 item.addEnchantment(EnchantmentManager.UNLOOTABLE, 1);
