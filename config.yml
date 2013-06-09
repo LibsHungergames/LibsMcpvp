@@ -9,7 +9,6 @@ BadKits:
   #Remove endermage from this list to enable it. It does work. But its not balanced and isnt enabled by default.
   - Endermage
   - Explorer
-  - Hermit
   - Rider
 Kits:
   Archer:
