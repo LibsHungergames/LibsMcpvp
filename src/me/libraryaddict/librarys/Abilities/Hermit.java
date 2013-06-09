@@ -3,6 +3,7 @@ package me.libraryaddict.librarys.Abilities;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,7 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Hermit extends AbilityListener implements Disableable {
     public int timesToLoop = 100;
+    public String failedToFindLocation = ChatColor.GREEN + "So sorry! I was unable to find a location for you to spawn at!";
 
     @EventHandler
     public void onGameStart(GameStartEvent event) {
@@ -28,8 +30,11 @@ public class Hermit extends AbilityListener implements Disableable {
                                 spawn.getX() + new Random().nextInt((int) (borderSize / 2)), 0, spawn.getZ()
                                         + new Random().nextInt((int) (borderSize / 2)));
                         loc = loc.getWorld().getHighestBlockAt(loc).getLocation();
-                        if (loc.getBlock().isLiquid())
+                        if (loc.getBlock().isLiquid()) {
+                            if (i + 1 == timesToLoop)
+                                p.sendMessage(failedToFindLocation);
                             continue;
+                        }
                         p.teleport(loc.add(0, 1, 0));
                         break;
                     }
