@@ -77,6 +77,13 @@ public class Backpacker extends AbilityListener implements Disableable {
         }
     }
 
+    @EventHandler
+    public void onGameStart(GameStartEvent event) {
+        for (Player p : getMyPlayers()) {
+            setBackpack(p);
+        }
+    }
+
     @Override
     public void registerPlayer(Player p) {
         super.registerPlayer(p);
@@ -96,12 +103,5 @@ public class Backpacker extends AbilityListener implements Disableable {
         backpack.put(p, Bukkit.createInventory(null, backpackInventoryRows * 9, backPackItemName));
         p.getInventory().setItem(9, item);
         p.updateInventory();
-    }
-
-    @EventHandler
-    public void onGameStart(GameStartEvent event) {
-        for (Player p : getMyPlayers()) {
-            setBackpack(p);
-        }
     }
 }

@@ -19,23 +19,18 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Barbarian extends AbilityListener {
     private HashMap<ItemStack, Integer> kills = new HashMap<ItemStack, Integer>();
-    public String swordName = "Bloody Bane";
     public int killsPerLevel = 3;
+    public String swordName = "Bloody Bane";
     private Material[] updates = new Material[] { Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD };
 
     @EventHandler
-    public void onKilled(PlayerKilledEvent event) {
-        if (event.getKillerPlayer() != null) {
-            ItemStack item = event.getKillerPlayer().getPlayer().getItemInHand();
-            if (isSpecialItem(item, swordName)) {
-                if (!kills.containsKey(item))
-                    kills.put(item, 0);
-                kills.put(item, kills.get(item) + 1);
-                if (kills.get(item) % 3 == 0) {
-                    int level = (kills.get(item) / 3) - 1;
-                    item.setType(updates[level]);
-                }
-            }
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player p = (Player) event.getPlayer();
+        if (isSpecialItem(p.getItemInHand(), swordName)) {
+            p.getItemInHand().setDurability((short) 0);
+            EntityPlayer eP = ((CraftPlayer) p).getHandle();
+            eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
+                    .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
         }
     }
 
@@ -53,13 +48,18 @@ public class Barbarian extends AbilityListener {
     }
 
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        Player p = (Player) event.getPlayer();
-        if (isSpecialItem(p.getItemInHand(), swordName)) {
-            p.getItemInHand().setDurability((short) 0);
-            EntityPlayer eP = ((CraftPlayer) p).getHandle();
-            eP.playerConnection.sendPacket(new Packet103SetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
-                    .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
+    public void onKilled(PlayerKilledEvent event) {
+        if (event.getKillerPlayer() != null) {
+            ItemStack item = event.getKillerPlayer().getPlayer().getItemInHand();
+            if (isSpecialItem(item, swordName)) {
+                if (!kills.containsKey(item))
+                    kills.put(item, 0);
+                kills.put(item, kills.get(item) + 1);
+                if (kills.get(item) % 3 == 0) {
+                    int level = (kills.get(item) / 3) - 1;
+                    item.setType(updates[level]);
+                }
+            }
         }
     }
 }

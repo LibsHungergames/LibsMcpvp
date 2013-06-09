@@ -18,11 +18,9 @@ public class Werewolf extends AbilityListener implements Disableable {
     public String[] potionEffectsNight = new String[] { "SPEED 12000 0", "INCREASE_DAMAGE 12000 0" };
     private int scheduler = -1;
 
-    public void registerPlayer(Player player) {
-        super.registerPlayer(player);
-        if (scheduler < 0 && HungergamesApi.getHungergames().currentTime >= 0)
-            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0,
-                    12000 - (HungergamesApi.getHungergames().world.getTime() % 12000));
+    @EventHandler
+    public void gameStartEvent(GameStartEvent event) {
+        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 12000);
     }
 
     private Runnable getRunnable() {
@@ -51,15 +49,17 @@ public class Werewolf extends AbilityListener implements Disableable {
     }
 
     @EventHandler
-    public void gameStartEvent(GameStartEvent event) {
-        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 12000);
-    }
-
-    @EventHandler
     public void onTarget(EntityTargetEvent event) {
         if (event.getTarget() instanceof Player && hasAbility((Player) event.getTarget())
                 && event.getEntityType() == EntityType.WOLF)
             event.setCancelled(true);
+    }
+
+    public void registerPlayer(Player player) {
+        super.registerPlayer(player);
+        if (scheduler < 0 && HungergamesApi.getHungergames().currentTime >= 0)
+            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0,
+                    12000 - (HungergamesApi.getHungergames().world.getTime() % 12000));
     }
 
 }

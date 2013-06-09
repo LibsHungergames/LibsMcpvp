@@ -10,8 +10,8 @@ import org.bukkit.potion.PotionEffectType;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Reaper extends AbilityListener {
-    public String reaperItemName = "Death Scythe";
     public int reaperEffectLastsSeconds = 6;
+    public String reaperItemName = "Death Scythe";
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
