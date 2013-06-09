@@ -43,7 +43,7 @@ public class Tracker extends AbilityListener implements CommandExecutor {
         Player p = event.getTracker().getPlayer();
         Player victim = event.getVictim();
         Location loc = event.getLocation();
-        if (hasAbility(p)) {
+        if (hasAbility(p) && event.getVictim() != null) {
             event.setMessage(String.format(trackerTrackingMessage, victim.getName(), ((int) p.getLocation().distance(loc)),
                     loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
             tracking.put(p, victim);
