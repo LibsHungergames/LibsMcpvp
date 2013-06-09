@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,7 +31,10 @@ public class Vulture extends AbilityListener {
             else
                 killerName = killer.getName();
             deathLoc = String.format(locationLayout, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-            cause = killed.getPlayer().getLastDamageCause().getCause().name();
+            if (killed.getPlayer().getLastDamageCause() != null)
+                cause = killed.getPlayer().getLastDamageCause().getCause().name();
+            else
+                cause = "NONE";
             if (deathCauses.containsKey(cause))
                 cause = deathCauses.get(cause);
         }
@@ -52,7 +56,7 @@ public class Vulture extends AbilityListener {
         }
 
         public String getTime() {
-            return HungergamesApi.getHungergames().returnTime(time);
+            return HungergamesApi.getHungergames().returnTime(HungergamesApi.getHungergames().currentTime - time);
         }
     }
 
@@ -60,25 +64,27 @@ public class Vulture extends AbilityListener {
     public String[] damageCauses = new String[] { "BLOCK_EXPLOSION Block explosion", "CONTACT Cactus", "CUSTOM Unknown",
             "DROWNING Drowning", "ENTITY_ATTACK Entity Attack", "ENTITY_EXPLOSION Explosion", "FALL Fall",
             "FALLING_BLOCK Falling Block", "FIRE fire", "FIRE_TICK Fire", "LAVA Lava", "LIGHTNING Lightning", "MAGIC Magic",
-            "MELTING Melting", "POISON Poison", "PROJECTILE Projectile", "STARVATION Starvation", "SUFFOCATION Suffocation",
-            "SUICIDE Suicide", "THORNS Thorns", "VOID Void", "WITHER Wither" };
+            "MELTING Melting", "NONE None", "POISON Poison", "PROJECTILE Projectile", "STARVATION Starvation",
+            "SUFFOCATION Suffocation", "SUICIDE Suicide", "THORNS Thorns", "VOID Void", "WITHER Wither" };
     private HashMap<String, String> deathCauses = new HashMap<String, String>();
     private ArrayList<KillInfo> kills = new ArrayList<KillInfo>();
-    public String killString = "Time " + ChatColor.WHITE + "-" + ChatColor.RED + "Killed " + ChatColor.WHITE + "-"
-            + ChatColor.BLUE + "Cause " + ChatColor.WHITE + "-" + ChatColor.GREEN + "Killer " + ChatColor.WHITE + "-"
-            + ChatColor.YELLOW + "Location";
-    public String killStringLayout = "%Time% " + ChatColor.WHITE + "-" + ChatColor.RED + "%Killed% " + ChatColor.WHITE + "-"
-            + ChatColor.BLUE + "%Cause% " + ChatColor.WHITE + "-" + ChatColor.GREEN + "%Killer% " + ChatColor.WHITE + "-"
-            + ChatColor.YELLOW + "%Location%";
+    public String killString = "Time " + ChatColor.WHITE + "-" + ChatColor.RED + " Killed " + ChatColor.WHITE + "-"
+            + ChatColor.BLUE + " Cause " + ChatColor.WHITE + "-" + ChatColor.GREEN + " Killer " + ChatColor.WHITE + "-"
+            + ChatColor.YELLOW + " Location";
+    public String killStringLayout = "%Time% ago " + ChatColor.WHITE + "-" + ChatColor.RED + " %Killed% " + ChatColor.WHITE + "-"
+            + ChatColor.BLUE + " %Cause% " + ChatColor.WHITE + "-" + ChatColor.GREEN + " %Killer% " + ChatColor.WHITE + "-"
+            + ChatColor.YELLOW + " %Location%";
     public String locationLayout = "(%s, %s, %s)";
     public String noKiller = "None";
     public String noKillsYet = ChatColor.BLUE + "There are no kills yet! Care to be the first?";
 
-    public void init() {
+    public boolean load(ConfigurationSection section, boolean isNewFile) {
+        boolean returns = super.load(section, isNewFile);
         for (String s : damageCauses) {
             String[] split = s.split(" ");
             deathCauses.put(split[0], s.substring(1 + split[0].length()));
         }
+        return returns;
     }
 
     @EventHandler
@@ -99,8 +105,13 @@ public class Vulture extends AbilityListener {
                 else {
                     p.sendMessage(killString);
                     for (KillInfo info : kills) {
-                        p.sendMessage(String.format(killStringLayout, info.getTime(), info.getKilled(), info.getCause(),
-                                info.getKiller(), info.getLocation()));
+                        String sendingString = killStringLayout;
+                        sendingString = sendingString.replace("%Killed%", info.getKilled());
+                        sendingString = sendingString.replace("%Time%", info.getTime());
+                        sendingString = sendingString.replace("%Cause%", info.getCause());
+                        sendingString = sendingString.replace("%Location%", info.getLocation());
+                        sendingString = sendingString.replace("%Killer%", info.getKiller());
+                        p.sendMessage(sendingString);
                     }
                 }
             }

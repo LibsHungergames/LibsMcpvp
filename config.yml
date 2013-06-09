@@ -9,6 +9,9 @@ BadKits:
   #Remove endermage from this list to enable it. It does work. But its not balanced and isnt enabled by default.
   - Endermage
   - Explorer
+  # Hermit works. Sorta. It sometimes seems to spawn you in the ground and so on. Sometimes in a ocean too!
+  # It will probably work if you generate the map fully
+  - Hermit
   - Rider
 Kits:
   Archer:
@@ -549,7 +552,7 @@ Kits:
     Price: 0
     Icon: RAW_BEEF 0 1
     Items:
-      - ENCHANTED_BOOK 0 1 Name=Death_Note
+      - ENCHANTED_BOOK 0 1 Name=Death_Note Unlootable 1
   Warder:
     Description: 'You are given a tome of protection, use this to place a 8 long wall of potions. Walking through the ward will give you speed I and protection I for 30 seconds. This effect is added to everyone walking through it. There is a warmup period of 1/2 second and it stays for 5 seconds. The book is usable again after a minute'
     Free: true

@@ -5,6 +5,9 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
@@ -21,21 +24,30 @@ public class Hermit extends AbilityListener implements Disableable {
     public void onGameStart(GameStartEvent event) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(HungergamesApi.getHungergames(), new Runnable() {
             public void run() {
-                double borderSize = HungergamesApi.getConfigManager().getBorderSize();
+                double borderSize = HungergamesApi.getConfigManager().getBorderSize() - 15;
                 Location spawn = HungergamesApi.getHungergames().world.getSpawnLocation();
                 for (Player p : getMyPlayers()) {
                     // Now lets make it so he never spawns less then half the border size
                     for (int i = 0; i < timesToLoop; i++) {
-                        Location loc = new Location(spawn.getWorld(),
-                                spawn.getX() + new Random().nextInt((int) (borderSize / 2)), 0, spawn.getZ()
-                                        + new Random().nextInt((int) (borderSize / 2)));
-                        loc = loc.getWorld().getHighestBlockAt(loc).getLocation();
-                        if (loc.getBlock().isLiquid()) {
+                        double addX = new Random().nextInt((int) (borderSize / 2)) + (borderSize / 2);
+                        double addZ = new Random().nextInt((int) (borderSize / 2)) + (borderSize / 2);
+                        if (new Random().nextBoolean())
+                            addX = -addX;
+                        if (new Random().nextBoolean())
+                            addZ = -addZ;
+                        Block block = spawn.getWorld()
+                                .getHighestBlockAt((int) (spawn.getX() + addX), (int) (spawn.getZ() + addZ));
+                        if (!block.getChunk().isLoaded()) {
+                            block.getChunk().load();
+                        }
+                        while (block.getRelative(BlockFace.UP).getType() != Material.AIR && !block.isLiquid())
+                            block = block.getRelative(BlockFace.UP);
+                        if (block.isLiquid()) {
                             if (i + 1 == timesToLoop)
                                 p.sendMessage(failedToFindLocation);
                             continue;
                         }
-                        p.teleport(loc.add(0, 1, 0));
+                        p.teleport(block.getLocation().clone().add(0, 1.5, 0));
                         break;
                     }
 
