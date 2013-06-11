@@ -73,7 +73,8 @@ public class Phantom extends AbilityListener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
         if (playerArmor.containsKey(event.getWhoClicked())) {
-            if (event.getCurrentItem().getType().name().contains("LEATHER_"))
+            if (event.getCurrentItem().getType().name().contains("LEATHER_")
+                    && ((LeatherArmorMeta) event.getCurrentItem().getItemMeta()).getColor().equals(Color.WHITE))
                 event.setCancelled(true);
         }
     }
