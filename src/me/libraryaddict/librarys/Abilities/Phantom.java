@@ -103,8 +103,6 @@ public class Phantom extends AbilityListener {
             flightLeft.put(p, flightLeft.get(p) - 1);
             if (flightLeft.get(p) <= 0) {
                 itel.remove();
-                if (p.isFlying())
-                    p.setFallDistance(p.getFallDistance() * 2);
                 p.setAllowFlight(false);
                 if (giveFlightArmor)
                     p.getInventory().setArmorContents(playerArmor.remove(p));

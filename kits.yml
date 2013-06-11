@@ -339,7 +339,7 @@ Kits:
     Ability:
       - Necro
   Phantom:
-    Description: 'You remember that old legend about the man who could fly right? Well it has a element of truth in it. For using this kit. You can fly! Beware however! If you are still flying after 5 seconds of activating the feather. Your fall damage will be doubled!'
+    Description: 'You remember that old legend about the man who could fly right? Well it has a element of truth in it. For using this kit. You can fly! Beware however! After 5 seconds of activating the flight. It wears off! Regardless if you are flyinh!'
     Free: true
     Price: 0
     Icon: FEATHER 0 1
