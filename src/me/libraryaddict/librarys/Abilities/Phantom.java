@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -54,7 +55,7 @@ public class Phantom extends AbilityListener {
             }
             cooldown.put(event.getItem(), hg.currentTime + cooldownTime);
             flightLeft.put(p, secondsOfFlight + 1);
-            p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 2);
+            p.getWorld().playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
             p.setAllowFlight(true);
             p.setFlying(true);
             if (giveFlightArmor) {
@@ -64,7 +65,16 @@ public class Phantom extends AbilityListener {
                 inv.setChestplate(colorIn(Material.LEATHER_CHESTPLATE));
                 inv.setLeggings(colorIn(Material.LEATHER_LEGGINGS));
                 inv.setBoots(colorIn(Material.LEATHER_BOOTS));
+                p.updateInventory();
             }
+        }
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        if (playerArmor.containsKey(event.getWhoClicked())) {
+            if (event.getCurrentItem().getType().name().contains("LEATHER_"))
+                event.setCancelled(true);
         }
     }
 
