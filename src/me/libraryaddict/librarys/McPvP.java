@@ -1,10 +1,14 @@
 package me.libraryaddict.librarys;
 
+import java.io.File;
+
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.Kit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,12 +20,19 @@ public class McPvP extends JavaPlugin implements Listener {
     private String currentVersion;
 
     public void onEnable() {
+        File file = new File(getDataFolder().toString() + "/kits.yml");
+        ConfigurationSection config;
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            saveResource("kits.yml", false);
+        }
+        config = YamlConfiguration.loadConfiguration(file);
         saveDefaultConfig();
         HungergamesApi.getAbilityManager().initializeAllAbilitiesInPackage(this, "me.libraryaddict.librarys.Abilities");
-        for (String string : getConfig().getConfigurationSection("Kits").getKeys(false)) {
-            if (getConfig().contains("BadKits") && getConfig().getStringList("BadKits").contains(string))
+        for (String string : config.getConfigurationSection("Kits").getKeys(false)) {
+            if (config.contains("BadKits") && config.getStringList("BadKits").contains(string))
                 continue;
-            Kit kit = HungergamesApi.getKitManager().parseKit(getConfig().getConfigurationSection("Kits." + string));
+            Kit kit = HungergamesApi.getKitManager().parseKit(config.getConfigurationSection("Kits." + string));
             HungergamesApi.getKitManager().addKit(kit);
         }
         currentVersion = "v" + Bukkit.getPluginManager().getPlugin("LibsMcpvp").getDescription().getVersion();
