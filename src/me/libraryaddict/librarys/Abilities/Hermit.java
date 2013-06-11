@@ -17,8 +17,8 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Hermit extends AbilityListener implements Disableable {
-    public int timesToLoop = 100;
     public String failedToFindLocation = ChatColor.GREEN + "So sorry! I was unable to find a location for you to spawn at!";
+    public int timesToLoop = 100;
 
     @EventHandler
     public void onGameStart(GameStartEvent event) {

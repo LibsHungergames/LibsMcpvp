@@ -19,15 +19,15 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class McpvpListener implements Listener {
+    private boolean cactusJuice;
+    private String cactusJuiceName;
+    private boolean chocolateMilk;
+    private String chocolateMilkName;
     private Hungergames hg = HungergamesApi.getHungergames();
-    private int respawnUntil;
     // private int joinUtil;
     private McPvP mcpvp;
     private boolean respawnItems;
-    private String chocolateMilkName;
-    private String cactusJuiceName;
-    private boolean chocolateMilk;
-    private boolean cactusJuice;
+    private int respawnUntil;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;

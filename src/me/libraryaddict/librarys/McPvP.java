@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class McPvP extends JavaPlugin implements Listener {
-    private String latestVersion;
     private String currentVersion;
+    private String latestVersion;
 
     public void onEnable() {
         File file = new File(getDataFolder().toString() + "/kits.yml");

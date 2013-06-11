@@ -1,11 +1,13 @@
 BadKits:
   - DiamondWarrior
-  #Remove endermage from this list to enable it. It does work. But its not balanced and isnt enabled by default.
+  # Endermage works. Remove from this list to enable
   - Endermage
   - Explorer
   # Hermit works. Sorta. It sometimes seems to spawn you in the ground and so on. Sometimes in a ocean too!
   # It will probably work if you generate the map fully
   - Hermit
+  # Phantom works. Remove from this list to enable
+  - Phantom
   - Rider
 Kits:
   Archer:
@@ -336,6 +338,13 @@ Kits:
     Icon: SKULL_ITEM 0 1
     Ability:
       - Necro
+  Phantom:
+    Description: 'You remember that old legend about the man who could fly right? Well it has a element of truth in it. For using this kit. You can fly! Beware however! If you are still flying after 5 seconds of activating the feather. Your fall damage will be doubled!'
+    Free: true
+    Price: 0
+    Icon: FEATHER 0 1
+    Items:
+      - 'FEATHER 0 1 Name=Condor''s_Feather UniqueItem Unlootable 1'
   Pickpocket:
     Description: 'Your blaze rod seems to have a nasty habit of allowing you open other players inventorys merely by right clicking them. Unsure of how far you should go, you gave yourself a limit of 4 items and swore not to interfere with their hotbar (Top row). If they run out of range the inventory closes'
     Free: true
