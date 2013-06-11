@@ -81,7 +81,17 @@ public class Phantom extends AbilityListener {
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
         flightLeft.remove(event.getKilled().getPlayer());
-        playerArmor.remove(event.getKilled().getPlayer());
+        if (playerArmor.containsKey(event.getKilled().getPlayer())) {
+            Iterator<ItemStack> itel = event.getDrops().iterator();
+            while (itel.hasNext()) {
+                ItemStack item = itel.next();
+                if (item.getType().name().contains("LEATHER_")
+                        && ((LeatherArmorMeta) item.getItemMeta()).getColor().equals(Color.WHITE))
+                    itel.remove();
+            }
+            for (ItemStack item : playerArmor.remove(event.getKilled().getPlayer()))
+                event.getDrops().add(item);
+        }
     }
 
     @EventHandler
