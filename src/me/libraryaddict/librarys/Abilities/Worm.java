@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
@@ -24,11 +25,10 @@ public class Worm extends AbilityListener implements Disableable {
                 drop = false;
             }
             event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
+            event.getBlock().setType(Material.AIR);
             if (drop)
-                event.setInstaBreak(true);
-            else {
-                event.getBlock().setType(Material.AIR);
-            }
+                event.getBlock().getWorld()
+                        .dropItemNaturally(event.getBlock().getLocation().add(0.5, 0, 0.5), new ItemStack(Material.DIRT));
         }
     }
 
