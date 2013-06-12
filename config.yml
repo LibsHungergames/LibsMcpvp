@@ -11,3 +11,6 @@ CactusJuiceRestores: 6
 ChocolateMilk: false
 ChocolateMilkName: '&fChocolate Milk'
 ChocolateMilkRestores: 6
+
+# Shall the winner appear on a platform full of delicious tasty cake?
+CakeForWinners: false
