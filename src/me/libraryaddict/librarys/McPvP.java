@@ -59,6 +59,8 @@ public class McPvP extends JavaPlugin implements Listener {
             });
         Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(new McpvpListener(this), this);
+        if (getConfig().getBoolean("McpvpFeast"))
+            HungergamesApi.setFeastManager(new LibsMcpvpFeastManager());
     }
 
     @EventHandler
