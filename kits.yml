@@ -526,8 +526,6 @@ Kits:
     Icon: POTION 8201 3
     Items:
       - POTION 8201 3 Unlootable 1
-    Ability:
-      - Urgal
   Vampire:
     Description: 'The Dracula kit is a fantastic solo kit. You gain a large health boost when you kill players, a medium health boost when slaying monsters, or a small health boost when killing animals. If you already have full health when slaying another player, you gain a health pot!'
     Free: true
