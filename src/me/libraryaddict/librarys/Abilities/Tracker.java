@@ -24,6 +24,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class Tracker extends AbilityListener implements CommandExecutor {
     private TranslationManager cm = HungergamesApi.getTranslationManager();
+    public String commandName = "track";
     public String howToUseMessage = ChatColor.RED + "Use /lock <Target Player>";
     private transient List<String> locked = new ArrayList<String>();
     public String lostTargetMessage = ChatColor.GOLD + "Lost target, Retargetting";
@@ -35,7 +36,7 @@ public class Tracker extends AbilityListener implements CommandExecutor {
 
     @Override
     public String getCommand() {
-        return "track";
+        return commandName;
     }
 
     @EventHandler

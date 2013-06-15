@@ -548,12 +548,14 @@ Kits:
     Ability:
       - Viper
   Vulture:
-    Description: 'You are given a book in which you record the names, time, location, cause and the killer of your fallen foes. Using this book you can choose to visit their death locations if you wish. Perhaps to pickup their drops or simply to take advantage of the killer as he moves through the loot!'
+    Description: 'You are given a book in which you record the names, time, location, cause and the killer of your fallen foes. Using this book you can view the last 10 deaths. You also have a one use /body <Name> to bet on the next player to die! If your bet works out, you get all their loot you can carry!'
     Free: true
     Price: 0
     Icon: RAW_BEEF 0 1
     Items:
       - ENCHANTED_BOOK 0 1 Name=Death_Note Unlootable 1
+    Ability:
+      - Vulture
   Warder:
     Description: 'You are given a tome of protection, use this to place a 8 long wall of potions. Walking through the ward will give you speed I and protection I for 30 seconds. This effect is added to everyone walking through it. There is a warmup period of 1/2 second and it stays for 5 seconds. The book is usable again after a minute'
     Free: true
