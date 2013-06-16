@@ -1,8 +1,14 @@
 # This sends the players with the perm 'hungergames.respawn' back to spawn
-# Set it less then 0 to disable
+# Set it less then 0 to disable. Set to 300 for 5min
 RespawnDuration: -1
-# Does his items regenerate as well
+# Does his kit items regenerate as well
 RespawnItems: true
+
+# This sends the players with the perm hungergamers.vip.rejoin alive when they join.
+# If they havn't joined yet. Set to 300 to enable. Set to 0 or less to disable
+JoinDuration: -1
+# Does his kit items regenerate as well
+RespawnJoinersItems: true
 
 CactusJuice: false
 CactusJuiceName: '&fCactus Juice'

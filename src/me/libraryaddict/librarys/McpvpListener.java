@@ -1,5 +1,7 @@
 package me.libraryaddict.librarys;
 
+import java.util.ArrayList;
+
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.PlayerWinEvent;
@@ -17,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,9 +31,12 @@ public class McpvpListener implements Listener {
     private String chocolateMilkName;
     private Hungergames hg = HungergamesApi.getHungergames();
     // private int joinUtil;
+    private ArrayList<String> joined = new ArrayList<String>();
     private McPvP mcpvp;
     private boolean respawnItems;
+    private boolean joinersItems;
     private int respawnUntil;
+    private int joinUntil;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;
@@ -62,22 +68,33 @@ public class McpvpListener implements Listener {
             recipe.addIngredient(1, Material.INK_SACK, 3);
             Bukkit.addRecipe(recipe);
         }
-        // this.joinUtil = mcpvp.getConfig().getInt("JoinDuration");
+        joinUntil = mcpvp.getConfig().getInt("JoinDuration");
+        joinersItems = mcpvp.getConfig().getBoolean("JoinersItems");
 
     }
 
-    /*@EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onJoin(final PlayerJoinEvent event) {
-        if (hg.currentTime >= 0 && hg.currentTime < joinUtil && event.getPlayer().hasPermission("hungergames.vip.rejoin")) {
+        if (hg.currentTime >= 0 && hg.currentTime < joinUntil && event.getPlayer().hasPermission("hungergames.vip.rejoin")
+                && !joined.contains(event.getPlayer().getName())) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
                 public void run() {
                     Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
-                    if (gamer != null)
+                    if (gamer != null) {
+                        gamer.clearInventory();
+                        HungergamesApi.getPlayerManager().sendToSpawn(gamer);
                         gamer.setAlive(true);
+                        KitManager kits = HungergamesApi.getKitManager();
+                        Player p = gamer.getPlayer();
+                        p.getInventory().addItem(new ItemStack(Material.COMPASS));
+                        kits.setKit(p, kits.getKitByPlayer(p).getName());
+                        if (joinersItems)
+                            kits.getKitByPlayer(p).giveKit(p);
+                    }
                 }
             }, 2);
         }
-    }*/
+    }
 
     @EventHandler
     public void onWin(PlayerWinEvent event) {
@@ -131,6 +148,8 @@ public class McpvpListener implements Listener {
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
+        if (joinUntil >= 0 && !joined.contains(event.getKilled().getName()))
+            joined.add(event.getKilled().getName());
         if (event.getKilled().getPlayer().hasPermission("hungergames.vip.respawn") && hg.currentTime < respawnUntil) {
             final String killedName = event.getKilled().getName();
             Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
