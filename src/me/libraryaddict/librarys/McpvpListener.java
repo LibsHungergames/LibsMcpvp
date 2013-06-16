@@ -137,6 +137,7 @@ public class McpvpListener implements Listener {
                 public void run() {
                     Gamer gamer = HungergamesApi.getPlayerManager().getGamer(killedName);
                     if (gamer != null) {
+                        gamer.clearInventory();
                         HungergamesApi.getPlayerManager().sendToSpawn(gamer);
                         gamer.setAlive(true);
                         KitManager kits = HungergamesApi.getKitManager();

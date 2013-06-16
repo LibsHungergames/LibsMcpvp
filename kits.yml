@@ -410,6 +410,14 @@ Kits:
     Icon: WRITTEN_BOOK 0 1
     Ability:
       - Santa
+  Scorcher:
+    Description: 'The scorcher kit allows you to blaze away like a beacon of &mhope&r death! While you are wearing your scorching boots and holding your scorchers ignition, flame appears from under your feet! Beware however! You are not immune to its effects and it only lasts for 66 seconds!'
+    Free: true
+    Price: 0
+    Icon: FIRE 0 1
+    Boots: LEATHER_BOOTS 0 1 Unlootable 1 Name=Scorchers_Boots
+    Items: 
+      - BLAZE_POWDER 0 1 Unlootable 1 Name=Scorchers_Igniter
   Scout:
     Description: 'You spawn with 2 speed II potions and you gain 2 speed II potions every 10 minutes. While the speed is in effect. You take no fall damage!'
     Free: true
