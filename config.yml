@@ -8,7 +8,7 @@ RespawnItems: true
 # If they havn't joined yet. Set to 300 to enable. Set to 0 or less to disable
 JoinDuration: -1
 # Does his kit items regenerate as well
-RespawnJoinersItems: true
+JoinersItems: true
 
 CactusJuice: false
 CactusJuiceName: '&fCactus Juice'
