@@ -26,7 +26,7 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 public class Vulture extends AbilityListener implements CommandExecutor {
     private class KillInfo {
         private String cause;
-        private String deathLoc;
+        private Location deathLoc;
         private String killedName;
         private String killerName;
         private int time;
@@ -38,7 +38,7 @@ public class Vulture extends AbilityListener implements CommandExecutor {
                 killerName = noKiller;
             else
                 killerName = killer.getName();
-            deathLoc = String.format(locationLayout, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+            deathLoc = loc;
             if (killed.getPlayer().getLastDamageCause() != null)
                 cause = killed.getPlayer().getLastDamageCause().getCause().name();
             else
@@ -59,7 +59,7 @@ public class Vulture extends AbilityListener implements CommandExecutor {
             return killerName;
         }
 
-        public String getLocation() {
+        public Location getLocation() {
             return deathLoc;
         }
 
@@ -68,6 +68,7 @@ public class Vulture extends AbilityListener implements CommandExecutor {
         }
     }
 
+    public String betCommandName = "bet";
     public String betPaidOff = ChatColor.RED + "Your bet on %s paid off!";
     private HashMap<Player, Gamer> bets = new HashMap<Player, Gamer>();
     public String betVictimAlreadyBetOn = ChatColor.RED + "%s already has a vulture betting on him!";
@@ -79,8 +80,14 @@ public class Vulture extends AbilityListener implements CommandExecutor {
     public String betVictimNoPlayerArgs = ChatColor.RED + "You didn't provide a player name!";
     public String betVictimNotFound = ChatColor.RED + "Player not found!";
     public String betVictimNotVulture = ChatColor.YELLOW + "You are not a vulture!";
+    public String bodyCommandBodyFound = ChatColor.YELLOW
+            + "Found the body of %s!\nYou adjust your compass to point at the location!\nCords: %s, %s, %s";
+    public String bodyCommandBodyNotFound = ChatColor.YELLOW
+            + "You look through your notebooks but you have no logs of that player!";
+    public String bodyCommandName = "body";
+    public String bodyCommandNoArgs = ChatColor.RED + "You need to define a player name!";
+    public String bodyCommandNotVulture = ChatColor.YELLOW + "You are not a vulture!";
     public String bookName = "Death Note";
-    public String commandName = "body";
     public String[] damageCauses = new String[] { "BLOCK_EXPLOSION Block explosion", "CONTACT Cactus", "CUSTOM Unknown",
             "DROWNING Drowning", "ENTITY_ATTACK Entity Attack", "ENTITY_EXPLOSION Explosion", "FALL Fall",
             "FALLING_BLOCK Falling Block", "FIRE fire", "FIRE_TICK Fire", "LAVA Lava", "LIGHTNING Lightning", "MAGIC Magic",
@@ -98,8 +105,8 @@ public class Vulture extends AbilityListener implements CommandExecutor {
     public String noKiller = "None";
     public String noKillsYet = ChatColor.BLUE + "There are no kills yet! Care to be the first?";
 
-    public String getCommand() {
-        return commandName;
+    public String[] getCommands() {
+        return new String[] { bodyCommandName, betCommandName };
     }
 
     public boolean load(ConfigurationSection section, boolean isNewFile) {
@@ -115,35 +122,54 @@ public class Vulture extends AbilityListener implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         PlayerManager pm = HungergamesApi.getPlayerManager();
         Player p = (Player) sender;
-        if (hasAbility(p)) {
-            if (args.length > 0) {
-                if (!bets.containsKey(p)) {
-                    Gamer victim = pm.getGamer(Bukkit.getPlayer(args[0]));
-                    if (victim != null) {
-                        if (victim.getPlayer() != p) {
-                            if (victim.isAlive()) {
-                                if (bets.containsValue(victim)) {
-                                    sender.sendMessage(String.format(betVictimAlreadyBetOn, victim.getName()));
-                                    return true;
-                                }
-                                bets.put(p, victim);
-                                sender.sendMessage(String.format(betVictimBetPlaced, victim.getName()));
+        if (cmd.getName().equalsIgnoreCase(betCommandName)) {
+            if (hasAbility(p)) {
+                if (args.length > 0) {
+                    if (!bets.containsKey(p)) {
+                        Gamer victim = pm.getGamer(Bukkit.getPlayer(args[0]));
+                        if (victim != null) {
+                            if (victim.getPlayer() != p) {
+                                if (victim.isAlive()) {
+                                    if (bets.containsValue(victim)) {
+                                        sender.sendMessage(String.format(betVictimAlreadyBetOn, victim.getName()));
+                                        return true;
+                                    }
+                                    bets.put(p, victim);
+                                    sender.sendMessage(String.format(betVictimBetPlaced, victim.getName()));
+                                } else
+                                    sender.sendMessage(betVictimIsDead);
                             } else
-                                sender.sendMessage(betVictimIsDead);
+                                sender.sendMessage(betVictimCantBetYourself);
                         } else
-                            sender.sendMessage(betVictimCantBetYourself);
+                            sender.sendMessage(betVictimNotFound);
                     } else
-                        sender.sendMessage(betVictimNotFound);
+                        sender.sendMessage(String.format(betVictimAlreadyBettingOn, bets.get(p).getName()));
+                } else {
+                    if (bets.containsKey(p))
+                        sender.sendMessage(String.format(betVictimCurrentlyBetting, bets.get(p).getName()));
+                    else
+                        sender.sendMessage(betVictimNoPlayerArgs);
+                }
+            } else
+                sender.sendMessage(betVictimNotVulture);
+        } else if (cmd.getName().equalsIgnoreCase(bodyCommandName)) {
+            if (hasAbility(p)) {
+                if (args.length > 0) {
+                    for (KillInfo kill : kills) {
+                        if (kill.getKilled().toLowerCase().startsWith(args[0].toLowerCase())) {
+                            Location loc = kill.getLocation().clone();
+                            p.setCompassTarget(loc);
+                            sender.sendMessage(String.format(bodyCommandBodyFound, kill.getKilled(), loc.getBlockX(),
+                                    loc.getBlockY(), loc.getBlockZ()));
+                            return true;
+                        }
+                    }
+                    sender.sendMessage(bodyCommandBodyNotFound);
                 } else
-                    sender.sendMessage(String.format(betVictimAlreadyBettingOn, bets.get(p).getName()));
-            } else {
-                if (bets.containsKey(p))
-                    sender.sendMessage(String.format(betVictimCurrentlyBetting, bets.get(p).getName()));
-                else
-                    sender.sendMessage(betVictimNoPlayerArgs);
-            }
-        } else
-            sender.sendMessage(betVictimNotVulture);
+                    sender.sendMessage(bodyCommandNoArgs);
+            } else
+                sender.sendMessage(bodyCommandNotVulture);
+        }
         return true;
     }
 
@@ -152,8 +178,6 @@ public class Vulture extends AbilityListener implements CommandExecutor {
         bets.remove(event.getKilled().getPlayer());
         KillInfo killInfo = new KillInfo(event.getDropsLocation(), event.getKilled(), event.getKillerPlayer());
         kills.add(killInfo);
-        if (kills.size() > 10)
-            kills.remove(0);
         Iterator<Player> playerItel = bets.keySet().iterator();
         while (playerItel.hasNext()) {
             Player p = playerItel.next();
@@ -185,12 +209,18 @@ public class Vulture extends AbilityListener implements CommandExecutor {
                     p.sendMessage(noKillsYet);
                 else {
                     p.sendMessage(killString);
-                    for (KillInfo info : kills) {
+                    int k = kills.size() - 11;
+                    if (k < 0)
+                        k = 0;
+                    for (int i = kills.size() - 1; i >= k; i--) {
+                        KillInfo info = kills.get(i);
                         String sendingString = killStringLayout;
                         sendingString = sendingString.replace("%Killed%", info.getKilled());
                         sendingString = sendingString.replace("%Time%", info.getTime());
                         sendingString = sendingString.replace("%Cause%", info.getCause());
-                        sendingString = sendingString.replace("%Location%", info.getLocation());
+                        Location loc = info.getLocation();
+                        sendingString = sendingString.replace("%Location%",
+                                String.format(locationLayout, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
                         sendingString = sendingString.replace("%Killer%", info.getKiller());
                         p.sendMessage(sendingString);
                     }
