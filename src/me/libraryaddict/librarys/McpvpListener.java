@@ -32,11 +32,11 @@ public class McpvpListener implements Listener {
     private Hungergames hg = HungergamesApi.getHungergames();
     // private int joinUtil;
     private ArrayList<String> joined = new ArrayList<String>();
+    private boolean joinersItems;
+    private int joinUntil;
     private McPvP mcpvp;
     private boolean respawnItems;
-    private boolean joinersItems;
     private int respawnUntil;
-    private int joinUntil;
 
     public McpvpListener(McPvP mcpvp) {
         this.mcpvp = mcpvp;
@@ -71,44 +71,6 @@ public class McpvpListener implements Listener {
         joinUntil = mcpvp.getConfig().getInt("JoinDuration");
         joinersItems = mcpvp.getConfig().getBoolean("JoinersItems");
 
-    }
-
-    @EventHandler
-    public void onJoin(final PlayerJoinEvent event) {
-        if (hg.currentTime >= 0 && hg.currentTime < joinUntil && event.getPlayer().hasPermission("hungergames.vip.rejoin")
-                && !joined.contains(event.getPlayer().getName())) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
-                public void run() {
-                    Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
-                    if (gamer != null) {
-                        gamer.clearInventory();
-                        HungergamesApi.getPlayerManager().sendToSpawn(gamer);
-                        gamer.setAlive(true);
-                        KitManager kits = HungergamesApi.getKitManager();
-                        Player p = gamer.getPlayer();
-                        p.getInventory().addItem(new ItemStack(Material.COMPASS));
-                        kits.setKit(p, kits.getKitByPlayer(p).getName());
-                        if (joinersItems)
-                            kits.getKitByPlayer(p).giveKit(p);
-                    }
-                }
-            }, 2);
-        }
-    }
-
-    @EventHandler
-    public void onWin(PlayerWinEvent event) {
-        if (mcpvp.getConfig().getBoolean("CakeForWinners")) {
-            Location loc = event.getWinner().getPlayer().getLocation();
-            loc = loc.getWorld().getHighestBlockAt(loc).getLocation().add(0, 30, 0);
-            for (int x = -3; x <= 3; x++) {
-                for (int z = -3; z <= 3; z++) {
-                    Block b = loc.clone().add(x, 0, z).getBlock();
-                    b.setType(Material.CAKE_BLOCK);
-                }
-            }
-            event.getWinner().getPlayer().teleport(loc.add(0, 2, 0));
-        }
     }
 
     @EventHandler
@@ -147,6 +109,29 @@ public class McpvpListener implements Listener {
     }
 
     @EventHandler
+    public void onJoin(final PlayerJoinEvent event) {
+        if (hg.currentTime >= 0 && hg.currentTime < joinUntil && event.getPlayer().hasPermission("hungergames.vip.rejoin")
+                && !joined.contains(event.getPlayer().getName())) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
+                public void run() {
+                    Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
+                    if (gamer != null) {
+                        gamer.clearInventory();
+                        HungergamesApi.getPlayerManager().sendToSpawn(gamer);
+                        gamer.setAlive(true);
+                        KitManager kits = HungergamesApi.getKitManager();
+                        Player p = gamer.getPlayer();
+                        p.getInventory().addItem(new ItemStack(Material.COMPASS));
+                        kits.setKit(p, kits.getKitByPlayer(p).getName());
+                        if (joinersItems)
+                            kits.getKitByPlayer(p).giveKit(p);
+                    }
+                }
+            }, 2);
+        }
+    }
+
+    @EventHandler
     public void onKilled(PlayerKilledEvent event) {
         if (joinUntil >= 0 && !joined.contains(event.getKilled().getName()))
             joined.add(event.getKilled().getName());
@@ -168,6 +153,21 @@ public class McpvpListener implements Listener {
                     }
                 }
             });
+        }
+    }
+
+    @EventHandler
+    public void onWin(PlayerWinEvent event) {
+        if (mcpvp.getConfig().getBoolean("CakeForWinners")) {
+            Location loc = event.getWinner().getPlayer().getLocation();
+            loc = loc.getWorld().getHighestBlockAt(loc).getLocation().add(0, 30, 0);
+            for (int x = -3; x <= 3; x++) {
+                for (int z = -3; z <= 3; z++) {
+                    Block b = loc.clone().add(x, 0, z).getBlock();
+                    b.setType(Material.CAKE_BLOCK);
+                }
+            }
+            event.getWinner().getPlayer().teleport(loc.add(0, 2, 0));
         }
     }
 }

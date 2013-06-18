@@ -45,6 +45,15 @@ public class Phantom extends AbilityListener {
     }
 
     @EventHandler
+    public void onClick(InventoryClickEvent event) {
+        if (playerArmor.containsKey(event.getWhoClicked())) {
+            if (event.getCurrentItem().getType().name().contains("LEATHER_")
+                    && ((LeatherArmorMeta) event.getCurrentItem().getItemMeta()).getColor().equals(Color.WHITE))
+                event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction().name().contains("RIGHT") && isSpecialItem(event.getItem(), phantomFeatherName)
                 && event.getItem().getTypeId() == phantomFeatherId) {
@@ -67,15 +76,6 @@ public class Phantom extends AbilityListener {
                 inv.setBoots(colorIn(Material.LEATHER_BOOTS));
                 p.updateInventory();
             }
-        }
-    }
-
-    @EventHandler
-    public void onClick(InventoryClickEvent event) {
-        if (playerArmor.containsKey(event.getWhoClicked())) {
-            if (event.getCurrentItem().getType().name().contains("LEATHER_")
-                    && ((LeatherArmorMeta) event.getCurrentItem().getItemMeta()).getColor().equals(Color.WHITE))
-                event.setCancelled(true);
         }
     }
 

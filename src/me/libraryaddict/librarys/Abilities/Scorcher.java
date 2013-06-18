@@ -14,8 +14,8 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Scorcher extends AbilityListener {
-    public String bootsName = "Scorchers Boots";
     public String blazeName = "Scorchers Igniter";
+    public String bootsName = "Scorchers Boots";
 
     @EventHandler
     public void onSecond(PlayerMoveEvent event) {
