@@ -16,7 +16,7 @@ public class Viper extends AbilityListener implements Disableable {
 
     public int chance = 3;
     public int length = 5;
-    public int multiplier = 1;
+    public int multiplier = 0;
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {

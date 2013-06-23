@@ -20,6 +20,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_5_R3.CraftServer;
 import org.bukkit.craftbukkit.v1_5_R3.entity.CraftVillager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -94,6 +95,8 @@ public class Wisp extends AbilityListener {
         if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
             throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
                     "Plugin LibsDisguises"));
+        if (!((CraftServer) Bukkit.getServer()).getServer().getPropertyManager().getBoolean("spawn-npcs", false))
+            throw new Exception("NPC's in server.properties is disabled, enable this to use the kit Wisp");
     }
 
     @EventHandler
