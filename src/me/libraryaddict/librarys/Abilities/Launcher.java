@@ -34,7 +34,7 @@ public class Launcher extends AbilityListener {
             if (b.hasMetadata("Launcher") && b.getMetadata("Launcher").size() > 0) {
                 double strength = 0;
                 Block under = b;
-                while (under.getType() == b.getType()) {
+                while (under.getType() == b.getType() && under.hasMetadata("Launcher") && under.getData() == b.getData()) {
                     under = under.getRelative(BlockFace.DOWN);
                     strength++;
                 }
