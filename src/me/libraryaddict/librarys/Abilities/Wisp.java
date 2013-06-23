@@ -77,6 +77,7 @@ public class Wisp extends AbilityListener {
             WillOfWisp wisp = new WillOfWisp();
             wisp.cast = hg.currentTime + this.fakeOnesLastForHowManySeconds;
             wisp.caster = p;
+            p.getWorld().playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1, 1);
             for (int i = 0; i < wispsToSpawn; i++) {
                 Villager villager = spawnVillager(p.getLocation());
                 wisp.villagers.add(villager);
