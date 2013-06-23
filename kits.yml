@@ -310,7 +310,7 @@ Kits:
     Price: 0
     Icon: SPONGE 0 1
     Items:
-      - SPONGE 0 20 Name=Launcher_Block Unlootable 1
+      - SPONGE 0 10 Name=Launcher_Block Unlootable 1
   Lumberjack:
     Description: 'You whack your mighty axe once, twice, thrice against the trunk of this great tree. With a loud groan the entire tree topples. Every piece of wood above that wood was broken!'
     Free: true
