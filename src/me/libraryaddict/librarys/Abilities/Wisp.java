@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_5_R3.entity.CraftVillager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -83,8 +84,14 @@ public class Wisp extends AbilityListener {
                 DisguiseAPI.disguiseToAll(villager, player);
                 villager.setRemoveWhenFarAway(true);
                 villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
-                if (p.getItemInHand() != null)
+                if (p.getItemInHand() != null) {
                     villager.getEquipment().setItemInHand(p.getItemInHand());
+                    villager.getEquipment().setItemInHandDropChance(0F);
+                }
+                villager.getEquipment().setBootsDropChance(0F);
+                villager.getEquipment().setLeggingsDropChance(0F);
+                villager.getEquipment().setChestplateDropChance(0F);
+                villager.getEquipment().setHelmetDropChance(0F);
             }
             wisps.add(wisp);
         }
@@ -140,6 +147,7 @@ public class Wisp extends AbilityListener {
 
     private void popWisp(Villager villager) {
         villager.getWorld().playEffect(villager.getLocation(), Effect.SMOKE, 9);
+        villager.getWorld().playSound(villager.getLocation(), Sound.LAVA_POP, 1, 1);
         villager.remove();
         DisguiseAPI.undisguiseToAll(villager);
     }
