@@ -4,16 +4,13 @@ import java.util.ArrayList;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
-import me.libraryaddict.Hungergames.Events.PlayerWinEvent;
 import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -153,21 +150,6 @@ public class McpvpListener implements Listener {
                     }
                 }
             });
-        }
-    }
-
-    @EventHandler
-    public void onWin(PlayerWinEvent event) {
-        if (mcpvp.getConfig().getBoolean("CakeForWinners")) {
-            Location loc = event.getWinner().getPlayer().getLocation();
-            loc = loc.getWorld().getHighestBlockAt(loc).getLocation().add(0, 30, 0);
-            for (int x = -3; x <= 3; x++) {
-                for (int z = -3; z <= 3; z++) {
-                    Block b = loc.clone().add(x, 0, z).getBlock();
-                    b.setType(Material.CAKE_BLOCK);
-                }
-            }
-            event.getWinner().getPlayer().teleport(loc.add(0, 2, 0));
         }
     }
 }
