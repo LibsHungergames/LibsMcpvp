@@ -100,6 +100,13 @@ Kits:
       - POTION 16428 1 Unlootable 1
       - POTION 16420 1 Unlootable 1
       - POTION 16424 1 Unlootable 1
+  CookieMonster:
+    Description: 'The cookie monster kit allows you to drop cookies from tall grass and shrubs, there is a 25% chance of a cookie dropping. Gain a tiny health boost from eating it. If health is full, a tiny hunger boost. Else if hunger is full, a speed boost!'
+    Free: true
+    Price: 0
+    Icon: COOKIE 0 1
+    Ability:
+      - CookieMonster
   Crafter:
     Description: 'This kit lets you craft and smelt while on the move, you have a crafting star and a furnace powder. Right click with either to open the workbench or furnace!'
     Free: true
@@ -153,6 +160,13 @@ Kits:
     Icon: Shears 0 1
     Items:
       - Shears 0 1 Name=Pair_Of_Forceps Unlootable 1
+  Dwarf:
+    Description: 'The dwarf kit allows you to sneak, and deal a knockback to everyone around you when you stop! The longer you sneak, the bigger your radius is and the knockback!'
+    Free: true
+    Price: 0
+    Icon: IRON_CHESTPLATE 0 1
+    Ability:
+      - Dwarf
   Endermage:
     Description: 'Warp em up. Warp em down. Warp em all around! The endermage places a enderportal and warps all players directly above and below him with a distance more then 3 to the enderportal. They are then invincible for 5 seconds and are able to instantly KO you. Surely you didn''t think there would be no drawbacks?!'
     Free: true
@@ -265,6 +279,13 @@ Kits:
     Icon: PORK 0 1
     Ability:
       - Hunter
+  JackHammer:
+    Description: 'You are given a magic hammer. ME HULK. ME SMASH. Smash a block and the blocks above it will start to disappear, after 5 uses a cooldown kicks in!'
+    Free: true
+    Price: 0
+    Icon: STONE_AXE 0 1
+    Items:
+      - STONE_AXE 0 1 Name=Jack_Hammer Unlootable 1
   Jumper:
     Description: 'You took up enderpearling as a hobby and you have always had at least 5 enderpearls in your inventory! Seconds before you were teleported to the battle arena you grabbed your Instant Platform 2000 - Perfect for always having a place to land and you find it impossible to be hurt by your enderpearls!'
     Free: true
@@ -283,6 +304,13 @@ Kits:
       - GRASS 0 16
     Ability:
       - Kaya
+  Launcher:
+    Description: 'You are given 20 sponges which will launch anyone who steps on top to distances unimaginable (not really). The more sponges under it, the stronger the effect. The block you place it against determines the direction you are launched! Anyone can break the block to gain a launcher block!'
+    Free: true
+    Price: 0
+    Icon: SPONGE 0 1
+    Items:
+      - SPONGE 0 20 Name=Launcher_Block Unlootable 1
   Lumberjack:
     Description: 'You whack your mighty axe once, twice, thrice against the trunk of this great tree. With a loud groan the entire tree topples. Every piece of wood above that wood was broken!'
     Free: true
@@ -580,8 +608,15 @@ Kits:
       - WATCH 0 1 Unlootable 1
     Ability:
       - Werewolf
+  Wisp:
+    Description: 'The wisp kit gives you 5 magma creams, on use 5 fake players with your name will spawn around you and run around! Use this time to launch a sneak attack in the confusion! If a fake player takes damage, it will disappear, if you take damage. They will all disappear!'
+    Free: true
+    Price: 0
+    Icon: MAGMA_CREAM 0 1
+    Items:
+      - MAGMA_CREAM 0 5 Name=Will_of_the_wisp Unlootable 1
   Worm:
-    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little.'
+    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little. You also take no fall damage when landing on dirt'
     Free: true
     Icon: DIRT 0 1
     Ability:
