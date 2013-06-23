@@ -98,6 +98,8 @@ public class Wisp extends AbilityListener {
 
     @EventHandler
     public void onAttack(EntityDamageEvent event) {
+        if (event.isCancelled())
+            return;
         Iterator<WillOfWisp> itel = wisps.iterator();
         while (itel.hasNext()) {
             WillOfWisp wisp = itel.next();
