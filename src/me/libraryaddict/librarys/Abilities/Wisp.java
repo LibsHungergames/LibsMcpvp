@@ -31,7 +31,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
@@ -42,64 +41,15 @@ import me.libraryaddict.disguise.DisguiseTypes.PlayerDisguise;
 
 public class Wisp extends AbilityListener {
 
-    public String wispItemName = "Will of the wisp";
-    public int wispsToSpawn = 5;
-    public String notRealOne = ChatColor.RED + "Guess that wasn't the real one :$";
-    public String aWispPopped = ChatColor.RED + "One of your wisps popped!";
-    public String allWispsPopped = ChatColor.RED + "All your wisps popped!";
-    public boolean removeFakeOnesWhenRealFound = true;
-    public int fakeOnesLastForHowManySeconds = 30;
-    private Hungergames hg = HungergamesApi.getHungergames();
-    private ArrayList<WillOfWisp> wisps = new ArrayList<WillOfWisp>();
-
-    // private HashMap<Player, ArrayList<Villager>> disguises = new HashMap<Player, ArrayList<Villager>>();
-
     class WillOfWisp {
+        int cast;
         Player caster;
         ArrayList<Villager> villagers = new ArrayList<Villager>();
-        int cast;
-    }
-
-    public Wisp() throws Exception {
-        if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
-            throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
-                    "Plugin LibsDisguises"));
-    }
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction().name().contains("RIGHT") && isSpecialItem(event.getItem(), wispItemName)) {
-            Player p = event.getPlayer();
-            ItemStack item = event.getItem();
-            item.setAmount(item.getAmount() - 1);
-            if (item.getAmount() == 0)
-                p.setItemInHand(new ItemStack(0));
-            WillOfWisp wisp = new WillOfWisp();
-            wisp.cast = hg.currentTime + this.fakeOnesLastForHowManySeconds;
-            wisp.caster = p;
-            p.getWorld().playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1, 1);
-            for (int i = 0; i < wispsToSpawn; i++) {
-                Villager villager = spawnVillager(p.getLocation());
-                wisp.villagers.add(villager);
-                PlayerDisguise player = new PlayerDisguise(p.getName());
-                DisguiseAPI.disguiseToAll(villager, player);
-                villager.setRemoveWhenFarAway(true);
-                villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
-                if (p.getItemInHand() != null) {
-                    villager.getEquipment().setItemInHand(p.getItemInHand());
-                    villager.getEquipment().setItemInHandDropChance(0F);
-                }
-                villager.getEquipment().setBootsDropChance(0F);
-                villager.getEquipment().setLeggingsDropChance(0F);
-                villager.getEquipment().setChestplateDropChance(0F);
-                villager.getEquipment().setHelmetDropChance(0F);
-            }
-            wisps.add(wisp);
-        }
     }
 
     public static Villager spawnVillager(Location loc) {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
+        villager.setNoDamageTicks(Integer.MAX_VALUE);
         try {
             EntityVillager ent = ((CraftVillager) villager).getHandle();
 
@@ -115,9 +65,9 @@ public class Wisp extends AbilityListener {
             ((List<PathfinderGoal>) aField.get(goalSelector)).clear();
             ((List<PathfinderGoal>) aField.get((PathfinderGoalSelector) targetField.get(ent))).clear();
 
-            goalSelector.a(1, new PathfinderGoalAvoidPlayer(ent, EntityHuman.class, 6.0F, 0.23F, 0.4F));
-            goalSelector.a(2, new PathfinderGoalAvoidPlayer(ent, EntityVillager.class, 6.0F, 0.23F, 0.4F));
-            goalSelector.a(3, new PathfinderGoalRandomStroll(ent, 0.2F));
+            goalSelector.a(1, new PathfinderGoalAvoidPlayer(ent, EntityHuman.class, 6.0F, 0.35F, 0.4F));
+            goalSelector.a(2, new PathfinderGoalAvoidPlayer(ent, EntityVillager.class, 6.0F, 0.35F, 0.4F));
+            goalSelector.a(3, new PathfinderGoalRandomStroll(ent, 0.35F));
             goalSelector.a(4, new PathfinderGoalLookAtPlayer(ent, EntityHuman.class, 6.0F));
             goalSelector.a(5, new PathfinderGoalRandomLookaround(ent));
         } catch (Exception ex) {
@@ -126,44 +76,24 @@ public class Wisp extends AbilityListener {
         return villager;
     }
 
-    @EventHandler
-    public void onKilled(PlayerKilledEvent event) {
-        Iterator<WillOfWisp> itel = wisps.iterator();
-        while (itel.hasNext()) {
-            WillOfWisp wisp = itel.next();
-            if (wisp.caster == event.getKilled().getPlayer()) {
-                for (Villager villager : wisp.villagers)
-                    popWisp(villager);
-                itel.remove();
-            }
-        }
-    }
+    public String allWispsPopped = ChatColor.RED + "All your wisps popped!";
+    public String aWispPopped = ChatColor.RED + "One of your wisps popped!";
+    public int fakeOnesLastForHowManySeconds = 30;
+    private Hungergames hg = HungergamesApi.getHungergames();
+    public String notRealOne = ChatColor.RED + "Guess that wasn't the real one :$";
+    public boolean removeFakeOnesWhenRealFound = true;
+    public String wispItemName = "Will of the wisp";
 
-    @EventHandler
-    public void onInteractEntity(PlayerInteractEntityEvent event) {
-        for (WillOfWisp wisp : wisps)
-            if (wisp.villagers.contains(event.getRightClicked()))
-                event.setCancelled(true);
-    }
+    // private HashMap<Player, ArrayList<Villager>> disguises = new HashMap<Player, ArrayList<Villager>>();
 
-    private void popWisp(Villager villager) {
-        villager.getWorld().playEffect(villager.getLocation(), Effect.SMOKE, 9);
-        villager.getWorld().playSound(villager.getLocation(), Sound.LAVA_POP, 1, 1);
-        villager.remove();
-        DisguiseAPI.undisguiseToAll(villager);
-    }
+    private ArrayList<WillOfWisp> wisps = new ArrayList<WillOfWisp>();
 
-    @EventHandler
-    public void onSecond(TimeSecondEvent event) {
-        Iterator<WillOfWisp> itel = wisps.iterator();
-        while (itel.hasNext()) {
-            WillOfWisp wisp = itel.next();
-            if (wisp.cast < hg.currentTime) {
-                for (Villager villager : wisp.villagers)
-                    popWisp(villager);
-                itel.remove();
-            }
-        }
+    public int wispsToSpawn = 5;
+
+    public Wisp() throws Exception {
+        if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
+            throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
+                    "Plugin LibsDisguises"));
     }
 
     @EventHandler
@@ -189,11 +119,85 @@ public class Wisp extends AbilityListener {
                     wisp.caster.sendMessage(aWispPopped);
                 if (event instanceof EntityDamageByEntityEvent) {
                     Entity damager = ((EntityDamageByEntityEvent) event).getDamager();
-                    if (damager instanceof Player)
+                    if (damager instanceof Player && wisp.caster != damager)
                         ((Player) damager).sendMessage(notRealOne);
                 }
                 break;
             }
         }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getAction().name().contains("RIGHT") && isSpecialItem(event.getItem(), wispItemName)) {
+            Player p = event.getPlayer();
+            ItemStack item = event.getItem();
+            item.setAmount(item.getAmount() - 1);
+            if (item.getAmount() == 0)
+                p.setItemInHand(new ItemStack(0));
+            WillOfWisp wisp = new WillOfWisp();
+            wisp.cast = hg.currentTime + this.fakeOnesLastForHowManySeconds;
+            wisp.caster = p;
+            p.getWorld().playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1, 0);
+            for (int i = 0; i < wispsToSpawn; i++) {
+                Villager villager = spawnVillager(p.getLocation());
+                wisp.villagers.add(villager);
+                PlayerDisguise player = new PlayerDisguise(p.getName());
+                DisguiseAPI.disguiseToAll(villager, player);
+                villager.setRemoveWhenFarAway(true);
+                villager.getEquipment().setArmorContents(p.getInventory().getArmorContents());
+                if (p.getItemInHand() != null) {
+                    villager.getEquipment().setItemInHand(p.getItemInHand());
+                    villager.getEquipment().setItemInHandDropChance(0F);
+                }
+                villager.getEquipment().setBootsDropChance(0F);
+                villager.getEquipment().setLeggingsDropChance(0F);
+                villager.getEquipment().setChestplateDropChance(0F);
+                villager.getEquipment().setHelmetDropChance(0F);
+            }
+            wisps.add(wisp);
+        }
+    }
+
+    @EventHandler
+    public void onInteractEntity(PlayerInteractEntityEvent event) {
+        for (WillOfWisp wisp : wisps)
+            if (wisp.villagers.contains(event.getRightClicked()))
+                event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onKilled(PlayerKilledEvent event) {
+        Iterator<WillOfWisp> itel = wisps.iterator();
+        while (itel.hasNext()) {
+            WillOfWisp wisp = itel.next();
+            if (wisp.caster == event.getKilled().getPlayer()) {
+                for (Villager villager : wisp.villagers)
+                    popWisp(villager);
+                itel.remove();
+            }
+        }
+    }
+
+    @EventHandler
+    public void onSecond(TimeSecondEvent event) {
+        Iterator<WillOfWisp> itel = wisps.iterator();
+        while (itel.hasNext()) {
+            WillOfWisp wisp = itel.next();
+            if (wisp.cast < hg.currentTime) {
+                for (Villager villager : wisp.villagers)
+                    popWisp(villager);
+                itel.remove();
+            }
+        }
+    }
+
+    private void popWisp(Villager villager) {
+        Location loc = villager.getLocation().clone();
+        loc.getWorld().playSound(loc, Sound.FIZZ, 2, 0);
+        for (int i = 0; i <= 9; i++)
+            loc.getWorld().playEffect(loc, Effect.SMOKE, i);
+        villager.remove();
+        DisguiseAPI.undisguiseToAll(villager);
     }
 }
