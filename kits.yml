@@ -41,6 +41,8 @@ Kits:
     Icon: WOOD_SWORD 0 1
     Items:
       - WOOD_SWORD 0 1 Name=Bloody_Bane Unlootable 1 UniqueItem
+    Ability:
+      - Barbarian
   Beastmaster:
     Description: 'The Beastmaster kit allows you to instantly tame the 3 wolves you spawn. As well as 4 bones. The wolves can be very useful when in 1 vs 1 combat, and often gives you that winning edge over your enemy in fights! You also have a 100% chance to tame any wolf, so no bone shall be wasted!'
     Free: true
@@ -115,6 +117,8 @@ Kits:
     Items:
       - NETHER_STAR 0 1 Name=Crafting_Star Unlootable 1 Lore=Right_click_with_this\nto_open_a_crafting_table
       - BLAZE_POWDER 0 1 Name=Furnace_Powder Unlootable 1 UniqueItem Lore=Right_click_with_this\nto_open_a_furnace
+    Ability:
+      - Crafter
   Cultivator:
     Description: 'God gave you a green thumb. You know how to use this.. By hogging all the food you grow ofc! Instantly grow wheat by planting it, and instantly grow trees just by placing a sapling!'
     Free: true
@@ -153,6 +157,8 @@ Kits:
     Icon: DRAGON_EGG 0 1
     Items:
       - DRAGON_EGG 0 6 Unlootable 1 Name=Mining_Mole Lore=Place_this_and_run
+    Ability:
+      - Digger
   Doctor:
     Description: 'Doctor wasn''t looking when you stole his forceps. Now you are running around on a battle field removing all the players potion effects!'
     Free: true
@@ -160,6 +166,8 @@ Kits:
     Icon: Shears 0 1
     Items:
       - Shears 0 1 Name=Pair_Of_Forceps Unlootable 1
+    Ability:
+      - Doctor
   Dwarf:
     Description: 'The dwarf kit allows you to sneak, and deal a knockback to everyone around you when you stop! The longer you sneak, the bigger your radius is and the knockback!'
     Free: true
@@ -174,6 +182,8 @@ Kits:
     Icon: ENDER_PORTAL 0 1
     Items:
       - ENDER_PORTAL 0 1 Name=Endermage_Portal Unlootable 1
+    Ability:
+      - Endermage
   Explorer:
     Description: 'So far this kit seems retarded to code. Not sure it will be in'
     Free: true
@@ -286,6 +296,8 @@ Kits:
     Icon: STONE_AXE 0 1
     Items:
       - STONE_AXE 0 1 Name=Jack_Hammer Unlootable 1
+    Ability:
+      - JackHammer
   Jumper:
     Description: 'You took up enderpearling as a hobby and you have always had at least 5 enderpearls in your inventory! Seconds before you were teleported to the battle arena you grabbed your Instant Platform 2000 - Perfect for always having a place to land and you find it impossible to be hurt by your enderpearls!'
     Free: true
@@ -311,6 +323,8 @@ Kits:
     Icon: SPONGE 0 1
     Items:
       - SPONGE 0 10 Name=Launcher_Block Unlootable 1
+    Ability:
+      - Launcher
   Lumberjack:
     Description: 'You whack your mighty axe once, twice, thrice against the trunk of this great tree. With a loud groan the entire tree topples. Every piece of wood above that wood was broken!'
     Free: true
@@ -343,8 +357,6 @@ Kits:
     Icon: STONE_PICKAXE 0 1
     Items:
       - STONE_PICKAXE 0 1 DURABILITY 1 DIG_SPEED 2 Unlootable 1
-    Ability:
-      - Miner
   Monk:
     Description: 'Right click someone with your blaze rod and their currently held item will switch with a random item in their inventory!'
     Free: true
@@ -352,6 +364,8 @@ Kits:
     Icon: BLAZE_ROD 0 1
     Items:
       - BLAZE_ROD 0 1 Name=Monk_Staff Unlootable 1 UniqueItem
+    Ability:
+      - Monk
   Monster:
     Description: 'At night you used to sleep afraid of the monsters. Until you started rubbing rotten flesh into your skin. Surprise surprise! The monsters seem to think you are one of them!'
     Free: true
@@ -373,6 +387,8 @@ Kits:
     Icon: FEATHER 0 1
     Items:
       - 'FEATHER 0 1 Name=Condor''s_Feather UniqueItem Unlootable 1'
+    Ability:
+      - Phantom
   Pickpocket:
     Description: 'Your blaze rod seems to have a nasty habit of allowing you open other players inventorys merely by right clicking them. Unsure of how far you should go, you gave yourself a limit of 4 items and swore not to interfere with their hotbar (Top row). If they run out of range the inventory closes'
     Free: true
@@ -406,6 +422,8 @@ Kits:
     Icon: WOOD_HOE 0 1
     Items:
       - WOOD_HOE -1000 1 Name=Death_Scythe Unlootable 1
+    Ability:
+      - Reaper
   Rider:
     Description: 'cba'
     Free: true
@@ -439,6 +457,8 @@ Kits:
     Boots: LEATHER_BOOTS 0 1 Unlootable 1 Name=Scorchers_Boots
     Items: 
       - BLAZE_POWDER 0 1 Unlootable 1 Name=Scorchers_Igniter
+    Ability:
+      - Scorcher
   Scout:
     Description: 'You spawn with 2 speed II potions and you gain 2 speed II potions every 10 minutes. While the speed is in effect. You take no fall damage!'
     Free: true
@@ -455,6 +475,8 @@ Kits:
     Icon: EYE_OF_ENDER 0 1
     Items:
       - EYE_OF_ENDER 0 1 Name=Ghost_Eye Unlootable 1 UniqueItem
+    Ability:
+      - Seeker
   Snail:
     Description: 'Everytime you hit someone you have a 1/3 chance of granting them the gift of slowness II'
     Free: true
@@ -469,6 +491,8 @@ Kits:
     Icon: SUGAR 0 1
     Items:
       - REDSTONE 0 1 Unlootable 1 Name=Spectre_Dust UniqueItem
+    Ability:
+      - Spectre
   Spiderman:
     Description: 'You start with 6 snowballs (You can replenish them) which create a 2x2 spider web where they land. You can only throw 3 snowballs until your web shooters demand a cooldown of 30 seconds. While in cobwebs you gain a speed II boost'
     Free: true
@@ -541,6 +565,8 @@ Kits:
     Icon: STRING 0 1
     Items:
       - 'STRING 0 10 Name=Trapper''s_String Unlootable 1'
+    Ability:
+      - Trapper
   Turtle:
     Description: 'You found your ultimate defense, Just by crouching and blocking with a sword. You only take half a heart of damage! However you find this position awkward to attack with when you are crouching.'
     Free: true
@@ -592,6 +618,8 @@ Kits:
     Icon: BOOK 0 1
     Items:
       - BOOK 0 1 Unlootable 1 Name=Tome_of_Protection UniqueItem
+    Ability:
+      - Warder
   Werewolf:
     Description: 'The Nightwalker kit is given constant Strength I and Speed I effect at night, however during the day is given Weakness I. Wolves will also avoid attacking you. Spawn with a clock to check if it is night or day.'
     Free: true
@@ -608,6 +636,8 @@ Kits:
     Icon: MAGMA_CREAM 0 1
     Items:
       - MAGMA_CREAM 0 5 Name=Will_of_the_wisp Unlootable 1
+    Ability:
+      - Wisp
   Worm:
     Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little. You also take no fall damage when landing on dirt'
     Free: true
