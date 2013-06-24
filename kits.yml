@@ -307,6 +307,15 @@ Kits:
       - ENDER_PEARL 0 5
     Ability:
       - Jumper
+  Kangaroo:
+    Description: 'You are given jumping boots which you can click with them to double jump! Its retarded and the normal way is to stick them on your feet. But hey! At least you can hop around right!'
+    Free: true
+    Price: 0
+    Icon: LEATHER_BOOTS 0 1
+    Items:
+      - LEATHER_BOOTS 0 1 Unlootable 1 Name=Kangaroo_Boots
+    Ability:
+      - Kangaroo
   Kaya:
     Description: 'The Kaya kit is awesome for planting traps and annoying unsuspecting victims! Kaya can use their grass blocks to make a platform, but when they try to walk on it. It disappears!'
     Free: true
