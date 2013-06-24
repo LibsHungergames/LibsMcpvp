@@ -415,13 +415,6 @@ Kits:
       - STICK 0 1 Name=Riding_Whip Unlootable 1
     Ability:
       - Rider
-  Salamander:
-    Description: 'The salamander kit is a very nice kit for those who just cannot stop burning! You no longer must fear fire! Swim in lava! Bath in flames! However you seem to be allergic to water..'
-    Free: true
-    Price: 0
-    Icon: LAVA 0 1
-    Ability:
-      - Salamander
   Salvager:
     Description: 'The Tinkerer kit will give you an anvil which allows you to turn items back into their original crafting elements. Great for converting your mining instruments into weapons of war'
     Free: true
