@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,7 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Seeker extends AbilityListener {
+public class Seeker extends AbilityListener implements Disableable {
     private transient HashMap<ItemStack, Long> canUseAgain = new HashMap<ItemStack, Long>();
     public int cooldown = 120;
     private String cooldownMessage = ChatColor.BLUE + "The ghost eye will be usable in %s seconds!";
@@ -30,7 +31,7 @@ public class Seeker extends AbilityListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
-        if (isSpecialItem(item, seekerItemName) && item.getTypeId() == seekerItemId) {
+        if (isSpecialItem(item, seekerItemName) && item.getTypeId() == seekerItemId && hasAbility(event.getPlayer())) {
             event.setCancelled(true);
             if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
                 return;
@@ -53,7 +54,6 @@ public class Seeker extends AbilityListener {
                     }
                 }
             } else {
-
                 event.getPlayer().sendMessage(String.format(cooldownMessage, -((System.currentTimeMillis() - lastUsed) / 1000)));
             }
         }

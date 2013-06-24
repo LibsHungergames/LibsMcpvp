@@ -18,10 +18,11 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Phantom extends AbilityListener {
+public class Phantom extends AbilityListener implements Disableable {
     private HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.RED + "You cannot use that just yet! %s seconds of cooldown remaining!";
     public int cooldownTime = 60;
@@ -56,7 +57,7 @@ public class Phantom extends AbilityListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction().name().contains("RIGHT") && isSpecialItem(event.getItem(), phantomFeatherName)
-                && event.getItem().getTypeId() == phantomFeatherId) {
+                && event.getItem().getTypeId() == phantomFeatherId && hasAbility(event.getPlayer())) {
             Player p = event.getPlayer();
             if (cooldown.containsKey(event.getItem()) && cooldown.get(event.getItem()) > hg.currentTime) {
                 p.sendMessage(String.format(cooldownMessage, hg.returnTime(cooldown.get(event.getItem()) - hg.currentTime)));

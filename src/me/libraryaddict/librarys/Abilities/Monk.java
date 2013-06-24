@@ -3,6 +3,7 @@ package me.libraryaddict.librarys.Abilities;
 import java.util.HashMap;
 import java.util.Random;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,7 +13,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class Monk extends AbilityListener {
+public class Monk extends AbilityListener implements Disableable {
 
     public int cooldown = 15;
     public String monkCooldownMessage = ChatColor.BLUE + "You may monk them again in %s seconds!";
@@ -25,7 +26,8 @@ public class Monk extends AbilityListener {
     @EventHandler
     public void onRightClick(PlayerInteractEntityEvent event) {
         ItemStack item = event.getPlayer().getItemInHand();
-        if (event.getRightClicked() instanceof Player && isSpecialItem(item, monkItemName) && item.getTypeId() == monkItemId) {
+        if (event.getRightClicked() instanceof Player && isSpecialItem(item, monkItemName) && item.getTypeId() == monkItemId
+                && hasAbility(event.getPlayer())) {
             long lastUsed = 0;
             if (monkStaff.containsKey(item))
                 lastUsed = monkStaff.get(item);

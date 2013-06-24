@@ -20,10 +20,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Flash extends AbilityListener {
+public class Flash extends AbilityListener implements Disableable {
 
     public boolean addMoreCooldownForLargeDistances = true;
     private transient HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
@@ -60,7 +61,7 @@ public class Flash extends AbilityListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
-        if (item != null && item.hasItemMeta() && event.getAction().name().contains("RIGHT")) {
+        if (event.getAction().name().contains("RIGHT") && hasAbility(event.getPlayer())) {
             if (isSpecialItem(item, flashItemName)) {
                 event.setCancelled(true);
                 event.getPlayer().updateInventory();

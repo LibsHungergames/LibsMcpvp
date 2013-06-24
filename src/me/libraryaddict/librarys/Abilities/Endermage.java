@@ -2,6 +2,7 @@ package me.libraryaddict.librarys.Abilities;
 
 import java.util.ArrayList;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.EnchantmentManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
@@ -23,7 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Endermage extends AbilityListener {
+public class Endermage extends AbilityListener implements Disableable {
     public boolean doInstantKO = true;
     public int endermagePortalBlockId = Material.ENDER_PORTAL.getId();
     public int endermagePortalId = Material.ENDER_PORTAL.getId();
@@ -51,7 +52,7 @@ public class Endermage extends AbilityListener {
     public void onPlace(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && item != null && item.getTypeId() == endermagePortalId
-                && isSpecialItem(item, endermagePortalName)) {
+                && isSpecialItem(item, endermagePortalName) && hasAbility(event.getPlayer())) {
             event.setCancelled(true);
             final Block b = event.getClickedBlock();
             if (endermages.contains(b))

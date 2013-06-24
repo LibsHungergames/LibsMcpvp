@@ -32,18 +32,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
-import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.DisguiseTypes.PlayerDisguise;
 
-public class Wisp extends AbilityListener {
+public class Wisp extends AbilityListener implements Disableable {
 
     class WillOfWisp {
-        int cast;
         Player caster;
         ArrayList<Villager> villagers = new ArrayList<Villager>();
     }
@@ -80,7 +78,6 @@ public class Wisp extends AbilityListener {
     public String allWispsPopped = ChatColor.RED + "All your wisps popped!";
     public String aWispPopped = ChatColor.RED + "One of your wisps popped!";
     public int fakeOnesLastForHowManySeconds = 30;
-    private Hungergames hg = HungergamesApi.getHungergames();
     public String notRealOne = ChatColor.RED + "Guess that wasn't the real one :$";
     public boolean removeFakeOnesWhenRealFound = true;
     public String wispItemName = "Will of the wisp";
@@ -140,8 +137,7 @@ public class Wisp extends AbilityListener {
             item.setAmount(item.getAmount() - 1);
             if (item.getAmount() == 0)
                 p.setItemInHand(new ItemStack(0));
-            WillOfWisp wisp = new WillOfWisp();
-            wisp.cast = hg.currentTime + this.fakeOnesLastForHowManySeconds;
+            final WillOfWisp wisp = new WillOfWisp();
             wisp.caster = p;
             p.getWorld().playSound(p.getLocation(), Sound.BAT_TAKEOFF, 1, 0);
             for (int i = 0; i < wispsToSpawn; i++) {
@@ -161,6 +157,13 @@ public class Wisp extends AbilityListener {
                 villager.getEquipment().setHelmetDropChance(0F);
             }
             wisps.add(wisp);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(HungergamesApi.getHungergames(), new Runnable() {
+                public void run() {
+                    for (Villager villager : wisp.villagers)
+                        popWisp(villager);
+                    wisps.remove(wisp);
+                }
+            }, fakeOnesLastForHowManySeconds * 20);
         }
     }
 
@@ -177,19 +180,6 @@ public class Wisp extends AbilityListener {
         while (itel.hasNext()) {
             WillOfWisp wisp = itel.next();
             if (wisp.caster == event.getKilled().getPlayer()) {
-                for (Villager villager : wisp.villagers)
-                    popWisp(villager);
-                itel.remove();
-            }
-        }
-    }
-
-    @EventHandler
-    public void onSecond(TimeSecondEvent event) {
-        Iterator<WillOfWisp> itel = wisps.iterator();
-        while (itel.hasNext()) {
-            WillOfWisp wisp = itel.next();
-            if (wisp.cast < hg.currentTime) {
                 for (Villager villager : wisp.villagers)
                     popWisp(villager);
                 itel.remove();

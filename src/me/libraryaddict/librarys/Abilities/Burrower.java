@@ -20,11 +20,12 @@ import org.bukkit.inventory.ItemStack;
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Burrower extends AbilityListener {
+public class Burrower extends AbilityListener implements Disableable {
     public int addX = 50;
     public int addZ = 50;
     private transient HashMap<Integer, List<Player>> expires = new HashMap<Integer, List<Player>>();

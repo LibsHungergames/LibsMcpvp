@@ -1,5 +1,6 @@
 package me.libraryaddict.librarys.Abilities;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
@@ -11,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Digger extends AbilityListener {
+public class Digger extends AbilityListener implements Disableable {
     public int delayInTicks = 30;
     public int diggerBlock = Material.DRAGON_EGG.getId();
     public int goDownY = 5;
@@ -22,7 +23,7 @@ public class Digger extends AbilityListener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         ItemStack item = event.getItemInHand();
-        if (item != null && item.getTypeId() == diggerBlock && isSpecialItem(item, nameOfItem)) {
+        if (item != null && item.getTypeId() == diggerBlock && isSpecialItem(item, nameOfItem) && hasAbility(event.getPlayer())) {
             final Block b = event.getBlock();
             b.setType(Material.AIR);
             event.getPlayer().sendMessage(messageAfterPlaced);

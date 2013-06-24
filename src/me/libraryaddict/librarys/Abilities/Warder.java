@@ -20,10 +20,11 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Warder extends AbilityListener {
+public class Warder extends AbilityListener implements Disableable {
     private transient HashMap<ItemStack, Integer> cooldownItems = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.BLUE + "You can use this again in %s seconds";
     public int cooldownSeconds = 60;
@@ -63,7 +64,7 @@ public class Warder extends AbilityListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && isSpecialItem(event.getItem(), warderBookName)
-                && event.getItem().getTypeId() == itemId) {
+                && event.getItem().getTypeId() == itemId && hasAbility(event.getPlayer())) {
             if (cooldownItems.containsKey(event.getItem())) {
                 event.getPlayer()
                         .sendMessage(String.format(cooldownMessage, cooldownItems.get(event.getItem()) - hg.currentTime));
@@ -96,6 +97,14 @@ public class Warder extends AbilityListener {
                             }
                     }
                 }, warmupTicks);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(hg, new Runnable() {
+                    public void run() {
+                        portals.remove(portalBlocks);
+                        for (Block b : portalBlocks)
+                            if (b.getType() == Material.PORTAL)
+                                b.setType(Material.AIR);
+                    }
+                }, warmupTicks + (fieldExistsFor * 20));
                 portals.put(portalBlocks, hg.currentTime + fieldExistsFor + (warmupTicks / 20));
                 cooldownItems.put(event.getItem(), hg.currentTime + cooldownSeconds);
             }
@@ -119,16 +128,6 @@ public class Warder extends AbilityListener {
 
     @EventHandler
     public void onTimeSecond(TimeSecondEvent event) {
-        if (portals.containsValue(hg.currentTime)) {
-            for (List<Block> blocks : portals.keySet()) {
-                if (portals.get(blocks) == hg.currentTime) {
-                    for (Block b : blocks)
-                        if (b.getType() == Material.PORTAL)
-                            b.setType(Material.AIR);
-                    portals.remove(blocks);
-                }
-            }
-        }
         if (cooldownItems.containsValue(hg.currentTime)) {
             for (ItemStack item : cooldownItems.keySet()) {
                 if (cooldownItems.get(item) == hg.currentTime) {

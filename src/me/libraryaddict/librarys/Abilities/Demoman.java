@@ -1,5 +1,6 @@
 package me.libraryaddict.librarys.Abilities;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
@@ -12,7 +13,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Demoman extends AbilityListener {
+public class Demoman extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
@@ -31,7 +32,8 @@ public class Demoman extends AbilityListener {
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlock().getType() == Material.STONE_PLATE && hasAbility(event.getPlayer())) {
             event.getBlock().removeMetadata("Placer", HungergamesApi.getHungergames());
-            event.getBlock().setMetadata("Placer", new FixedMetadataValue(HungergamesApi.getHungergames(), event.getPlayer().getName()));
+            event.getBlock().setMetadata("Placer",
+                    new FixedMetadataValue(HungergamesApi.getHungergames(), event.getPlayer().getName()));
         }
     }
 }

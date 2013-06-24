@@ -26,6 +26,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import net.minecraft.server.v1_5_R3.EntityPlayer;
@@ -33,7 +34,7 @@ import net.minecraft.server.v1_5_R3.EntityTracker;
 import net.minecraft.server.v1_5_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_5_R3.WorldServer;
 
-public class Spectre extends AbilityListener {
+public class Spectre extends AbilityListener implements Disableable {
     public boolean addInvisToSpectre = true;
     private transient HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.BLUE + "You can use this again in %s seconds!";
@@ -109,7 +110,7 @@ public class Spectre extends AbilityListener {
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         if (item != null && item.hasItemMeta() && event.getAction().name().contains("RIGHT")) {
-            if (isSpecialItem(item, spectreItemName)) {
+            if (isSpecialItem(item, spectreItemName) && hasAbility(event.getPlayer())) {
                 event.setCancelled(true);
                 Player p = event.getPlayer();
                 p.updateInventory();

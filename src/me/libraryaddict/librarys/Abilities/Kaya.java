@@ -21,10 +21,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.Gamer;
 
-public class Kaya extends AbilityListener {
+public class Kaya extends AbilityListener implements Disableable {
 
     public int distanceFromBlocks = 3;
     public int heightFromBlocks = 2;

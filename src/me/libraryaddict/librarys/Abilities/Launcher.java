@@ -19,11 +19,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.EnchantmentManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Launcher extends AbilityListener {
+public class Launcher extends AbilityListener implements Disableable {
     public String launcherBlockName = ChatColor.WHITE + "Launcher Block";
 
     @EventHandler
@@ -93,10 +94,13 @@ public class Launcher extends AbilityListener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         if (isSpecialItem(event.getItemInHand(), this.launcherBlockName)) {
-            BlockFace face = event.getBlockAgainst().getFace(event.getBlock());
-            if (face == BlockFace.DOWN)
-                face = BlockFace.UP;
-            event.getBlock().setMetadata("Launcher", new FixedMetadataValue(HungergamesApi.getHungergames(), face));
+            if (hasAbility(event.getPlayer())) {
+                BlockFace face = event.getBlockAgainst().getFace(event.getBlock());
+                if (face == BlockFace.DOWN)
+                    face = BlockFace.UP;
+                event.getBlock().setMetadata("Launcher", new FixedMetadataValue(HungergamesApi.getHungergames(), face));
+            } else
+                event.setCancelled(true);
         }
     }
 }

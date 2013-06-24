@@ -27,8 +27,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.Hungergames.Events.GameStartEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 
-public class Frosty extends AbilityListener {
+public class Frosty extends AbilityListener implements Disableable {
     private ArrayList<BlockFace> faces = new ArrayList<BlockFace>();
     public int iceHeight = 1;
     public int iceRadius = 3;

@@ -18,12 +18,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.PlayerManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Vulture extends AbilityListener implements CommandExecutor {
+public class Vulture extends AbilityListener implements CommandExecutor, Disableable {
     private class KillInfo {
         private String cause;
         private Location deathLoc;
@@ -203,7 +204,7 @@ public class Vulture extends AbilityListener implements CommandExecutor {
     @EventHandler
     public void onRightClick(PlayerInteractEvent event) {
         if (event.getAction().name().contains("RIGHT")) {
-            if (isSpecialItem(event.getItem(), bookName)) {
+            if (isSpecialItem(event.getItem(), bookName) && hasAbility(event.getPlayer())) {
                 Player p = event.getPlayer();
                 if (kills.size() == 0)
                     p.sendMessage(noKillsYet);

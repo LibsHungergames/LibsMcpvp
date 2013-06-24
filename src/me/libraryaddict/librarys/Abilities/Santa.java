@@ -16,12 +16,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
+import me.libraryaddict.Hungergames.Managers.EnchantmentManager;
 import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.Kit;
 
-public class Santa extends AbilityListener {
+public class Santa extends AbilityListener implements Disableable {
     public double chanceOutOfAHundredForNaughtyKitToBeViable = 70;
     public boolean displayMessageOnOpen = true;
     public String[] dontGivePresentFor = new String[] { "Santa", "Barbarian", "Crafter", "Doctor", "Endermage", "Flash", "Monk",
@@ -129,6 +131,7 @@ public class Santa extends AbilityListener {
                     if (presentLore.length > 0 && (presentLore.length > 1 || presentLore[0].length() > 0))
                         meta.setLore(Arrays.asList(presentLore));
                     item.setItemMeta(meta);
+                    item.addEnchantment(EnchantmentManager.UNLOOTABLE, 1);
                     kits.addItem(p, item);
                 }
             }

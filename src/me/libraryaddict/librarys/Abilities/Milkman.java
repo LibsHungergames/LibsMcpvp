@@ -2,6 +2,7 @@ package me.libraryaddict.librarys.Abilities;
 
 import java.util.HashMap;
 
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.KitManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Milkman extends AbilityListener {
+public class Milkman extends AbilityListener implements Disableable {
     private transient HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     private transient KitManager kits = HungergamesApi.getKitManager();
     public int maxUses = 5;
@@ -64,7 +65,7 @@ public class Milkman extends AbilityListener {
     @EventHandler
     public void onInteractEntity(PlayerInteractEntityEvent event) {
         ItemStack item = event.getPlayer().getItemInHand();
-        if (isSpecialItem(item, milkbucketName) && item.getType() == Material.BUCKET) {
+        if (isSpecialItem(item, milkbucketName) && item.getType() == Material.BUCKET && hasAbility(event.getPlayer())) {
             if (event.getRightClicked() instanceof Cow) {
                 event.setCancelled(true);
                 ItemStack cloned = item.clone();

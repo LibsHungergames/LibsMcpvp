@@ -15,11 +15,12 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
-public class Switcher extends AbilityListener {
+public class Switcher extends AbilityListener implements Disableable {
     private HashMap<Player, Integer> cooldown = new HashMap<Player, Integer>();
     public int cooldownLength = 10;
     public String cooldownMessage = ChatColor.BLUE + "You can throw another snowball in %s seconds";

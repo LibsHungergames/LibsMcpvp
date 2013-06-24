@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.EnchantmentManager;
 import me.libraryaddict.Hungergames.Managers.PlayerManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
@@ -24,7 +25,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Array extends AbilityListener {
+public class Array extends AbilityListener implements Disableable {
 
     class HealArray {
         Block[] blocks;
@@ -63,7 +64,8 @@ public class Array extends AbilityListener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
-        if (isSpecialItem(event.getItemInHand(), arrayItemName) && event.getItemInHand().getTypeId() == arrayBeaconId) {
+        if (isSpecialItem(event.getItemInHand(), arrayItemName) && event.getItemInHand().getTypeId() == arrayBeaconId
+                && hasAbility(event.getPlayer())) {
             // Create beacon
             Block b = event.getBlock();
             HealArray heal = new HealArray();

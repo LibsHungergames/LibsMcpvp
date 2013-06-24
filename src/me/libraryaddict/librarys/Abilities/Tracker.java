@@ -7,6 +7,7 @@ import java.util.List;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Events.PlayerTrackEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Managers.TranslationManager;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
@@ -22,7 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class Tracker extends AbilityListener implements CommandExecutor {
+public class Tracker extends AbilityListener implements Disableable, CommandExecutor {
     private TranslationManager cm = HungergamesApi.getTranslationManager();
     public String commandName = "track";
     public String howToUseMessage = ChatColor.RED + "Use /lock <Target Player>";

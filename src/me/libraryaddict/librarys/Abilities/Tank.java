@@ -6,9 +6,10 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
-public class Tank extends AbilityListener {
+public class Tank extends AbilityListener implements Disableable {
     public float explosionSize = 2F;
 
     @EventHandler

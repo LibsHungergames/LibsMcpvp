@@ -51,7 +51,7 @@ public class Barbarian extends AbilityListener {
     public void onKilled(PlayerKilledEvent event) {
         if (event.getKillerPlayer() != null) {
             ItemStack item = event.getKillerPlayer().getPlayer().getItemInHand();
-            if (isSpecialItem(item, swordName)) {
+            if (isSpecialItem(item, swordName) && hasAbility(event.getKillerPlayer().getPlayer())) {
                 if (!kills.containsKey(item))
                     kills.put(item, 0);
                 kills.put(item, kills.get(item) + 1);

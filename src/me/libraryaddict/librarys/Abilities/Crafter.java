@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.Hungergames.Types.FakeFurnace;
@@ -22,7 +23,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Crafter extends AbilityListener {
+public class Crafter extends AbilityListener implements Disableable {
 
     public int craftingStarItemId = Material.NETHER_STAR.getId();
     public String craftingStarItemName = ChatColor.WHITE + "Crafting Star";
@@ -42,7 +43,8 @@ public class Crafter extends AbilityListener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
-        if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+        if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)
+                && hasAbility(event.getPlayer())) {
             Player p = event.getPlayer();
             if (isSpecialItem(item, craftingStarItemName) && craftingStarItemId == item.getTypeId()) {
                 p.openWorkbench(null, true);

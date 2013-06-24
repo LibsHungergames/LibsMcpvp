@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
@@ -21,13 +22,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Pickpocket extends AbilityListener {
+public class Pickpocket extends AbilityListener implements Disableable {
 
     class Pick {
         int itemsStolen = 0;
         long lastUsed = 0;
         Player pickpocket = null;
     }
+
     public String attemptedToPickpocketWhilePickpocketing = ChatColor.BLUE + "Cannot touch that!";
     public String attemptedToStealHotbar = ChatColor.BLUE + "Thats their hotbar!";
     public int cooldown = 30;
@@ -84,7 +86,7 @@ public class Pickpocket extends AbilityListener {
     public void onInteract(PlayerInteractEntityEvent event) {
         ItemStack item = event.getPlayer().getItemInHand();
         if (event.getRightClicked() instanceof Player && isSpecialItem(item, thievingStickItemName)
-                && item.getTypeId() == thievingStickItemId) {
+                && item.getTypeId() == thievingStickItemId && hasAbility(event.getPlayer())) {
             Pick pick = new Pick();
             if (pickpockets.containsKey(item))
                 pick = pickpockets.get(item);
