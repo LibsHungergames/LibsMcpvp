@@ -29,6 +29,8 @@ public class Dwarf extends AbilityListener implements Disableable {
                 long sneakingTime = System.currentTimeMillis() - startedSneaking.remove(p);
                 double knockBack = 0.5 * (sneakingTime / 1000);
                 for (Entity entity : p.getNearbyEntities(knockBack, knockBack, knockBack)) {
+                    if (entity instanceof Player && ((Player) entity).isSneaking())
+                        continue;
                     Vector vector = entity.getLocation().toVector().subtract(p.getLocation().toVector()).normalize();
                     entity.setVelocity(vector.multiply(knockBack));
                 }

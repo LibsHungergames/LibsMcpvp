@@ -169,7 +169,7 @@ Kits:
     Ability:
       - Doctor
   Dwarf:
-    Description: 'The dwarf kit allows you to sneak, and deal a knockback to everyone around you when you stop! The longer you sneak, the bigger your radius is and the knockback!'
+    Description: 'The dwarf kit allows you to sneak, and deal a knockback to everyone around you when you stop! The longer you sneak, the bigger your radius is and the knockback! Sneaking for a second will not cut it, and if they are sneaking as well. You are out of luck!'
     Free: true
     Price: 0
     Icon: IRON_CHESTPLATE 0 1
