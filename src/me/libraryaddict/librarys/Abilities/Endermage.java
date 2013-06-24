@@ -84,6 +84,7 @@ public class Endermage extends AbilityListener implements Disableable {
                                     if (invincibleTicks > 0)
                                         p.setNoDamageTicks(invincibleTicks);
                                     p.teleport(portal.clone().add(0, -0.5, 0));
+                                    p.setFallDistance(-100);
                                 }
                             }
                         }
