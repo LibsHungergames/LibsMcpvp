@@ -17,9 +17,8 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -49,12 +48,12 @@ public class Endermage extends AbilityListener implements Disableable {
     }
 
     @EventHandler
-    public void onPlace(PlayerInteractEvent event) {
-        ItemStack item = event.getItem();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && item != null && item.getTypeId() == endermagePortalId
-                && isSpecialItem(item, endermagePortalName) && hasAbility(event.getPlayer())) {
+    public void onPlace(BlockPlaceEvent event) {
+        ItemStack item = event.getItemInHand();
+        if (item != null && item.getTypeId() == endermagePortalId && isSpecialItem(item, endermagePortalName)
+                && hasAbility(event.getPlayer())) {
             event.setCancelled(true);
-            final Block b = event.getClickedBlock();
+            final Block b = event.getBlock();
             if (endermages.contains(b))
                 return;
             endermages.add(b);
@@ -62,8 +61,6 @@ public class Endermage extends AbilityListener implements Disableable {
             if (item.getAmount() == 0)
                 event.getPlayer().setItemInHand(new ItemStack(0));
             final Location portal = b.getLocation().clone().add(0.5, 0.5, 0.5);
-            final Material material = b.getType();
-            final byte dataValue = b.getData();
             portal.getBlock().setTypeId(endermagePortalBlockId);
             final Gamer mager = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());
             for (int i = 0; i <= 5; i++) {
@@ -91,7 +88,6 @@ public class Endermage extends AbilityListener implements Disableable {
                             }
                         }
                         if (no == 5) {
-                            portal.getBlock().setTypeIdAndData(material.getId(), dataValue, true);
                             if (mager.isAlive()) {
                                 ItemStack item = new ItemStack(endermagePortalId);
                                 ItemMeta meta = item.getItemMeta();
