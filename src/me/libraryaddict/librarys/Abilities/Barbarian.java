@@ -57,7 +57,8 @@ public class Barbarian extends AbilityListener {
                 kills.put(item, kills.get(item) + 1);
                 if (kills.get(item) % 3 == 0) {
                     int level = (kills.get(item) / 3) - 1;
-                    item.setType(updates[level]);
+                    if (level < updates.length)
+                        item.setType(updates[level]);
                 }
             }
         }
