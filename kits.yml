@@ -342,7 +342,7 @@ Kits:
     Price: 0
     Icon: STONE_PICKAXE 0 1
     Items:
-      - STONE_PICKAXE 0 1 DURABILITY 1 DIG_SPEED 2
+      - STONE_PICKAXE 0 1 DURABILITY 1 DIG_SPEED 2 Unlootable 1
     Ability:
       - Miner
   Monk:
