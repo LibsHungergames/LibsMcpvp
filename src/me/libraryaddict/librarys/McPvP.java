@@ -47,10 +47,10 @@ public class McPvP extends JavaPlugin implements Listener {
                             latestVersion = "v" + latestVersion;
                             for (Player p : Bukkit.getOnlinePlayers())
                                 if (p.hasPermission("hungergames.update"))
-                                    p.sendMessage(String.format(ChatColor.GOLD + "[Libs MCPVP] " + ChatColor.DARK_GREEN
-                                            + "There is a update ready to be downloaded! You are using " + ChatColor.GREEN + "%s"
-                                            + ChatColor.DARK_GREEN + ", the new version is " + ChatColor.GREEN + "%s"
-                                            + ChatColor.DARK_GREEN + "!", currentVersion, latestVersion));
+                                    p.sendMessage(String.format(ChatColor.RED + "[Libs MCPVP] " + ChatColor.DARK_RED
+                                            + "There is a update ready to be downloaded! You are using " + ChatColor.RED + "%s"
+                                            + ChatColor.DARK_RED + ", the new version is " + ChatColor.RED + "%s"
+                                            + ChatColor.DARK_RED + "!", currentVersion, latestVersion));
                         }
                     } catch (Exception ex) {
                         System.out.print(String.format("[Libs MCPVP] Failed to check for update: %s", ex.getMessage()));
