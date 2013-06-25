@@ -219,7 +219,7 @@ Kits:
     Ability:
       - Flash
   Fletcher:
-    Description: 'Kill a chicken and drop addictional feathers, destroy gravel for the assured chance of a piece of flint. Its time to team up with that archer!'
+    Description: 'Kill a chicken and drop addictional feathers, destroy gravel for the assured chance of a piece of flint. Kill skeletons to get 2 arrows each kill! Its time to team up with that archer!'
     Free: true
     Price: 0
     Icon: ARROW 0 1

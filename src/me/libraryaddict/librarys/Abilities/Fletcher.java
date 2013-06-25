@@ -6,7 +6,7 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Chicken;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -25,16 +25,22 @@ public class Fletcher extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Chicken && event.getEntity().getKiller() != null
-                && hasAbility(event.getEntity().getKiller())) {
+        if (event.getEntity().getKiller() != null && hasAbility(event.getEntity().getKiller())) {
+            Material mat = null;
+            if (event.getEntityType() == EntityType.SKELETON)
+                mat = Material.ARROW;
+            else if (event.getEntityType() == EntityType.CHICKEN)
+                mat = Material.FEATHER;
+            else
+                return;
             Iterator<ItemStack> itel = event.getDrops().iterator();
             while (itel.hasNext()) {
                 ItemStack item = itel.next();
-                if (item == null || item.getType() != Material.FEATHER)
+                if (item == null || item.getType() != mat)
                     continue;
                 itel.remove();
             }
-            event.getDrops().add(new ItemStack(Material.FEATHER, 2));
+            event.getDrops().add(new ItemStack(mat, 2));
         }
     }
 }
