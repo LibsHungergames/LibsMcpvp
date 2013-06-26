@@ -176,7 +176,7 @@ Kits:
     Ability:
       - Dwarf
   Endermage:
-    Description: 'Warp em up. Warp em down. Warp em all around! The endermage places a enderportal and warps all players directly above and below him with a distance more then 3 to the enderportal. They are then invincible for 5 seconds and are able to instantly KO you. Surely you didn''t think there would be no drawbacks?!'
+    Description: 'Warp em up. Warp em down. Warp em all around! The endermage places a enderportal and warps all players directly above and below him with a distance more then 3 to the enderportal. You are also teleported there if someone is caught. All teleported players have 5 seconds of invincibility then you fight!'
     Free: true
     Price: 0
     Icon: ENDER_PORTAL 0 1
