@@ -28,6 +28,39 @@ public class Launcher extends AbilityListener implements Disableable {
     public String launcherBlockName = ChatColor.WHITE + "Launcher Block";
 
     @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        if (event.getBlock().hasMetadata("Launcher")) {
+            event.setCancelled(true);
+            Item item = event
+                    .getBlock()
+                    .getWorld()
+                    .dropItemNaturally(event.getBlock().getLocation().clone().add(0.5, 0, 0.1),
+                            new ItemStack(event.getBlock().getType()));
+            event.getBlock().setType(Material.AIR);
+            ItemStack itemstack = item.getItemStack().clone();
+            ItemMeta meta = itemstack.getItemMeta();
+            meta.setDisplayName(launcherBlockName);
+            itemstack.setItemMeta(meta);
+            itemstack.addEnchantment(EnchantmentManager.UNLOOTABLE, 1);
+            EnchantmentManager.updateEnchants(itemstack);
+            item.setItemStack(itemstack);
+        }
+    }
+
+    @EventHandler
+    public void onExplode(EntityExplodeEvent event) {
+        Iterator<Block> itel = event.blockList().iterator();
+        while (itel.hasNext()) {
+            Block block = itel.next();
+            if (block.hasMetadata("Launcher")) {
+                BlockBreakEvent newEvent = new BlockBreakEvent(block, null);
+                onBreak(newEvent);
+                itel.remove();
+            }
+        }
+    }
+
+    @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
         if (HungergamesApi.getPlayerManager().getGamer(p).isAlive()) {
@@ -52,43 +85,10 @@ public class Launcher extends AbilityListener implements Disableable {
     }
 
     @EventHandler
-    public void onBreak(BlockBreakEvent event) {
-        if (event.getBlock().hasMetadata("Launcher")) {
-            event.setCancelled(true);
-            Item item = event
-                    .getBlock()
-                    .getWorld()
-                    .dropItemNaturally(event.getBlock().getLocation().clone().add(0.5, 0, 0.1),
-                            new ItemStack(event.getBlock().getType()));
-            event.getBlock().setType(Material.AIR);
-            ItemStack itemstack = item.getItemStack().clone();
-            ItemMeta meta = itemstack.getItemMeta();
-            meta.setDisplayName(launcherBlockName);
-            itemstack.setItemMeta(meta);
-            itemstack.addEnchantment(EnchantmentManager.UNLOOTABLE, 1);
-            EnchantmentManager.updateEnchants(itemstack);
-            item.setItemStack(itemstack);
-        }
-    }
-
-    @EventHandler
     public void onPiston(BlockPistonExtendEvent event) {
         for (Block b : event.getBlocks())
             if (b.hasMetadata("Launcher"))
                 event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onExplode(EntityExplodeEvent event) {
-        Iterator<Block> itel = event.blockList().iterator();
-        while (itel.hasNext()) {
-            Block block = itel.next();
-            if (block.hasMetadata("Launcher")) {
-                BlockBreakEvent newEvent = new BlockBreakEvent(block, null);
-                onBreak(newEvent);
-                itel.remove();
-            }
-        }
     }
 
     @EventHandler

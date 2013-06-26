@@ -12,9 +12,9 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Dwarf extends AbilityListener implements Disableable {
-    private HashMap<Player, Long> startedSneaking = new HashMap<Player, Long>();
-    private HashMap<Player, Long> cooldownExpires = new HashMap<Player, Long>();
     public int cooldown = 30;
+    private HashMap<Player, Long> cooldownExpires = new HashMap<Player, Long>();
+    private HashMap<Player, Long> startedSneaking = new HashMap<Player, Long>();
 
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent event) {

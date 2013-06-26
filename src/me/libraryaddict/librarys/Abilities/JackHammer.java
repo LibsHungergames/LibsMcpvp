@@ -17,12 +17,12 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class JackHammer extends AbilityListener implements Disableable {
-    private HashMap<ItemStack, Integer> uses = new HashMap<ItemStack, Integer>();
+    public int cooldown = 30;
+    public String cooldownMessage = ChatColor.RED + "%s seconds until you can use jackhammer again!";
     private HashMap<ItemStack, Integer> cooldownTime = new HashMap<ItemStack, Integer>();
     public String hammerName = "Jack Hammer";
-    public int cooldown = 30;
+    private HashMap<ItemStack, Integer> uses = new HashMap<ItemStack, Integer>();
     public int usesBeforeCooldown = 5;
-    public String cooldownMessage = ChatColor.RED + "%s seconds until you can use jackhammer again!";
 
     @EventHandler
     public void onBreak(final BlockBreakEvent event) {
