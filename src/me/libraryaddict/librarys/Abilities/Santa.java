@@ -85,7 +85,7 @@ public class Santa extends AbilityListener implements Disableable {
         }
         for (String kitName : naughtyList) {
             if (kit.getName().equalsIgnoreCase(kitName)
-                    && (new Random().nextInt(10000) < chanceOutOfAHundredForNaughtyKitToBeViable * 100))
+                    && (new Random().nextInt(100) < chanceOutOfAHundredForNaughtyKitToBeViable))
                 return false;
         }
         if (kit.getItems().length == 0)
