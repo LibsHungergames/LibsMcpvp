@@ -149,7 +149,7 @@ public class McpvpListener implements Listener {
                             kits.getKitByPlayer(p).giveKit(p);
                     }
                 }
-            });
+            }, 2);
         }
     }
 }
