@@ -130,7 +130,7 @@ Kits:
     Description: 'Its time to destroy that thief for breaking into your home! Place a stone pressure plate on gravel to create a landmine! Step on it to blow it up! The explosion is a little bigger then TNT. Careful however! You can set off your own landmines!'
     Free: true
     Price: 0
-    Icon: TNT 0 1
+    Icon: STONE_PLATE 0 1
     Items:
       - GRAVEL 0 2
       - STONE_PLATE 0 2
