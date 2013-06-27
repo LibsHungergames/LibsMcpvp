@@ -39,6 +39,7 @@ public class Endermage extends AbilityListener implements Disableable {
         if (isSpecialItem(item, endermagePortalName) && hasAbility(event.getPlayer())) {
             event.setCancelled(true);
             Player mage = event.getPlayer();
+            mage.updateInventory();
             final Block b = event.getBlock();
             if (cooldown.containsKey(mage) && cooldown.get(mage) > hg.currentTime) {
                 mage.sendMessage(String.format(cooldownMessage, cooldown.get(mage) - hg.currentTime));
