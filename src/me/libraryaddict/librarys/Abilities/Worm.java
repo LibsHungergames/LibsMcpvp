@@ -15,7 +15,7 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Worm extends AbilityListener implements Disableable {
-    public boolean dirtBlocksDamage = true;
+    public boolean dirtPreventsFallDamage = true;
 
     @EventHandler
     public void onDamage(BlockDamageEvent event) {
@@ -39,7 +39,7 @@ public class Worm extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
-        if (dirtBlocksDamage && event.getCause() == DamageCause.FALL && event.getEntity() instanceof Player) {
+        if (dirtPreventsFallDamage && event.getCause() == DamageCause.FALL && event.getEntity() instanceof Player) {
             if (hasAbility((Player) event.getEntity())) {
                 Location loc = event.getEntity().getLocation();
                 boolean dirt = false;
