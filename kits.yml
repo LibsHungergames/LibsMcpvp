@@ -203,12 +203,14 @@ Kits:
     Ability:
       - Fireman
   Fisherman:
-    Description: 'The Fisherman kit starts with a fishing rod, use the fishing rod to catch fish. Lots and lots of fish. With a minute between catches. This is one of the most *cough* unbalanced kits in the game.'
+    Description: 'The fisherman kit starts with a fishing rod, use the fishing rod to catch fish. Lots and lots of fish! However, theres a chance you will hook all kinds of random junk! Be it for food or you just want the unexpected. The fisherman kit is the right kit for you!'
     Free: true
     Price: 0
     Icon: FISHING_ROD 0 1
     Items:
       - FISHING_ROD 0 1
+    Ability:
+      - Fisherman
   Flash:
     Description: 'With a mere swing of your redstone torch you teleport to where you were looking, and receive have the distance in weakness II. One you teleport, players will see lightning visually strike you. The redstone torch turns off when its out of charge and turns back on when it''s charge has recovered'
     Free: true
