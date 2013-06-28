@@ -30,6 +30,7 @@ public class Launcher extends AbilityListener implements Disableable {
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if (event.getBlock().hasMetadata("Launcher")) {
+            event.getBlock().removeMetadata("Launcher", HungergamesApi.getHungergames());
             event.setCancelled(true);
             Item item = event
                     .getBlock()
