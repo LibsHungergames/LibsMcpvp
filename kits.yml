@@ -465,7 +465,7 @@ Kits:
     Free: true
     Price: 0
     Icon: FIRE 0 1
-    Boots: LEATHER_BOOTS 0 1 Unlootable 1 Name=Scorchers_Boots
+    Boots: LEATHER_BOOTS 0 1 Unlootable 1 Name=Scorchers_Boots Color=255:0:0
     Items: 
       - BLAZE_POWDER 0 1 Unlootable 1 Name=Scorchers_Igniter
     Ability:
