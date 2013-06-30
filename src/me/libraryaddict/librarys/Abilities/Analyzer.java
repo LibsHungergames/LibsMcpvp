@@ -101,12 +101,17 @@ public class Analyzer extends AbilityListener implements Disableable {
         }
     }
 
+    public boolean alwaysDisplayInfo = false;
     public boolean countSoup = false;
     private HashMap<Player, String> currentNames = new HashMap<Player, String>();
     public String informationItem = ChatColor.WHITE + "Itemstack %s has %s items";
     public String informationMob = ChatColor.WHITE + "Mob %s has %s health";
-    public String informationPlayer = ChatColor.WHITE + "%s has %s health and %s hunger";
-    public String informationPlayerSoup = ChatColor.WHITE + "%s has %s health and %s hunger. He is holding %s soups";
+    public String informationPlayer = ChatColor.YELLOW + "%s" + ChatColor.WHITE + " has Health: " + ChatColor.YELLOW + "%s"
+            + ChatColor.WHITE + ", Hunger:" + ChatColor.YELLOW + " %s" + ChatColor.WHITE + ", Armor: " + ChatColor.YELLOW + "%s"
+            + ChatColor.WHITE + ", Kit: " + ChatColor.YELLOW + "%s";
+    public String informationPlayerSoup = ChatColor.YELLOW + "%s" + ChatColor.WHITE + " has Health: " + ChatColor.YELLOW + "%s"
+            + ChatColor.WHITE + ", Hunger:" + ChatColor.YELLOW + " %s" + ChatColor.WHITE + ", Armor: " + ChatColor.YELLOW + "%s"
+            + ChatColor.WHITE + ", Kit: " + ChatColor.YELLOW + "%s" + ChatColor.WHITE + ", Soups: " + ChatColor.YELLOW + "%s";
     public int rangeToScan = 100;
     private int scheduler;
 
@@ -119,6 +124,36 @@ public class Analyzer extends AbilityListener implements Disableable {
     @EventHandler
     public void gameStartEvent(GameStartEvent event) {
         scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 0);
+    }
+
+    private int getArmorRating(ItemStack[] items) {
+        int i = 0;
+        for (ItemStack item : items)
+            if (item != null)
+                i += getArmorValue(item);
+        return i;
+    }
+
+    private int getArmorValue(ItemStack armor) {
+        Material mat = armor.getType();
+        if (mat == Material.LEATHER_HELMET || mat == Material.LEATHER_BOOTS || mat == Material.GOLD_BOOTS
+                || mat == Material.CHAINMAIL_BOOTS)
+            return 1;
+        if (mat == Material.LEATHER_LEGGINGS || mat == Material.GOLD_HELMET || mat == Material.CHAINMAIL_HELMET
+                || mat == Material.IRON_HELMET || mat == Material.IRON_BOOTS)
+            return 2;
+        if (mat == Material.LEATHER_CHESTPLATE || mat == Material.GOLD_LEGGINGS || mat == Material.DIAMOND_BOOTS
+                || mat == Material.DIAMOND_HELMET)
+            return 3;
+        if (mat == Material.CHAINMAIL_LEGGINGS)
+            return 4;
+        if (mat == Material.GOLD_CHESTPLATE || mat == Material.CHAINMAIL_CHESTPLATE || mat == Material.IRON_LEGGINGS)
+            return 5;
+        if (mat == Material.IRON_LEGGINGS || mat == Material.DIAMOND_LEGGINGS)
+            return 6;
+        if (mat == Material.DIAMOND_CHESTPLATE)
+            return 8;
+        return 0;
     }
 
     private Entity getEntityInSight(Player p) {
@@ -156,9 +191,11 @@ public class Analyzer extends AbilityListener implements Disableable {
                 for (ItemStack item : p.getInventory())
                     if (item != null && item.getType() == Material.MUSHROOM_SOUP)
                         i++;
-                return String.format(informationPlayerSoup, p.getName(), p.getHealth(), p.getFoodLevel(), i);
+                return String.format(informationPlayerSoup, p.getName(), p.getHealth(), getArmorRating(p.getInventory()
+                        .getArmorContents()), p.getFoodLevel(), HungergamesApi.getKitManager().getKitByPlayer(p).getName(), i);
             }
-            return String.format(informationPlayer, p.getName(), p.getHealth(), p.getFoodLevel());
+            return String.format(informationPlayer, p.getName(), p.getHealth(), p.getFoodLevel(), HungergamesApi.getKitManager()
+                    .getKitByPlayer(p).getName(), getArmorRating(p.getInventory().getArmorContents()));
         } else if (entity instanceof Item) {
             Item item = (Item) entity;
             return String.format(informationItem, HungergamesApi.getNameManager().getItemName(item.getItemStack()), item
@@ -173,23 +210,31 @@ public class Analyzer extends AbilityListener implements Disableable {
 
     private Runnable getRunnable() {
         return new Runnable() {
+            boolean zero;
+
             public void run() {
+                zero = !zero;
                 for (Player p : getMyPlayers()) {
                     ItemStack item = p.getItemInHand();
                     if (item == null || item.getType() == Material.AIR)
                         continue;
                     Entity entity = getEntityInSight(p);
                     String info = getInformation(entity);
-                    if (currentNames.containsKey(p)) {
-                        if (info == null)
-                            currentNames.remove(p);
-                        else if (currentNames.get(p).equals(info)) {
+                    if (alwaysDisplayInfo) {
+                        if (info != null)
+                            info += ChatColor.COLOR_CHAR + (zero ? "a" : "b");
+                    } else {
+                        if (currentNames.containsKey(p)) {
+                            if (info == null)
+                                currentNames.remove(p);
+                            else if (currentNames.get(p).equals(info)) {
+                                continue;
+                            }
+                        } else if (info != null)
+                            currentNames.put(p, info);
+                        else
                             continue;
-                        }
-                    } else if (info != null)
-                        currentNames.put(p, info);
-                    else
-                        continue;
+                    }
                     ItemMeta meta = item.getItemMeta();
                     if (info != null)
                         meta.setDisplayName(info);
