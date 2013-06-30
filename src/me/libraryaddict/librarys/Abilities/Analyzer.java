@@ -114,7 +114,7 @@ public class Analyzer extends AbilityListener implements Disableable {
             + ChatColor.WHITE + ", Kit: " + ChatColor.YELLOW + "%s" + ChatColor.WHITE + ", Soups: " + ChatColor.YELLOW + "%s";
     public int rangeToScan = 100;
     private int scheduler;
-    public int ticksPerEntityCheck = 5;
+    public int ticksPerEntityCheck = 10;
 
     public Analyzer() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
