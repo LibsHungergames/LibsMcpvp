@@ -15,7 +15,7 @@ public class Poseidon extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        if (getMyPlayers().contains(event.getPlayer()) && event.getPlayer().getLocation().getBlock().isLiquid())
+        if (hasAbility(event.getPlayer()) && event.getPlayer().getRemainingAir() < 200)
             event.getPlayer().setRemainingAir(200);
     }
 
