@@ -114,6 +114,7 @@ public class Analyzer extends AbilityListener implements Disableable {
             + ChatColor.WHITE + ", Kit: " + ChatColor.YELLOW + "%s" + ChatColor.WHITE + ", Soups: " + ChatColor.YELLOW + "%s";
     public int rangeToScan = 100;
     private int scheduler;
+    public int ticksPerEntityCheck = 1;
 
     public Analyzer() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
@@ -123,7 +124,8 @@ public class Analyzer extends AbilityListener implements Disableable {
 
     @EventHandler
     public void gameStartEvent(GameStartEvent event) {
-        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 0);
+        scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(),
+                ticksPerEntityCheck, ticksPerEntityCheck);
     }
 
     private int getArmorRating(ItemStack[] items) {
@@ -291,7 +293,8 @@ public class Analyzer extends AbilityListener implements Disableable {
     public void registerPlayer(Player player) {
         super.registerPlayer(player);
         if (scheduler < 0 && HungergamesApi.getHungergames().currentTime >= 0) {
-            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(), 0, 0);
+            scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), getRunnable(),
+                    ticksPerEntityCheck, ticksPerEntityCheck);
         }
     }
 
