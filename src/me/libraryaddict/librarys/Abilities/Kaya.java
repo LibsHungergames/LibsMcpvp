@@ -28,7 +28,8 @@ import me.libraryaddict.Hungergames.Types.Gamer;
 public class Kaya extends AbilityListener implements Disableable {
 
     public int distanceFromBlocks = 3;
-    public int heightFromBlocks = 2;
+    public int upperHeightFromBlocks = 2;
+    public int lowerHeightFromBlocks = 1;
     private transient HashMap<Block, Player> kayaBlocks = new HashMap<Block, Player>();
 
     public Kaya() {
@@ -79,7 +80,7 @@ public class Kaya extends AbilityListener implements Disableable {
             Location loc = event.getPlayer().getLocation();
             for (int z = -distanceFromBlocks; z <= distanceFromBlocks; z++) {
                 for (int x = -distanceFromBlocks; x <= distanceFromBlocks; x++) {
-                    for (int y = -heightFromBlocks; y < heightFromBlocks; y++) {
+                    for (int y = lowerHeightFromBlocks; y <= upperHeightFromBlocks; y++) {
                         Block block = loc.clone().add(x, y, z).getBlock();
                         if (kayaBlocks.containsKey(block) && block.getType() == Material.GRASS) {
                             if (kayaBlocks.get(block) != event.getPlayer()) {
