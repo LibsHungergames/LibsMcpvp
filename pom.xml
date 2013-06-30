@@ -45,6 +45,11 @@
 			<url>file:${project.basedir}/lib</url>
 		</repository>
 		<repository>
+			<id>comphenix-rep</id>
+			<name>Comphenix Repository</name>
+			<url>http://repo.comphenix.net/content/groups/public</url>
+		</repository>
+		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
@@ -57,10 +62,15 @@
 			<version>1.5.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.comphenix.protocol</groupId>
+			<artifactId>ProtocolLib</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+		<dependency>
 			<groupId>libsdisguises</groupId>
 			<artifactId>libsdisguises</artifactId>
 			<version>v1.1</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>libshungergames</groupId>
 			<artifactId>libshungergames</artifactId>
