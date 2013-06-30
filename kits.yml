@@ -10,6 +10,13 @@ BadKits:
   - Phantom
   - Rider
 Kits:
+  Analyzer:
+    Description: 'The analyzer kit shows you information on the entity you are currently looking at! You must be holding a item else you will be unable to look at the information being feed to your screen. From health to items in a itemstack. This can do it all!'
+    Free: true
+    Price: 0
+    Icon: THIN_GLASS 0 1
+    Ability:
+      - Analyzer
   Archer:
     Description: 'The archer kit allows you to shoot others. Hmm. Thats pretty much it. You also get a bow and 10 arrows'
     Free: true
