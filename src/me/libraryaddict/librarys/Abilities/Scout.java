@@ -53,4 +53,5 @@ public class Scout extends AbilityListener implements Disableable {
                     Math.abs(givePotionsEverySoSeconds * 20) - toTake, givePotionsEverySoSeconds * 20);
         }
     }
+
 }
