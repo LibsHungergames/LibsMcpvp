@@ -193,8 +193,8 @@ public class Analyzer extends AbilityListener implements Disableable {
                 for (ItemStack item : p.getInventory())
                     if (item != null && item.getType() == Material.MUSHROOM_SOUP)
                         i++;
-                return String.format(informationPlayerSoup, p.getName(), p.getHealth(), getArmorRating(p.getInventory()
-                        .getArmorContents()), p.getFoodLevel(), HungergamesApi.getKitManager().getKitByPlayer(p).getName(), i);
+                return String.format(informationPlayerSoup, p.getName(), p.getHealth(), p.getFoodLevel(), getArmorRating(p
+                        .getInventory().getArmorContents()), HungergamesApi.getKitManager().getKitByPlayer(p).getName(), i);
             }
             return String.format(informationPlayer, p.getName(), p.getHealth(), p.getFoodLevel(), HungergamesApi.getKitManager()
                     .getKitByPlayer(p).getName(), getArmorRating(p.getInventory().getArmorContents()));
