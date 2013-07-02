@@ -13,8 +13,6 @@ import net.minecraft.server.v1_6_R1.EntityLiving;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_6_R1.entity.CraftCreature;
-import org.bukkit.craftbukkit.v1_6_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_6_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
