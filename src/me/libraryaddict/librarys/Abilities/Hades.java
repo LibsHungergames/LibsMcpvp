@@ -6,13 +6,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import me.libraryaddict.Hungergames.Types.*;
-import net.minecraft.server.v1_5_R3.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_5_R3.PathfinderGoalSelector;
-import net.minecraft.server.v1_5_R3.EntityLiving;
+import net.minecraft.server.v1_6_R1.EntityCreature;
+import net.minecraft.server.v1_6_R1.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_6_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_6_R1.EntityLiving;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_5_R3.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_5_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R1.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_6_R1.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_6_R1.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -31,8 +33,8 @@ public class Hades extends AbilityListener implements Disableable {
     private transient HashMap<Zombie, Player> tamed = new HashMap<Zombie, Player>();
 
     private void makeSlave(LivingEntity entity, Player tamer) {
-        EntityLiving eIG = ((CraftLivingEntity) entity).getHandle();
-        FollowOwner navig = new FollowOwner(eIG, 0.3F, 10.0F, 2.0F, ((CraftPlayer) tamer).getHandle());
+        EntityCreature eIG = ((CraftCreature) entity).getHandle();
+        FollowOwner navig = new FollowOwner(eIG, 0.3F, 10.0F, 2.0F, tamer);
         try {
             Field field = EntityLiving.class.getDeclaredField("targetSelector");
             field.setAccessible(true);
@@ -48,8 +50,8 @@ public class Hades extends AbilityListener implements Disableable {
             targeta = PathfinderGoalSelector.class.getDeclaredField("a");
             targeta.setAccessible(true);
             ((List) targeta.get(targetSelector)).clear();
-            targetSelector.a(3, new OwnerAttacks(eIG, ((CraftPlayer) tamer).getHandle()));
-            targetSelector.a(3, new OwnerAttacked(eIG, ((CraftPlayer) tamer).getHandle()));
+            targetSelector.a(3, new OwnerAttacks(eIG, tamer));
+            targetSelector.a(3, new OwnerAttacked(eIG, tamer));
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
