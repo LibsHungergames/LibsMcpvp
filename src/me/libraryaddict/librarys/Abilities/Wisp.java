@@ -6,10 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.server.v1_6_R1.EntityHuman;
+import net.minecraft.server.v1_6_R1.EntityInsentient;
 import net.minecraft.server.v1_6_R1.EntityLiving;
 import net.minecraft.server.v1_6_R1.EntityVillager;
 import net.minecraft.server.v1_6_R1.PathfinderGoal;
 import net.minecraft.server.v1_6_R1.PathfinderGoalAvoidPlayer;
+import net.minecraft.server.v1_6_R1.PathfinderGoalFloat;
 import net.minecraft.server.v1_6_R1.PathfinderGoalLookAtPlayer;
 import net.minecraft.server.v1_6_R1.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_6_R1.PathfinderGoalRandomStroll;
@@ -49,6 +51,7 @@ public class Wisp extends AbilityListener implements Disableable {
     public static Villager spawnVillager(Location loc) {
         Villager villager = (Villager) loc.getWorld().spawnEntity(loc, EntityType.VILLAGER);
         villager.setNoDamageTicks(Integer.MAX_VALUE);
+        villager.setBreed(false);
         try {
             EntityVillager ent = ((CraftVillager) villager).getHandle();
 
@@ -56,7 +59,7 @@ public class Wisp extends AbilityListener implements Disableable {
             goalField.setAccessible(true);
             PathfinderGoalSelector goalSelector = (PathfinderGoalSelector) goalField.get(ent);
 
-            Field targetField = EntityLiving.class.getDeclaredField("targetSelector");
+            Field targetField = EntityInsentient.class.getDeclaredField("targetSelector");
             targetField.setAccessible(true);
 
             Field aField = PathfinderGoalSelector.class.getDeclaredField("a");
@@ -64,6 +67,7 @@ public class Wisp extends AbilityListener implements Disableable {
             ((List<PathfinderGoal>) aField.get(goalSelector)).clear();
             ((List<PathfinderGoal>) aField.get((PathfinderGoalSelector) targetField.get(ent))).clear();
 
+            goalSelector.a(0, new PathfinderGoalFloat(ent));
             goalSelector.a(1, new PathfinderGoalAvoidPlayer(ent, EntityHuman.class, 6.0F, 0.35F, 0.4F));
             goalSelector.a(2, new PathfinderGoalAvoidPlayer(ent, EntityVillager.class, 6.0F, 0.35F, 0.4F));
             goalSelector.a(3, new PathfinderGoalRandomStroll(ent, 0.35F));

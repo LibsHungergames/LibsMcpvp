@@ -7,10 +7,9 @@ import java.util.List;
 
 import me.libraryaddict.Hungergames.Types.*;
 import net.minecraft.server.v1_6_R1.EntityCreature;
+import net.minecraft.server.v1_6_R1.EntityInsentient;
 import net.minecraft.server.v1_6_R1.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_6_R1.PathfinderGoalSelector;
-import net.minecraft.server.v1_6_R1.EntityLiving;
-
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_6_R1.entity.CraftCreature;
 import org.bukkit.entity.LivingEntity;
@@ -34,7 +33,7 @@ public class Hades extends AbilityListener implements Disableable {
         EntityCreature eIG = ((CraftCreature) entity).getHandle();
         FollowOwner navig = new FollowOwner(eIG, 0.3F, 10.0F, 2.0F, tamer);
         try {
-            Field field = EntityLiving.class.getDeclaredField("targetSelector");
+            Field field = EntityInsentient.class.getDeclaredField("targetSelector");
             field.setAccessible(true);
             PathfinderGoalSelector targetSelector = (PathfinderGoalSelector) field.get(eIG);
             Field targeta = PathfinderGoalSelector.class.getDeclaredField("a");
@@ -42,7 +41,7 @@ public class Hades extends AbilityListener implements Disableable {
             ((List) targeta.get(targetSelector)).clear();
             targetSelector.a(4, new PathfinderGoalMeleeAttack(eIG, 0.3F, true));
             targetSelector.a(5, navig);
-            field = EntityLiving.class.getDeclaredField("goalSelector");
+            field = EntityInsentient.class.getDeclaredField("goalSelector");
             field.setAccessible(true);
             targetSelector = (PathfinderGoalSelector) field.get(eIG);
             targeta = PathfinderGoalSelector.class.getDeclaredField("a");
