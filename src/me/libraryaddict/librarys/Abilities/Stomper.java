@@ -32,8 +32,8 @@ public class Stomper extends AbilityListener implements Disableable {
         if (event.getCause() == DamageCause.FALL && event.getEntity() instanceof Player) {
             Player p = (Player) event.getEntity();
             if (hasAbility(p)) {
-                int dmg = event.getDamage();
-                int area = dmg / 3;
+                double dmg = event.getDamage();
+                int area = (int) (dmg / 3);
                 if (area > 3)
                     area = 3;
                 event.setCancelled(true);
@@ -59,9 +59,9 @@ public class Stomper extends AbilityListener implements Disableable {
                 double velocity = (double) dmg * 0.01;
                 for (Entity entity : p.getNearbyEntities(area * 2, area, area * 2))
                     if (entity instanceof LivingEntity) {
-                        int hisDmg = dmg;
+                        double hisDmg = dmg;
                         if (reduceStompDamageByDistance)
-                            hisDmg = (int) (dmg / (entity.getLocation().distance(center) + 1));
+                            hisDmg = (dmg / (entity.getLocation().distance(center) + 1));
                         if (entity.getLocation().getBlockY() - 1 > center.getBlockY())
                             continue;
                         if (entity instanceof Player) {

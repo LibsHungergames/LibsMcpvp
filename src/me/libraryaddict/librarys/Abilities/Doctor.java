@@ -16,7 +16,7 @@ public class Doctor extends AbilityListener implements Disableable {
     public boolean heal = false;
     public int pairOfForcepsItemId = Material.SHEARS.getId();
     public String pairOfForcepsItemName = ChatColor.WHITE + "Pair of Forceps";
-    public int toHeal = 5;
+    public double toHeal = 5;
 
     @EventHandler
     public void onRightClick(PlayerInteractEntityEvent event) {
@@ -28,7 +28,7 @@ public class Doctor extends AbilityListener implements Disableable {
             for (PotionEffect effect : effects)
                 lEntity.removePotionEffect(effect.getType());
             if (heal) {
-                int health = lEntity.getHealth();
+                double health = lEntity.getHealth();
                 health += toHeal;
                 if (health > lEntity.getMaxHealth())
                     health = lEntity.getMaxHealth();

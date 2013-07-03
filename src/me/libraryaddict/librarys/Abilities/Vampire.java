@@ -23,7 +23,7 @@ public class Vampire extends AbilityListener implements Disableable {
         if (event.getEntity().getKiller() != null && hasAbility(event.getEntity().getKiller())) {
             Player p = event.getEntity().getKiller();
             if (event.getEntity() instanceof Creature) {
-                int hp = p.getHealth();
+                double hp = p.getHealth();
                 hp += (event.getEntity() instanceof Animals ? healsFromAnimals : healsFromMonsters);
                 if (hp > 20) {
                     hp = 20;
@@ -36,7 +36,7 @@ public class Vampire extends AbilityListener implements Disableable {
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
         if (event.getKillerPlayer() != null && hasAbility(event.getKillerPlayer().getPlayer())) {
-            int hp = event.getKillerPlayer().getPlayer().getHealth();
+            double hp = event.getKillerPlayer().getPlayer().getHealth();
             hp += healsFromPlayers;
             if (hp - 20 >= surplusHealthRequiredForPotion)
                 event.getDrops().add(new ItemStack(Material.POTION, 1, (short) 16421));
