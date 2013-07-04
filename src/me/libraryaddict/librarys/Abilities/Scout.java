@@ -38,7 +38,7 @@ public class Scout extends AbilityListener implements Disableable {
     public void onDamage(EntityDamageEvent event) {
         if (cancelFall)
             if (event.getCause() == DamageCause.FALL && event.getEntity() instanceof Player
-                    && hasAbility(((Player) event.getEntity()).getName())
+                    && hasAbility(((Player) event.getEntity()))
                     && ((Player) event.getEntity()).hasPotionEffect(PotionEffectType.SPEED))
                 event.setCancelled(true);
     }

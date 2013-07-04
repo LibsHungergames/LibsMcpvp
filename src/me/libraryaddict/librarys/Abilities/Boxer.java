@@ -13,7 +13,7 @@ public class Boxer extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player && hasAbility(((Player) event.getDamager()).getName()) && event.getDamage() == 1)
+        if (event.getDamager() instanceof Player && hasAbility(((Player) event.getDamager())) && event.getDamage() == 1)
             event.setDamage(boxerDamage);
         if (reduceDamage && event.getEntity() instanceof Player && hasAbility(((Player) event.getEntity()).getName())
                 && event.getDamage() > 0)
