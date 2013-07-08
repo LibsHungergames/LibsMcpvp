@@ -104,8 +104,10 @@ public class Analyzer extends AbilityListener implements Disableable {
     public boolean alwaysDisplayInfo = false;
     public boolean countSoup = false;
     private HashMap<Player, String> currentNames = new HashMap<Player, String>();
-    public String informationItem = ChatColor.WHITE + "Itemstack %s has %s items";
-    public String informationMob = ChatColor.WHITE + "Mob %s has %s health";
+    public String informationItem = ChatColor.WHITE + "Itemstack " + ChatColor.YELLOW + "%s" + ChatColor.WHITE + " has "
+            + ChatColor.YELLOW + "%s" + ChatColor.WHITE + " items";
+    public String informationMob = ChatColor.WHITE + "Mob " + ChatColor.YELLOW + "%s" + ChatColor.WHITE + " has "
+            + ChatColor.YELLOW + "%s" + ChatColor.WHITE + " health";
     public String informationPlayer = ChatColor.YELLOW + "%s" + ChatColor.WHITE + " has Health: " + ChatColor.YELLOW + "%s"
             + ChatColor.WHITE + ", Hunger:" + ChatColor.YELLOW + " %s" + ChatColor.WHITE + ", Armor: " + ChatColor.YELLOW + "%s"
             + ChatColor.WHITE + ", Kit: " + ChatColor.YELLOW + "%s";
@@ -196,8 +198,8 @@ public class Analyzer extends AbilityListener implements Disableable {
                 return String.format(informationPlayerSoup, p.getName(), p.getHealth(), p.getFoodLevel(), getArmorRating(p
                         .getInventory().getArmorContents()), HungergamesApi.getKitManager().getKitByPlayer(p).getName(), i);
             }
-            return String.format(informationPlayer, p.getName(), p.getHealth(), p.getFoodLevel(), HungergamesApi.getKitManager()
-                    .getKitByPlayer(p).getName(), getArmorRating(p.getInventory().getArmorContents()));
+            return String.format(informationPlayer, p.getName(), p.getHealth(), p.getFoodLevel(), getArmorRating(p.getInventory()
+                    .getArmorContents()), HungergamesApi.getKitManager().getKitByPlayer(p).getName());
         } else if (entity instanceof Item) {
             Item item = (Item) entity;
             return String.format(informationItem, HungergamesApi.getNameManager().getItemName(item.getItemStack()), item
