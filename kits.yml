@@ -201,7 +201,7 @@ Kits:
     Ability:
       - Explorer
   Fireman:
-    Description: 'As a precaution you were carrying your water bucket just before the aliens grabbed you and stuck you in this battleground. Time to find lava and do what everyone told you off for!'
+    Description: 'As a precaution you were carrying your water bucket just before the aliens grabbed you and stuck you in this battleground. Time to find lava and do what everyone told you off for! You also don''t take fire damage!'
     Free: true
     Price: 0
     Icon: WATER_BUCKET 0 1
