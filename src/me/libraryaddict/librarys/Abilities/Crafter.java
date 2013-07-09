@@ -10,13 +10,13 @@ import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
-import me.libraryaddict.Hungergames.Types.FakeFurnace;
+import me.libraryaddict.librarys.Misc.FakeFurnace;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_6_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -66,7 +66,7 @@ public class Crafter extends AbilityListener implements Disableable {
             if (item != null && furnaces.containsKey(item)) {
                 FakeFurnace furnace = furnaces.remove(item);
                 if (furnace != null) {
-                    for (net.minecraft.server.v1_6_R1.ItemStack i : furnace.getContents())
+                    for (net.minecraft.server.v1_6_R2.ItemStack i : furnace.getContents())
                         drops.add(CraftItemStack.asBukkitCopy(i));
                 }
             }

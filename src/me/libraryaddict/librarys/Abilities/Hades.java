@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import me.libraryaddict.Hungergames.Types.*;
-import net.minecraft.server.v1_6_R1.EntityCreature;
-import net.minecraft.server.v1_6_R1.EntityInsentient;
-import net.minecraft.server.v1_6_R1.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_6_R1.PathfinderGoalSelector;
+import net.minecraft.server.v1_6_R2.EntityCreature;
+import net.minecraft.server.v1_6_R2.EntityInsentient;
+import net.minecraft.server.v1_6_R2.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_6_R2.PathfinderGoalSelector;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R1.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_6_R2.entity.CraftCreature;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -24,6 +23,10 @@ import org.bukkit.potion.PotionEffect;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
+import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.librarys.Misc.FollowOwner;
+import me.libraryaddict.librarys.Misc.OwnerAttacked;
+import me.libraryaddict.librarys.Misc.OwnerAttacks;
 
 public class Hades extends AbilityListener implements Disableable {
     private int itemToUse = Material.ROTTEN_FLESH.getId();
