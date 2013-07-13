@@ -23,7 +23,10 @@ public class Worm extends AbilityListener implements Disableable {
             Player p = event.getPlayer();
             boolean drop = true;
             if (p.getHealth() < 20) {
-                p.setHealth(p.getHealth() + 1);
+                double hp = p.getHealth() + 1;
+                if (hp > 20)
+                    hp = 20;
+                p.setHealth(hp);
                 drop = false;
             } else if (p.getFoodLevel() < 20) {
                 p.setFoodLevel(p.getFoodLevel() + 1);
