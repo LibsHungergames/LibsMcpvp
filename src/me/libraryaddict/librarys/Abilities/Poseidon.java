@@ -11,7 +11,7 @@ import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 
 public class Poseidon extends AbilityListener implements Disableable {
-    public int potionMultiplier = 1;
+    public int potionMultiplier = 0;
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
