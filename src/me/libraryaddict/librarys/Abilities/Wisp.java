@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.minecraft.server.v1_6_R2.EntityHuman;
 import net.minecraft.server.v1_6_R2.EntityInsentient;
-import net.minecraft.server.v1_6_R2.EntityLiving;
 import net.minecraft.server.v1_6_R2.EntityVillager;
 import net.minecraft.server.v1_6_R2.PathfinderGoal;
 import net.minecraft.server.v1_6_R2.PathfinderGoalAvoidPlayer;
