@@ -55,7 +55,7 @@ public class Wisp extends AbilityListener implements Disableable {
         try {
             EntityVillager ent = ((CraftVillager) villager).getHandle();
 
-            Field goalField = EntityLiving.class.getDeclaredField("goalSelector");
+            Field goalField = EntityInsentient.class.getDeclaredField("goalSelector");
             goalField.setAccessible(true);
             PathfinderGoalSelector goalSelector = (PathfinderGoalSelector) goalField.get(ent);
 
