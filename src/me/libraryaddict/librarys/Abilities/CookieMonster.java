@@ -25,7 +25,10 @@ public class CookieMonster extends AbilityListener implements Disableable {
             if (hasAbility(p) && event.getItem() != null && event.getItem().getType() == Material.COOKIE) {
                 event.setCancelled(true);
                 if (p.getHealth() < 20) {
-                    p.setHealth(p.getHealth() + 1);
+                    double hp = p.getHealth() + 1;
+                    if (hp > 20)
+                        hp = 20;
+                    p.setHealth(hp);
                 } else if (p.getFoodLevel() < 20) {
                     p.setFoodLevel(p.getFoodLevel() + 1);
                 } else {
