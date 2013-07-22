@@ -56,6 +56,8 @@ public class FollowOwner extends PathfinderGoal {
     }
 
     public void e() {
+        if (e == null)
+            return;
         this.d.getControllerLook().a(this.e, 10.0F, this.d.bp());
         if (--this.h > 0)
             return;
