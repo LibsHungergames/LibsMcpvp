@@ -34,6 +34,8 @@ public class FollowOwner extends PathfinderGoal {
     }
 
     public boolean a() {
+        if (e == null)
+            return false;
         if (this.d.e(e) < this.c * this.c)
             return false;
         return true;
