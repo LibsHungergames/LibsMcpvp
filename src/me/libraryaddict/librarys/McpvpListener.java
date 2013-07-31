@@ -118,6 +118,7 @@ public class McpvpListener implements Listener {
                         gamer.setAlive(true);
                         KitManager kits = HungergamesApi.getKitManager();
                         Player p = gamer.getPlayer();
+                        p.setNoDamageTicks(200);
                         p.getInventory().addItem(new ItemStack(Material.COMPASS));
                         kits.setKit(p, kits.getKitByPlayer(p).getName());
                         if (joinersItems)
@@ -143,6 +144,7 @@ public class McpvpListener implements Listener {
                         gamer.setAlive(true);
                         KitManager kits = HungergamesApi.getKitManager();
                         Player p = gamer.getPlayer();
+                        p.setNoDamageTicks(200);
                         p.getInventory().addItem(new ItemStack(Material.COMPASS));
                         kits.setKit(p, kits.getKitByPlayer(p).getName());
                         if (respawnItems)
