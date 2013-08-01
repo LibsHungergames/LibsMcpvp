@@ -593,7 +593,7 @@ Kits:
     Ability:
       - Turtle
   Urgal:
-    Description: 'The Hulk kit starts with three Strength I potions. The difficulty comes in deciding when to use your potions... early to wipe out a few unsuspecting victims, or late game when that little bit of extra damage could turn the fight!'
+    Description: 'The Hulk kit starts with a Strength I potion. The difficulty comes in deciding when to use your potion... early to wipe out a few unsuspecting victims, or late game when that extra damage could turn the fight!'
     Free: true
     Price: 0
     Icon: POTION 8201 1
