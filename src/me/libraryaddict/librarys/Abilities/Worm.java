@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Worm extends AbilityListener implements Disableable {
     public boolean dirtPreventsFallDamage = true;
@@ -21,22 +22,34 @@ public class Worm extends AbilityListener implements Disableable {
     public void onDamage(BlockDamageEvent event) {
         if (hasAbility(event.getPlayer()) && event.getBlock().getType() == Material.DIRT) {
             Player p = event.getPlayer();
-            boolean drop = true;
-            if (p.getHealth() < 20) {
-                double hp = p.getHealth() + 1;
-                if (hp > 20)
-                    hp = 20;
-                p.setHealth(hp);
-                drop = false;
-            } else if (p.getFoodLevel() < 20) {
-                p.setFoodLevel(p.getFoodLevel() + 1);
-                drop = false;
+            double dist = event.getBlock().getLocation().distance(p.getWorld().getSpawnLocation());
+            double borderSize = HungergamesApi.getConfigManager().getBorderSize();
+            if (!HungergamesApi.getConfigManager().isRoundedBorder()) {
+                double i = Math.abs(event.getBlock().getX() - p.getWorld().getSpawnLocation().getBlockX());
+                if (i >= borderSize)
+                    dist = i;
+                i = Math.abs(event.getBlock().getZ() - p.getWorld().getSpawnLocation().getBlockZ());
+                if (i >= borderSize)
+                    dist += i;
             }
-            event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
-            event.getBlock().setType(Material.AIR);
-            if (drop)
-                event.getBlock().getWorld()
-                        .dropItemNaturally(event.getBlock().getLocation().add(0.5, 0, 0.5), new ItemStack(Material.DIRT));
+            if (dist < borderSize) {
+                boolean drop = true;
+                if (p.getHealth() < 20) {
+                    double hp = p.getHealth() + 1;
+                    if (hp > 20)
+                        hp = 20;
+                    p.setHealth(hp);
+                    drop = false;
+                } else if (p.getFoodLevel() < 20) {
+                    p.setFoodLevel(p.getFoodLevel() + 1);
+                    drop = false;
+                }
+                event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
+                event.getBlock().setType(Material.AIR);
+                if (drop)
+                    event.getBlock().getWorld()
+                            .dropItemNaturally(event.getBlock().getLocation().add(0.5, 0, 0.5), new ItemStack(Material.DIRT));
+            }
         }
     }
 
