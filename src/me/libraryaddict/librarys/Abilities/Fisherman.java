@@ -14,8 +14,8 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 public class Fisherman extends AbilityListener implements Disableable {
-    public double biteChanceWhereOneIsInstant = 0.4D;
-    public int chanceInOneOfJunk = 6;
+    public double biteChanceWhereOneIsInstant = 0.05D;
+    public int chanceInOneOfJunk = 5;
     public String[] junk = new String[] { "ACTIVATOR_RAIL", "ANVIL", "APPLE", "ARROW", "BAKED_POTATO", "BEACON", "BED",
             "BIRCH_WOOD_STAIRS", "BLAZE_POWDER", "BLAZE_ROD", "BOAT", "BONE", "BOOK", "BOOK_AND_QUILL", "BOOKSHELF", "BOW",
             "BOWL", "BREAD", "BREWING_STAND_ITEM", "BRICK", "BRICK_STAIRS", "BROWN_MUSHROOM", "BUCKET", "CACTUS", "CAKE",
