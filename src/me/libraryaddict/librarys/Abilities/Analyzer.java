@@ -171,6 +171,8 @@ public class Analyzer extends AbilityListener implements Disableable {
         // Get nearby entities
         for (Entity entity : p.getNearbyEntities(rangeToScan, rangeToScan, rangeToScan)) {
             // Bounding box of the given player
+            if (entity instanceof Player && !HungergamesApi.getPlayerManager().getGamer(entity).isAlive())
+                continue;
             Vector3D targetPos = new Vector3D(entity.getLocation());
             Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
             Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
