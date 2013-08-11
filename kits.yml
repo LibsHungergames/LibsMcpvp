@@ -8,7 +8,6 @@ BadKits:
   - Hermit
   # Phantom works. Remove from this list to enable
   - Phantom
-  - Rider
 Kits:
   Analyzer:
     Description: 'The analyzer kit shows you information on the entity you are currently looking at! You must be holding a item else you will be unable to look at the information being feed to your screen. From health to items in a itemstack. This can do it all!'
@@ -438,12 +437,12 @@ Kits:
     Ability:
       - Reaper
   Rider:
-    Description: 'cba'
+    Description: 'You are given a riding crop which you can use to summon a horse, no one else can ride your horse and to make it disappear, just use your riding crop again! It died? Summon another!'
     Free: true
     Price: 0
     Icon: CARROT_STICK 0 1
     Items:
-      - STICK 0 1 Name=Riding_Whip Unlootable 1
+      - 'CARROT_STICK 0 1 Name=Summon:_Mighty_Steed Unlootable 1'
     Ability:
       - Rider
   Salvager:
