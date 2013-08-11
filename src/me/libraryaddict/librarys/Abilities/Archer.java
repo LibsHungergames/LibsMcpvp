@@ -12,7 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Fletcher extends AbilityListener implements Disableable {
+public class Archer extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {

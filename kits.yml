@@ -18,13 +18,15 @@ Kits:
     Ability:
       - Analyzer
   Archer:
-    Description: 'The archer kit allows you to shoot others. Hmm. Thats pretty much it. You also get a bow and 10 arrows'
+    Description: 'Kill a chicken and drop addictional feathers, destroy gravel for the assured chance of a piece of flint. Kill skeletons to get 2 arrows each kill! You also start with a bow and 10 arrows!'
     Free: true
     Price: 0
     Icon: BOW 0 1
     Items:
       - BOW 0 1
       - ARROW 0 10
+    Ability:
+      - Archer
   Array:
     Description: 'The array kit supplies you with 3 beacons, place them to create a array. This gives all players in a radius of 6 blocks regeneration II making this a great team kit.'
     Free: true
@@ -227,13 +229,6 @@ Kits:
       - REDSTONE_TORCH_ON 0 1 Name=Flash UniqueItem Unlootable 1
     Ability:
       - Flash
-  Fletcher:
-    Description: 'Kill a chicken and drop addictional feathers, destroy gravel for the assured chance of a piece of flint. Kill skeletons to get 2 arrows each kill! Its time to team up with that archer!'
-    Free: true
-    Price: 0
-    Icon: ARROW 0 1
-    Ability:
-      - Fletcher
   Forger:
     Description: 'The forger kit lets you instantly smelt ores if you have enough coal. By clicking the coal or a ore in your inventory it will be smelted at a ratio of one ore per coal.'
     Free: true
