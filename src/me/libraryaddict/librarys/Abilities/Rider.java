@@ -99,7 +99,7 @@ public class Rider extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getCurrentItem().getType() == Material.SADDLE) {
+        if (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.SADDLE) {
             if (event.getWhoClicked().getVehicle() != null) {
                 if (horses.containsValue(event.getWhoClicked().getVehicle())) {
                     event.setCancelled(true);
