@@ -28,6 +28,7 @@ public class Endermage extends AbilityListener implements Disableable {
     public String nooneWarped = ChatColor.RED + "You didn't get anyone! Cooldown still applies!";
     public String warpedMessage = ChatColor.LIGHT_PURPLE + "Warped!\n" + ChatColor.RED
             + "You are invincible for 5 seconds!\nPrepare to fight!";
+    public boolean canWarpOtherEndermanges = true;
 
     private boolean isEnderable(Location portal, Location player) {
         return Math.abs(portal.getX() - player.getX()) < 2 && Math.abs(portal.getZ() - player.getZ()) < 2
@@ -49,7 +50,8 @@ public class Endermage extends AbilityListener implements Disableable {
                 boolean foundSomeone = false;
                 for (Gamer gamer : HungergamesApi.getPlayerManager().getAliveGamers()) {
                     Player victim = gamer.getPlayer();
-                    if (gamer.isAlive() && victim != mage && isEnderable(portal, victim.getLocation())) {
+                    if (gamer.isAlive() && victim != mage && isEnderable(portal, victim.getLocation())
+                            && (canWarpOtherEndermanges || !hasAbility(victim))) {
                         foundSomeone = true;
                         warp(victim, portal);
                     }
