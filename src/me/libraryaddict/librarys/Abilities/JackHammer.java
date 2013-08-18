@@ -23,6 +23,7 @@ public class JackHammer extends AbilityListener implements Disableable {
     public String hammerName = "Jack Hammer";
     private HashMap<ItemStack, Integer> uses = new HashMap<ItemStack, Integer>();
     public int usesBeforeCooldown = 5;
+    public int ticksBetweenBreaks = 20;
 
     @EventHandler
     public void onBreak(final BlockBreakEvent event) {
@@ -51,7 +52,7 @@ public class JackHammer extends AbilityListener implements Disableable {
                         } else
                             cancel();
                     }
-                }.runTaskTimer(hg, 20, 20);
+                }.runTaskTimer(hg, ticksBetweenBreaks, ticksBetweenBreaks);
             }
         }
     }
