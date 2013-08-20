@@ -131,11 +131,10 @@ public class McpvpListener implements Listener {
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
-        if (joinUntil >= 0 && !joined.contains(event.getKilled().getName()))
-            joined.add(event.getKilled().getName());
         if (event.getKilled().getPlayer().hasPermission("hungergames.vip.respawn") && hg.currentTime < respawnUntil
                 && !joined.contains(event.getKilled().getName())) {
             final String killedName = event.getKilled().getName();
+            joined.add(killedName);
             Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
                 public void run() {
                     Gamer gamer = HungergamesApi.getPlayerManager().getGamer(killedName);
