@@ -84,6 +84,7 @@ public class Flash extends AbilityListener implements Disableable {
                             Location pLoc = event.getPlayer().getLocation();
                             loc.setPitch(pLoc.getPitch());
                             loc.setYaw(pLoc.getYaw());
+                            event.getPlayer().eject();
                             event.getPlayer().teleport(loc);
                             pLoc.getWorld().playSound(pLoc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
                             pLoc.getWorld().playSound(loc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
