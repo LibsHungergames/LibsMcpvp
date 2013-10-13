@@ -9,7 +9,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.libraryaddict.Hungergames.Interfaces.ChestManager;
-import me.libraryaddict.Hungergames.Managers.LibsFeastManager;
+import me.libraryaddict.Hungergames.Listeners.LibsFeastManager;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class LibsMcpvpFeastManager extends LibsFeastManager {
@@ -27,7 +27,7 @@ public class LibsMcpvpFeastManager extends LibsFeastManager {
                         Block block = loc.clone().add(x, 0, z).getBlock();
                         Block b = block;
                         if (x == 0 && z == 0)
-                            setBlockFast(b, Material.ENCHANTMENT_TABLE.getId(), (short) 0);
+                            gen.setBlockFast(b, Material.ENCHANTMENT_TABLE.getId(), (short) 0);
                         else if (Math.abs(x + z) % 2 == 0) {
                             block.setTypeIdAndData(Material.CHEST.getId(), (byte) 0, false);
                             processedBlocks.add(block);

@@ -32,10 +32,10 @@ public class Chameleon extends AbilityListener implements Disableable {
 
     public Chameleon() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
-            throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
+            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(),
                     "Plugin LibsDisguises"));
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
-            throw new Exception(String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(),
+            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(),
                     "Plugin ProtocolLib"));
     }
 

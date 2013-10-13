@@ -121,7 +121,7 @@ public class Analyzer extends AbilityListener implements Disableable {
     public Analyzer() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
             throw new Exception(
-                    String.format(HungergamesApi.getTranslationManager().getLoggerDependencyNotFound(), "ProtocolLib"));
+                    String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(), "ProtocolLib"));
     }
 
     @EventHandler
