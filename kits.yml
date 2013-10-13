@@ -329,7 +329,7 @@ Kits:
     Ability:
       - Kaya
   Launcher:
-    Description: 'You are given 20 sponges which will launch anyone who steps on top to distances unimaginable (not really). The more sponges under it, the stronger the effect. The block you place it against determines the direction you are launched! Anyone can break the block to gain a launcher block!'
+    Description: 'You are given 10 sponges which will launch anyone who steps on top to distances unimaginable (not really). The more sponges under it, the stronger the effect. The block you place it against determines the direction you are launched! Anyone can break the block to gain a launcher block!'
     Free: true
     Price: 0
     Icon: SPONGE 0 1
