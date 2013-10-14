@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -246,7 +246,7 @@ public class Analyzer extends AbilityListener implements Disableable {
                         meta.setDisplayName(info);
                     item = item.clone();
                     item.setItemMeta(meta);
-                    net.minecraft.server.v1_6_R2.ItemStack itemstack = CraftItemStack.asNMSCopy(item);
+                    net.minecraft.server.v1_6_R3.ItemStack itemstack = CraftItemStack.asNMSCopy(item);
                     PacketContainer packet = new PacketContainer(103);
                     StructureModifier<Object> mods = packet.getModifier();
                     mods.write(0, 0);

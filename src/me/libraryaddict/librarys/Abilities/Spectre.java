@@ -12,7 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -29,10 +29,10 @@ import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
-import net.minecraft.server.v1_6_R2.EntityPlayer;
-import net.minecraft.server.v1_6_R2.EntityTracker;
-import net.minecraft.server.v1_6_R2.EntityTrackerEntry;
-import net.minecraft.server.v1_6_R2.WorldServer;
+import net.minecraft.server.v1_6_R3.EntityPlayer;
+import net.minecraft.server.v1_6_R3.EntityTracker;
+import net.minecraft.server.v1_6_R3.EntityTrackerEntry;
+import net.minecraft.server.v1_6_R3.WorldServer;
 
 public class Spectre extends AbilityListener implements Disableable {
     public boolean addInvisToSpectre = true;

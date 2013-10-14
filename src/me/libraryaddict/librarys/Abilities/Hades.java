@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.server.v1_6_R2.EntityCreature;
-import net.minecraft.server.v1_6_R2.EntityInsentient;
-import net.minecraft.server.v1_6_R2.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_6_R2.PathfinderGoalSelector;
+import net.minecraft.server.v1_6_R3.EntityCreature;
+import net.minecraft.server.v1_6_R3.EntityInsentient;
+import net.minecraft.server.v1_6_R3.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_6_R3.PathfinderGoalSelector;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftCreature;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftCreature;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;

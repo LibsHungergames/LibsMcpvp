@@ -1,11 +1,11 @@
 package me.libraryaddict.librarys.Misc;
 
-import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import net.minecraft.server.v1_6_R2.EntityCreature;
-import net.minecraft.server.v1_6_R2.EntityLiving;
-import net.minecraft.server.v1_6_R2.PathfinderGoalTarget;
+import net.minecraft.server.v1_6_R3.EntityCreature;
+import net.minecraft.server.v1_6_R3.EntityLiving;
+import net.minecraft.server.v1_6_R3.PathfinderGoalTarget;
 
 public class OwnerAttacks extends PathfinderGoalTarget {
     EntityCreature a;
@@ -20,7 +20,7 @@ public class OwnerAttacks extends PathfinderGoalTarget {
     }
 
     public boolean a() {
-        this.b = owner.aF();
+        this.b = owner.getLastDamager();
         return a(this.b, false);
     }
 
