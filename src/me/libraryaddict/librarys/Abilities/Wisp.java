@@ -38,7 +38,7 @@ import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.DisguiseTypes.PlayerDisguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 
 public class Wisp extends AbilityListener implements Disableable {
 
