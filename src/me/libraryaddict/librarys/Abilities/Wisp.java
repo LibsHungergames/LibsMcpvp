@@ -93,10 +93,10 @@ public class Wisp extends AbilityListener implements Disableable {
 
     public Wisp() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("LibsDisguises") == null)
-            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getLoggerDependencyNotFound(),
+            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(),
                     "Plugin LibsDisguises"));
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
-            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getLoggerDependencyNotFound(),
+            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(),
                     "Plugin ProtocolLib"));
         if (!((CraftServer) Bukkit.getServer()).getServer().getPropertyManager().getBoolean("spawn-npcs", false))
             throw new Exception("NPC's in server.properties is disabled, enable this to use the kit Wisp");

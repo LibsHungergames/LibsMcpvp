@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>libshungergames</groupId>
 			<artifactId>libshungergames</artifactId>
-			<version>v4.5.9</version>
+			<version>v4.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
