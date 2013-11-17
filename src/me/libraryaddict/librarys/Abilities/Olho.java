@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Viper extends AbilityListener implements Disableable {
+public class Olho extends AbilityListener implements Disableable {
 
     public int chance = 3;
     public int length = 5;
@@ -26,7 +26,7 @@ public class Viper extends AbilityListener implements Disableable {
             LivingEntity entity = (LivingEntity) event.getEntity();
             Player p = (Player) event.getDamager();
             if (hasAbility(p) && new Random().nextInt(chance) == 1) {
-                entity.addPotionEffect(new PotionEffect(PotionEffectType.POISON, length * 20, multiplier), true);
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, length * 20, multiplier), true);
             }
         }
     }
