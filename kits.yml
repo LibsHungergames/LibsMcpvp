@@ -171,9 +171,9 @@ Kits:
     Description: 'Doctor wasn''t looking when you stole his forceps. Now you are running around on a battle field removing all the players potion effects!'
     Free: true
     Price: 0
-    Icon: Shears 0 1
+    Icon: SHEARS 0 1
     Items:
-      - Shears 0 1 Name=Pair_Of_Forceps Unlootable 1
+      - SHEARS 0 1 Name=Pair_Of_Forceps Unlootable 1
     Ability:
       - Doctor
   Dwarf:
@@ -421,7 +421,7 @@ Kits:
     Description: 'The pyro kit is hilariously explosive! You have a flint and steel to light the forest up, and 5 explosive fire charges which launch like a ghast fireball!'
     Free: true
     Price: 0
-    Icon: FIRE 0 1
+    Icon: FLINT_AND_STEEL 0 1
     Items:
       - FLINT_AND_STEEL 0 1
       - FIREBALL 0 5
@@ -465,7 +465,7 @@ Kits:
     Description: 'The scorcher kit allows you to blaze away like a beacon of &mhope&r death! While you are wearing your scorching boots and holding your scorchers ignition, flame appears from under your feet! Beware however! You are not immune to its effects and it only lasts for 66 seconds!'
     Free: true
     Price: 0
-    Icon: FIRE 0 1
+    Icon: FLINT_AND_STEEL 0 1
     Boots: LEATHER_BOOTS 0 1 Unlootable 1 Name=Scorchers_Boots Color=255:0:0
     Items: 
       - BLAZE_POWDER 0 1 Unlootable 1 Name=Scorchers_Igniter
@@ -583,7 +583,7 @@ Kits:
     Description: 'You found your ultimate defense, Just by crouching and blocking with a sword. You only take half a heart of damage! However you find this position awkward to attack with when you are crouching.'
     Free: true
     Price: 0
-    Icon: IRON_DOOR_BLOCK 0 1
+    Icon: IRON_CHESTPLATE 0 1
     Ability:
       - Turtle
   Urgal:
