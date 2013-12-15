@@ -109,6 +109,7 @@ public class McpvpListener implements Listener {
     public void onJoin(final PlayerJoinEvent event) {
         if (hg.currentTime >= 0 && hg.currentTime < joinUntil && event.getPlayer().hasPermission("hungergames.vip.rejoin")
                 && !joined.contains(event.getPlayer().getName())) {
+            joined.add(event.getPlayer().getName());
             Bukkit.getScheduler().scheduleSyncDelayedTask(mcpvp, new Runnable() {
                 public void run() {
                     Gamer gamer = HungergamesApi.getPlayerManager().getGamer(event.getPlayer());

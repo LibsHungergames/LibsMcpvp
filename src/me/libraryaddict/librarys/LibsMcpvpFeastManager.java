@@ -20,8 +20,8 @@ public class LibsMcpvpFeastManager extends LibsFeastManager {
                 if (x == 0 && z == 0)
                     gen.setBlockFast(b, Material.ENCHANTMENT_TABLE.getId(), (short) 0);
                 else if (Math.abs(x + z) % 2 == 0) {
-                    block.setTypeIdAndData(Material.CHEST.getId(), (byte) 0, false);
                     gen.addToProcessedBlocks(block);
+                    block.setTypeIdAndData(Material.CHEST.getId(), (byte) 0, false);
                     Chest chest = (Chest) block.getState();
                     cm.fillChest(chest.getInventory());
                     chest.update();

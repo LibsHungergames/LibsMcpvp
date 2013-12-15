@@ -269,15 +269,6 @@ Kits:
     Icon: DIAMOND_SPADE 0 1
     Ability:
       - Gravedigger
-  Hades:
-    Description: 'The Hades kit will allow you to turn zombies into your minions! Once you right click a Zombie with a rotten flesh, they will turn into your minion and follow you around! They will attack whatever you attack, and attack whatever attacks you! Just like wolves they will teleport towards you once they get out of a 10 blocks radius from you. All minions have a diamond helmet!'
-    Free: true
-    Price: 0
-    Icon: ROTTEN_FLESH 0 1
-    Items:
-      - ROTTEN_FLESH 0 4
-    Ability:
-      - Hades
   Hermit:
     Description: 'You ran away from home looking for a better life, Someone invited you to a battle of skill. You accepted but minutes before the game starts you decided to go on a jog. As a result you are now hundreds of blocks from spawn when the game starts! Oh dear!'
     Free: true
