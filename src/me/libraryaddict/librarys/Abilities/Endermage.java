@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Endermage extends AbilityListener implements Disableable {
+    public boolean canWarpOtherEndermanges = true;
     private transient HashMap<Player, Integer> cooldown = new HashMap<Player, Integer>();
     public String cooldownMessage = ChatColor.RED + "You cannot use this just yet! Wait %s seconds!";
     public int cooldownTime = 30;
@@ -28,7 +29,6 @@ public class Endermage extends AbilityListener implements Disableable {
     public String nooneWarped = ChatColor.RED + "You didn't get anyone! Cooldown still applies!";
     public String warpedMessage = ChatColor.LIGHT_PURPLE + "Warped!\n" + ChatColor.RED
             + "You are invincible for 5 seconds!\nPrepare to fight!";
-    public boolean canWarpOtherEndermanges = true;
 
     private boolean isEnderable(Location portal, Location player) {
         return Math.abs(portal.getX() - player.getX()) < 2 && Math.abs(portal.getZ() - player.getZ()) < 2
