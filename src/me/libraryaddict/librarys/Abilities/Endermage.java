@@ -42,7 +42,7 @@ public class Endermage extends AbilityListener implements Disableable {
             event.setCancelled(true);
             Player mage = event.getPlayer();
             mage.updateInventory();
-            final Block b = event.getBlock();
+            final Block b = event.getBlock(endportalframe);
             if (cooldown.containsKey(mage) && cooldown.get(mage) > hg.currentTime) {
                 mage.sendMessage(String.format(cooldownMessage, cooldown.get(mage) - hg.currentTime));
             } else {
@@ -72,7 +72,7 @@ public class Endermage extends AbilityListener implements Disableable {
         victim.playSound(portal, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
         if (invincibleTicks > 0)
             victim.setNoDamageTicks(invincibleTicks);
-        victim.teleport(portal);
+        victim.teleport(endportalframe);
         victim.sendMessage(warpedMessage);
     }
 
