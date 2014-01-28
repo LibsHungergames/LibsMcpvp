@@ -61,7 +61,7 @@ public class Wisp extends AbilityListener implements Disableable {
             Field targetField = EntityInsentient.class.getDeclaredField("targetSelector");
             targetField.setAccessible(true);
 
-            Field aField = PathfinderGoalSelector.class.getDeclaredField("a");
+            Field aField = PathfinderGoalSelector.class.getDeclaredField("b");
             aField.setAccessible(true);
             ((List<PathfinderGoal>) aField.get(goalSelector)).clear();
             ((List<PathfinderGoal>) aField.get((PathfinderGoalSelector) targetField.get(ent))).clear();
