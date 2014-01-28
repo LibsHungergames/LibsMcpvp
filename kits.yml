@@ -446,7 +446,7 @@ Kits:
     Ability:
       - Salvager
   Santa:
-    Description: 'The santa kit is great for those that love to team! Every minute you are given a random present with a kit in it. Give the present to someone who owns said kit and they will get their starting items back! Give it to a urgal and he gets his strength potions back! Some kits are on the naughty list however and have a lower chance of appearing however..'
+    Description: 'The santa kit is great for those that love to team! Every minute you are given a random present with a kit in it. Give the present to someone who owns said kit and they will get their starting items back! Give it to a urgal and they get their strength potions back! Some kits are on the naughty list however and have a lower chance of appearing however..'
     Free: true
     Price: 0
     Icon: WRITTEN_BOOK 0 1
@@ -642,7 +642,7 @@ Kits:
     Ability:
       - Wisp
   Worm:
-    Description: 'The worm kit has the ability to instantly smash dirt, if his hunger or health is below full. Then instead of dirt dropping, it is consumed and his health or hunger is replenished a little. You also take no fall damage when landing on dirt'
+    Description: 'The worm kit has the ability to instantly smash dirt, if their hunger or health is below full. Then instead of dirt dropping, it is consumed and their health or hunger is replenished a little. You also take no fall damage when landing on dirt'
     Free: true
     Icon: DIRT 0 1
     Ability:
