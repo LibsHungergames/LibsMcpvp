@@ -30,7 +30,7 @@ public class Flash extends AbilityListener implements Disableable {
     private transient HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.BLUE + "You can use this again in %s seconds!";
     public String flashItemName = ChatColor.WHITE + "Flash";
-    public int flashOffItemId = Material.REDSTONE_TORCH_OFF.getId();
+    public int flashOffItemId = Material.TORCH.getId();
     public int flashOnItemId = Material.REDSTONE_TORCH_ON.getId();
     public boolean giveWeakness = true;
     private HashSet<Byte> ignoreBlockTypes = new HashSet<Byte>();
