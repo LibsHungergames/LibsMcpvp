@@ -29,8 +29,8 @@ public class Kaya extends AbilityListener implements Disableable {
 
     public int distanceFromBlocks = 3;
     private transient HashMap<Block, Player> kayaBlocks = new HashMap<Block, Player>();
-    public int lowerHeightFromBlocks = 1;
-    public int upperHeightFromBlocks = 2;
+    public int lowerHeightFromBlocks = -1;
+    public int upperHeightFromBlocks = 1;
 
     public Kaya() {
         ShapelessRecipe recipe = new ShapelessRecipe(new ItemStack(Material.GRASS));
