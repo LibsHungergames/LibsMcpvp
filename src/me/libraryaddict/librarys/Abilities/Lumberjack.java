@@ -13,9 +13,10 @@ public class Lumberjack extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() == Material.LOG && hasAbility(event.getPlayer())) {
+        if ((event.getBlock().getType() == Material.LOG || event.getBlock().getType() == Material.LOG_2)
+                && hasAbility(event.getPlayer())) {
             Block b = event.getBlock().getRelative(BlockFace.UP);
-            while (b.getType() == Material.LOG) {
+            while (b.getType() == Material.LOG || b.getType() == Material.LOG_2) {
                 b.breakNaturally();
                 b = b.getRelative(BlockFace.UP);
             }
