@@ -70,8 +70,8 @@ public class Chameleon extends AbilityListener implements Disableable {
         if (event.isCancelled())
             return;
         Entity damager = event.getDamager();
-        if (event.getDamager() instanceof Projectile && ((Projectile) damager).getShooter() != null)
-            damager = ((Projectile) damager).getShooter();
+        if (event.getDamager() instanceof Projectile && ((Projectile) damager).getShooter() instanceof Entity)
+            damager = (Entity) ((Projectile) damager).getShooter();
         if (isChameleon(event.getEntity()) && breakDisguiseOnAttacked) {
             Player p = (Player) event.getEntity();
             if (DisguiseAPI.isDisguised(p)) {
