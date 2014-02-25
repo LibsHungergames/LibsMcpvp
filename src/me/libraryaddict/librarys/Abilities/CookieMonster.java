@@ -29,10 +29,10 @@ public class CookieMonster extends AbilityListener implements Disableable {
             if (!cookieExpires.containsKey(p) || cookieExpires.get(p) < System.currentTimeMillis()) {
                 if (hasAbility(p) && event.getItem() != null && event.getItem().getType() == Material.COOKIE) {
                     event.setCancelled(true);
-                    if (p.getHealth() < 20) {
+                    if (p.getHealth() < p.getMaxHealth()) {
                         double hp = p.getHealth() + 1;
-                        if (hp > 20)
-                            hp = 20;
+                        if (hp > p.getMaxHealth())
+                            hp = p.getMaxHealth();
                         p.setHealth(hp);
                     } else if (p.getFoodLevel() < 20) {
                         p.setFoodLevel(p.getFoodLevel() + 1);

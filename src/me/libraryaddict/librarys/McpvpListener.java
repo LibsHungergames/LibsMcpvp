@@ -82,13 +82,13 @@ public class McpvpListener implements Listener {
             else if (cactusJuice && name.equals(cactusJuiceName))
                 restores = mcpvp.getConfig().getInt("CactusJuiceRestores");
             if (restores != 0) {
-                if (p.getHealth() < 20 || p.getFoodLevel() < 19) {
+                if (p.getHealth() < p.getMaxHealth() || p.getFoodLevel() < 19) {
                     event.setCancelled(true);
-                    if (p.getHealth() < 20)
-                        if (p.getHealth() + restores <= 20)
+                    if (p.getHealth() < p.getMaxHealth())
+                        if (p.getHealth() + restores <= p.getMaxHealth())
                             p.setHealth(p.getHealth() + restores);
                         else
-                            p.setHealth(20);
+                            p.setHealth(p.getMaxHealth());
                     else if (p.getFoodLevel() < 20)
                         if (p.getFoodLevel() + restores <= 20)
                             p.setFoodLevel(p.getFoodLevel() + restores);

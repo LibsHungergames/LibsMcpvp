@@ -153,7 +153,7 @@ public class Gambler extends AbilityListener implements Disableable {
             Player p = event.getPlayer();
             WonItem wonItem = getRandom();
             if (wonItem.isHealth())
-                p.setHealth(20);
+                p.setHealth(p.getMaxHealth());
             else if (wonItem.isHunger()) {
                 p.setFoodLevel(20);
                 p.setSaturation(5.0F);
