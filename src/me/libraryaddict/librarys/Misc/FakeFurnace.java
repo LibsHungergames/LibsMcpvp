@@ -1,9 +1,9 @@
 package me.libraryaddict.librarys.Misc;
 
 import java.util.*;
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_7_R2.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 
 public class FakeFurnace extends TileEntityFurnace {
