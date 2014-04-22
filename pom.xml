@@ -31,14 +31,17 @@
 				</executions>
 				<configuration>
 					<options>
-						<option>-allowaccessmodification</option>
-						<option>-overloadaggressively</option>
+                        <option>-overloadaggressively</option>
+                        <option>-repackageclasses</option>
+                        <option>-allowaccessmodification</option>
+                        <option>-dontnote</option>
 						<option>-keep class
 							me.libraryaddict.librarys.Abilities.* {
 							public *; }</option>
-						<option>-keep class me.libraryaddict.librarys.McPvP</option>
+                        <option>-keep class me.libraryaddict.librarys.McPvP { }</option>
+                        <option>-keep class me.libraryaddict.librarys.LibsMcpvpFeastManager { }</option>
 						<option>-keep class
-							me.libraryaddict.Hungergames.McpvpListener.* {
+							me.libraryaddict.librarys.McpvpListener { public *;
 							}</option>
 						<option>-keepattributes *Annotation*</option>
 					</options>
