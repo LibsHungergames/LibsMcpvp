@@ -20,6 +20,7 @@ public class McPvP extends JavaPlugin implements Listener {
     private String currentVersion;
     private String latestVersion;
 
+    @Override
     public void onEnable() {
         File file = new File(getDataFolder().toString() + "/kits.yml");
         ConfigurationSection config;

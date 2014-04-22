@@ -10,6 +10,7 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class LibsMcpvpFeastManager extends LibsFeastManager {
 
+    @Override
     public void generateChests(final Location loc, int height) {
         final int h = height - 1;
         ChestManager cm = HungergamesApi.getChestManager();
