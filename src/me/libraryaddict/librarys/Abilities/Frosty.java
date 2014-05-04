@@ -1,5 +1,7 @@
 package me.libraryaddict.librarys.Abilities;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,7 +15,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -28,6 +29,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.Hungergames.Events.GameStartEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
+import me.libraryaddict.Hungergames.Managers.ReflectionManager;
 
 public class Frosty extends AbilityListener implements Disableable {
     private ArrayList<BlockFace> faces = new ArrayList<BlockFace>();
@@ -99,21 +101,38 @@ public class Frosty extends AbilityListener implements Disableable {
         }
     }
 
+    private boolean canPlace(Location loc) {
+        try {
+            ReflectionManager reflection = HungergamesApi.getReflectionManager();
+            for (Method blockMethod : reflection.getNmsClass("Block").getMethods()) {
+                if (Modifier.isStatic(blockMethod.getModifiers()) && blockMethod.getParameterTypes().length == 1
+                        && blockMethod.getParameterTypes()[0] == int.class
+                        && blockMethod.getReturnType().getSimpleName().equals("Block")) {
+                    Object snowBlock = blockMethod.invoke(null, Material.SNOW.getId());
+                    Method canPlace = snowBlock.getClass().getMethod("canPlace", reflection.getNmsClass("World"), int.class,
+                            int.class, int.class);
+                    return (Boolean) canPlace.invoke(snowBlock,
+                            loc.getWorld().getClass().getMethod("getHandle").invoke(loc.getWorld()), loc.getBlockX(),
+                            loc.getBlockY(), loc.getBlockZ());
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     private void transform(Entity entity) {
         Location loc = entity.getLocation();
         if (loc.getBlock().getRelative(BlockFace.DOWN).getType() == Material.AIR)
             loc = loc.getBlock().getRelative(BlockFace.DOWN).getLocation();
-        if (loc.getBlock().getType() == Material.AIR
-                && net.minecraft.server.v1_7_R3.Block.e(Material.SNOW.getId()).canPlace(((CraftWorld) loc.getWorld()).getHandle(), loc.getBlockX(),
-                        loc.getBlockY(), loc.getBlockZ()))
+        if (loc.getBlock().getType() == Material.AIR && canPlace(loc))
             loc.getBlock().setType(Material.SNOW);
         else {
             Collections.shuffle(faces, new Random());
             for (BlockFace face : faces) {
                 Block b = loc.getBlock().getRelative(face);
-                if (b.getType() == Material.AIR
-                        && net.minecraft.server.v1_7_R3.Block.e(Material.SNOW.getId()).canPlace(((CraftWorld) loc.getWorld()).getHandle(), b.getX(),
-                                b.getY(), b.getZ())) {
+                if (b.getType() == Material.AIR && canPlace(b.getLocation())) {
                     b.setType(Material.SNOW);
                     break;
                 }
