@@ -22,23 +22,25 @@ public class McPvP extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         File file = new File(getDataFolder().toString() + "/kits.yml");
         ConfigurationSection config;
         if (!file.exists()) {
-            file.getParentFile().mkdirs();
+            file.mkdirs();
             saveResource("kits.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(file);
-        saveDefaultConfig();
         HungergamesApi.getAbilityManager().initializeAllAbilitiesInPackage(this, "me.libraryaddict.librarys.Abilities");
-        for (String string : config.getConfigurationSection("Kits").getKeys(false)) {
-            if (config.contains("BadKits") && config.getStringList("BadKits").contains(string))
-                continue;
-            Kit kit = HungergamesApi.getKitManager().parseKit(config.getConfigurationSection("Kits." + string));
-            HungergamesApi.getKitManager().addKit(kit);
+        if (config.contains("Kits")) {
+            for (String string : config.getConfigurationSection("Kits").getKeys(false)) {
+                if (config.contains("BadKits") && config.getStringList("BadKits").contains(string))
+                    continue;
+                Kit kit = HungergamesApi.getKitManager().parseKit(config.getConfigurationSection("Kits." + string));
+                HungergamesApi.getKitManager().addKit(kit);
+            }
         }
         currentVersion = "v" + Bukkit.getPluginManager().getPlugin("LibsMcpvp").getDescription().getVersion();
-        if (HungergamesApi.getHungergames().getConfig().getBoolean("CheckUpdates"))
+        if (HungergamesApi.getHungergames().getConfig().getBoolean("CheckUpdates")) {
             Bukkit.getScheduler().scheduleAsyncDelayedTask(this, new Runnable() {
                 public void run() {
                     try {
@@ -59,10 +61,12 @@ public class McPvP extends JavaPlugin implements Listener {
                     }
                 }
             });
+        }
         Bukkit.getPluginManager().registerEvents(this, this);
         Bukkit.getPluginManager().registerEvents(new McpvpListener(this), this);
-        if (getConfig().getBoolean("McpvpFeast"))
+        if (getConfig().getBoolean("McpvpFeast")) {
             LibsFeastManager.setFeastManager(new LibsMcpvpFeastManager());
+        }
     }
 
     @EventHandler
