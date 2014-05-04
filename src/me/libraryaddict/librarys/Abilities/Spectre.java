@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
@@ -58,17 +60,24 @@ public class Spectre extends AbilityListener implements Disableable {
             EntityPlayer observer = getHandle(p);
             if (observer.playerConnection == null)
                 continue;
-            Map<String, Player> hiddenPlayers = null;
             try {
                 Field map = CraftPlayer.class.getDeclaredField("hiddenPlayers");
                 map.setAccessible(true);
-                hiddenPlayers = (Map<String, Player>) map.get(p);
+                if (map.getType() == Set.class) {
+                    Set<UUID> hiddenPlayers = (Set<UUID>) map.get(p);
+                    if (hiddenPlayers.contains(hider.getUniqueId())) {
+                        continue;
+                    }
+                    hiddenPlayers.add(hider.getUniqueId());
+                } else {
+                    Map<String, Player> hiddenPlayers = (Map<String, Player>) map.get(p);
+                    if (hiddenPlayers.containsKey(hider.getName()))
+                        continue;
+                    hiddenPlayers.put(hider.getName(), hider);
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (hiddenPlayers.containsKey(hider.getName()))
-                continue;
-            hiddenPlayers.put(hider.getName(), hider);
 
             // remove this player from the hidden player's EntityTrackerEntry
             EntityPlayer other = getHandle(hider);
@@ -198,17 +207,24 @@ public class Spectre extends AbilityListener implements Disableable {
             EntityPlayer observer = getHandle(p);
             if (observer.playerConnection == null)
                 continue;
-            Map<String, Player> hiddenPlayers = null;
             try {
                 Field map = CraftPlayer.class.getDeclaredField("hiddenPlayers");
                 map.setAccessible(true);
-                hiddenPlayers = (Map<String, Player>) map.get(p);
+                if (map.getType() == Set.class) {
+                    Set<UUID> hiddenPlayers = (Set<UUID>) map.get(p);
+                    if (!hiddenPlayers.contains(hider.getUniqueId())) {
+                        continue;
+                    }
+                    hiddenPlayers.remove(hider.getUniqueId());
+                } else {
+                    Map<String, Player> hiddenPlayers = (Map<String, Player>) map.get(p);
+                    if (!hiddenPlayers.containsKey(hider.getName()))
+                        continue;
+                    hiddenPlayers.remove(hider.getName());
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (!hiddenPlayers.containsKey(hider.getName()))
-                return;
-            hiddenPlayers.remove(hider.getName());
 
             EntityPlayer other = getHandle(hider);
             EntityTracker tracker = ((WorldServer) other.world).tracker;
