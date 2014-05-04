@@ -6,11 +6,11 @@ import java.util.List;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -95,10 +95,8 @@ public class Flash extends AbilityListener implements Disableable {
                             p.teleport(loc);
                             pLoc.getWorld().playSound(pLoc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
                             pLoc.getWorld().playSound(loc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
-                            ((CraftWorld) pLoc.getWorld()).getHandle().addParticle("portal", pLoc.getX(), pLoc.getY(),
-                                    pLoc.getZ(), loc.getX(), loc.getY(), loc.getZ());
-                            ((CraftWorld) pLoc.getWorld()).getHandle().addParticle("portal", loc.getX(), loc.getY(), loc.getZ(),
-                                    pLoc.getX(), pLoc.getY(), pLoc.getZ());
+                            pLoc.getWorld().playEffect(pLoc, Effect.PORTAL, 0);
+                            pLoc.getWorld().playEffect(loc, Effect.PORTAL, 0);
                             if (giveWeakness)
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, (int) ((dist / 2) * 20), 1), true);
                             pLoc.getWorld().strikeLightningEffect(loc);
