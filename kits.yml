@@ -48,7 +48,7 @@ Kits:
     Price: 0
     Icon: WOOD_SWORD 0 1
     Items:
-      - WOOD_SWORD 0 1 Name=Bloody_Bane Unlootable 1 UniqueItem
+      - WOOD_SWORD 0 1 Name=Bloody_Bane Unlootable 1 UniqueItem Unbreakable
     Ability:
       - Barbarian
   Beastmaster:

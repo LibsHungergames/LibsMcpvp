@@ -2,16 +2,8 @@ package me.libraryaddict.librarys.Abilities;
 
 import java.util.HashMap;
 
-import net.minecraft.server.v1_7_R3.EntityPlayer;
-import net.minecraft.server.v1_7_R3.PacketPlayOutSetSlot;
-
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
@@ -22,30 +14,6 @@ public class Barbarian extends AbilityListener {
     public int killsPerLevel = 3;
     public String swordName = "Bloody Bane";
     private Material[] updates = new Material[] { Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD };
-
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        Player p = (Player) event.getPlayer();
-        if (isSpecialItem(p.getItemInHand(), swordName)) {
-            p.getItemInHand().setDurability((short) 0);
-            EntityPlayer eP = ((CraftPlayer) p).getHandle();
-            eP.playerConnection.sendPacket(new PacketPlayOutSetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
-                    .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
-        }
-    }
-
-    @EventHandler
-    public void onDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player p = (Player) event.getDamager();
-            if (isSpecialItem(p.getItemInHand(), swordName)) {
-                p.getItemInHand().setDurability((short) 0);
-                EntityPlayer eP = ((CraftPlayer) p).getHandle();
-                eP.playerConnection.sendPacket(new PacketPlayOutSetSlot(eP.activeContainer.windowId, 44 - Math.abs(p.getInventory()
-                        .getHeldItemSlot() - 8), CraftItemStack.asNMSCopy(p.getItemInHand())));
-            }
-        }
-    }
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
