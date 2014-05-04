@@ -25,6 +25,7 @@ import me.libraryaddict.Hungergames.Events.GameStartEvent;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Analyzer extends AbilityListener implements Disableable {
@@ -120,8 +121,8 @@ public class Analyzer extends AbilityListener implements Disableable {
 
     public Analyzer() throws Exception {
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null)
-            throw new Exception(
-                    String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(), "ProtocolLib"));
+            throw new Exception(String.format(HungergamesApi.getConfigManager().getLoggerConfig().getDependencyNotFound(),
+                    "ProtocolLib"));
     }
 
     @EventHandler
@@ -171,8 +172,11 @@ public class Analyzer extends AbilityListener implements Disableable {
         // Get nearby entities
         for (Entity entity : p.getNearbyEntities(rangeToScan, rangeToScan, rangeToScan)) {
             // Bounding box of the given player
-            if (entity instanceof Player && !HungergamesApi.getPlayerManager().getGamer(entity).isAlive())
-                continue;
+            if (entity instanceof Player) {
+                Gamer gamer = HungergamesApi.getPlayerManager().getGamer(entity);
+                if (gamer == null || !gamer.isAlive())
+                    continue;
+            }
             Vector3D targetPos = new Vector3D(entity.getLocation());
             Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
             Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
