@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -17,10 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.reflect.StructureModifier;
-
 import me.libraryaddict.Hungergames.Events.GameStartEvent;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
@@ -250,12 +248,10 @@ public class Analyzer extends AbilityListener implements Disableable {
                         meta.setDisplayName(info);
                     item = item.clone();
                     item.setItemMeta(meta);
-                    net.minecraft.server.v1_7_R3.ItemStack itemstack = CraftItemStack.asNMSCopy(item);
-                    PacketContainer packet = new PacketContainer(103);
-                    StructureModifier<Object> mods = packet.getModifier();
-                    mods.write(0, 0);
-                    mods.write(1, 44 - Math.abs(p.getInventory().getHeldItemSlot() - 8));
-                    mods.write(2, itemstack);
+                    PacketContainer packet = new PacketContainer(PacketType.Play.Server.SET_SLOT);
+                    packet.getModifier().write(0, 0);
+                    packet.getModifier().write(2,  44 - Math.abs(p.getInventory().getHeldItemSlot() - 8));
+                    packet.getItemModifier().write(0, item);
                     try {
                         ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
                     } catch (InvocationTargetException e) {
