@@ -26,7 +26,6 @@ public class McPvP extends JavaPlugin implements Listener {
         File file = new File(getDataFolder().toString() + "/kits.yml");
         ConfigurationSection config;
         if (!file.exists()) {
-            file.mkdirs();
             saveResource("kits.yml", false);
         }
         config = YamlConfiguration.loadConfiguration(file);
