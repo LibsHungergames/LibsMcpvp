@@ -13,7 +13,7 @@ public class Barbarian extends AbilityListener {
     private HashMap<ItemStack, Integer> kills = new HashMap<ItemStack, Integer>();
     public int killsPerLevel = 3;
     public String swordName = "Bloody Bane";
-    private Material[] updates = new Material[] { Material.STONE_SWORD, Material.IRON_SWORD, Material.DIAMOND_SWORD };
+    public String[] weaponTypeUpgrades = new String[] { "STONE_SWORD", "IRON_SWORD", "DIAMOND_SWORD" };
 
     @EventHandler
     public void onKilled(PlayerKilledEvent event) {
@@ -25,8 +25,8 @@ public class Barbarian extends AbilityListener {
                 kills.put(item, kills.get(item) + 1);
                 if (kills.get(item) % killsPerLevel == 0) {
                     int level = (kills.get(item) / killsPerLevel) - 1;
-                    if (level < updates.length)
-                        item.setType(updates[level]);
+                    if (level < weaponTypeUpgrades.length)
+                        item.setType(Material.valueOf(weaponTypeUpgrades[level]));
                 }
             }
         }
