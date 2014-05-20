@@ -37,14 +37,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<!-- <url>http://dev.bukkit.org/server-mods/hunger-games/</url> -->
 	<repositories>
 		<repository>
 			<id>comphenix-rep</id>
 			<name>Comphenix Repository</name>
 			<url>http://repo.comphenix.net/content/groups/public</url>
 		</repository>
-
 		<repository>
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
