@@ -249,8 +249,8 @@ public class Analyzer extends AbilityListener implements Disableable {
                     item = item.clone();
                     item.setItemMeta(meta);
                     PacketContainer packet = new PacketContainer(PacketType.Play.Server.SET_SLOT);
-                    packet.getModifier().write(0, 0);
-                    packet.getModifier().write(2,  44 - Math.abs(p.getInventory().getHeldItemSlot() - 8));
+                    packet.getIntegers().write(0, 0);
+                    packet.getIntegers().write(1,  44 - Math.abs(p.getInventory().getHeldItemSlot() - 8));
                     packet.getItemModifier().write(0, item);
                     try {
                         ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
