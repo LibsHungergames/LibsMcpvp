@@ -25,7 +25,7 @@ public class Viper extends AbilityListener implements Disableable {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
             LivingEntity entity = (LivingEntity) event.getEntity();
             Player p = (Player) event.getDamager();
-            if (hasAbility(p) && new Random().nextInt(chance) == 1) {
+            if (hasAbility(p) && new Random().nextInt(chance) == 0) {
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.POISON, length * 20, multiplier), true);
             }
         }
