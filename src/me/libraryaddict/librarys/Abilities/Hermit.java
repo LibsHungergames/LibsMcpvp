@@ -53,7 +53,7 @@ public class Hermit extends AbilityListener implements Disableable {
 
                 }
             }
-        });
+        }, 2);
     }
 
 }
