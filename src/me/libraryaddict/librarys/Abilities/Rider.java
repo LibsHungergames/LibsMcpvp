@@ -3,6 +3,7 @@ package me.libraryaddict.librarys.Abilities;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -26,9 +27,14 @@ public class Rider extends AbilityListener implements Disableable {
     public double jumpStrength = 1;
     public boolean modifyHorseStats = true;
     public boolean nameHorse = true;
+    public String noSummonsLeft = ChatColor.RED + "You ran out of summons!";
     public boolean preventOthersFromUsing = true;
     public double runSpeed = 1;
     public String saddleName = "Summon: Mighty Steed";
+    private HashMap<Player, Integer> summons = new HashMap<Player, Integer>();
+    public String summonsLeft = ChatColor.RED + "You have %Summons% summons left!";
+    public int summonsPerRound = -1;
+    public String tooManySummonsUsed = ChatColor.RED + "You have summoned the horse too many times this round!";
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
@@ -69,6 +75,24 @@ public class Rider extends AbilityListener implements Disableable {
                         horse.remove();
                     }
                 } else {
+                    if (summonsPerRound > 0) {
+                        int summonsDone = 0;
+                        if (summons.containsKey(p)) {
+                            summonsDone = summons.get(p);
+                        }
+                        if (summonsDone >= summonsPerRound) {
+                            p.sendMessage(tooManySummonsUsed);
+                            return;
+                        } else {
+                            summonsDone++;
+                            if (summonsDone == summonsPerRound) {
+                                p.sendMessage(this.noSummonsLeft);
+                            } else {
+                                p.sendMessage(this.summonsLeft.replaceAll("%Summons%", "" + summonsDone));
+                            }
+                        }
+                        summons.put(p, summonsDone);
+                    }
                     Horse horse = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
                     horses.put(p, horse);
                     if (nameHorse) {
@@ -102,6 +126,7 @@ public class Rider extends AbilityListener implements Disableable {
                 horse.remove();
             }
         }
+        this.summons.remove(event.getKilled().getPlayer());
     }
 
     @EventHandler

@@ -56,10 +56,6 @@ public class Flash extends AbilityListener implements Disableable {
         ignoreBlockTypes.add((byte) Material.WATER_LILY.getId());
     }
 
-    private void setCooldown(Player p, int newCooldown) {
-        p.setMetadata("FlashCooldown", new FixedMetadataValue(HungergamesApi.getHungergames(), newCooldown));
-    }
-
     public int getCooldown(Player p) {
         return (p.hasMetadata("FlashCooldown") ? p.getMetadata("FlashCooldown").get(0).asInt() : 0);
     }
@@ -125,5 +121,9 @@ public class Flash extends AbilityListener implements Disableable {
                 p.getItemOnCursor().setTypeId(flashOnItemId);
             }
         }
+    }
+
+    private void setCooldown(Player p, int newCooldown) {
+        p.setMetadata("FlashCooldown", new FixedMetadataValue(HungergamesApi.getHungergames(), newCooldown));
     }
 }

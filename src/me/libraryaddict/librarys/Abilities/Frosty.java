@@ -46,6 +46,27 @@ public class Frosty extends AbilityListener implements Disableable {
         faces.add(BlockFace.WEST);
     }
 
+    private boolean canPlace(Location loc) {
+        try {
+            ReflectionManager reflection = HungergamesApi.getReflectionManager();
+            for (Method blockMethod : reflection.getNmsClass("Block").getMethods()) {
+                if (Modifier.isStatic(blockMethod.getModifiers()) && blockMethod.getParameterTypes().length == 1
+                        && blockMethod.getParameterTypes()[0] == int.class
+                        && blockMethod.getReturnType().getSimpleName().equals("Block")) {
+                    Object snowBlock = blockMethod.invoke(null, Material.SNOW.getId());
+                    Method canPlace = snowBlock.getClass().getMethod("canPlace", reflection.getNmsClass("World"), int.class,
+                            int.class, int.class);
+                    return (Boolean) canPlace.invoke(snowBlock,
+                            loc.getWorld().getClass().getMethod("getHandle").invoke(loc.getWorld()), loc.getBlockX(),
+                            loc.getBlockY(), loc.getBlockZ());
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
     @EventHandler
     public void gameStart(GameStartEvent event) {
         if (!snowballsScheduler)
@@ -99,27 +120,6 @@ public class Frosty extends AbilityListener implements Disableable {
                 }
             }, 0, 0));
         }
-    }
-
-    private boolean canPlace(Location loc) {
-        try {
-            ReflectionManager reflection = HungergamesApi.getReflectionManager();
-            for (Method blockMethod : reflection.getNmsClass("Block").getMethods()) {
-                if (Modifier.isStatic(blockMethod.getModifiers()) && blockMethod.getParameterTypes().length == 1
-                        && blockMethod.getParameterTypes()[0] == int.class
-                        && blockMethod.getReturnType().getSimpleName().equals("Block")) {
-                    Object snowBlock = blockMethod.invoke(null, Material.SNOW.getId());
-                    Method canPlace = snowBlock.getClass().getMethod("canPlace", reflection.getNmsClass("World"), int.class,
-                            int.class, int.class);
-                    return (Boolean) canPlace.invoke(snowBlock,
-                            loc.getWorld().getClass().getMethod("getHandle").invoke(loc.getWorld()), loc.getBlockX(),
-                            loc.getBlockY(), loc.getBlockZ());
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return false;
     }
 
     private void transform(Entity entity) {
