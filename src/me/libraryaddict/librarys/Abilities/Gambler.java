@@ -147,7 +147,7 @@ public class Gambler extends AbilityListener implements Disableable {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && hasAbility(event.getPlayer())
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && hasAbility(event.getPlayer()) && !event.getPlayer().isSneaking()
                 && event.getClickedBlock().getType() == Material.STONE_BUTTON && event.getClickedBlock().getData() <= (byte) 4
                 && event.getClickedBlock().getData() > (byte) 0) {
             Player p = event.getPlayer();
