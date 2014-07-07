@@ -88,7 +88,7 @@ public class Rider extends AbilityListener implements Disableable {
                             if (summonsDone == summonsPerRound) {
                                 p.sendMessage(this.noSummonsLeft);
                             } else {
-                                p.sendMessage(this.summonsLeft.replaceAll("%Summons%", "" + summonsDone));
+                                p.sendMessage(this.summonsLeft.replaceAll("%Summons%", "" + (summonsPerRound - summonsDone)));
                             }
                         }
                         summons.put(p, summonsDone);
