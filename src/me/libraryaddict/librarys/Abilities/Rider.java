@@ -94,6 +94,7 @@ public class Rider extends AbilityListener implements Disableable {
                         summons.put(p, summonsDone);
                     }
                     Horse horse = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
+                    horse.setAdult();
                     horses.put(p, horse);
                     if (nameHorse) {
                         horse.setCustomName(String.format(horseName, p.getName()));
