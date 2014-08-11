@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>LibsMcpvp</groupId>
 	<artifactId>LibsMcpvp</artifactId>
-	<version>3.3.6</version>
+	<version>3.4</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<defaultGoal>clean package</defaultGoal>
@@ -29,6 +29,13 @@
 					<include>kits.yml</include>
 					<include>config.yml</include>
 					<include>README.md</include>
+					<include>pom.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src</directory>
+				<includes>
+					<include>**/*.java</include>
 				</includes>
 			</resource>
 		</resources>
