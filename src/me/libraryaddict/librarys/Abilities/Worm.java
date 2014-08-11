@@ -16,6 +16,7 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Worm extends AbilityListener implements Disableable {
+    public boolean addNoCheatPlusBypass = true;
     public boolean dirtPreventsFallDamage = true;
 
     @EventHandler
@@ -56,8 +57,9 @@ public class Worm extends AbilityListener implements Disableable {
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (dirtPreventsFallDamage && event.getCause() == DamageCause.FALL && event.getEntity() instanceof Player) {
-            if (hasAbility((Player) event.getEntity())) {
-                Location loc = event.getEntity().getLocation();
+            Player p = (Player) event.getEntity();
+            if (hasAbility(p)) {
+                Location loc = p.getLocation();
                 boolean dirt = false;
                 for (float x = -0.35F; x <= 0.35F && !dirt; x += 0.35F) {
                     for (float z = -0.35F; z <= 0.35F && !dirt; z += 0.35F) {
@@ -66,8 +68,11 @@ public class Worm extends AbilityListener implements Disableable {
                             dirt = true;
                     }
                 }
-                if (dirt)
+                if (dirt) {
                     event.setCancelled(true);
+                    if (this.addNoCheatPlusBypass)
+                        p.addAttachment(HungergamesApi.getHungergames(), "nocheatplus.checks.moving.nofall", true, 100);
+                }
             }
         }
     }

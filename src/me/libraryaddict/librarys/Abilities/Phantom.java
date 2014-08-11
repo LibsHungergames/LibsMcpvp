@@ -23,6 +23,7 @@ import me.libraryaddict.Hungergames.Types.AbilityListener;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Phantom extends AbilityListener implements Disableable {
+    public boolean addNoCheatPlusBypass = true;
     private HashMap<ItemStack, Integer> cooldown = new HashMap<ItemStack, Integer>();
     public String cooldownMessage = ChatColor.RED + "You cannot use that just yet! %s seconds of cooldown remaining!";
     public int cooldownTime = 60;
@@ -104,12 +105,14 @@ public class Phantom extends AbilityListener implements Disableable {
             flightLeft.put(p, flightLeft.get(p) - 1);
             if (flightLeft.get(p) <= 0) {
                 itel.remove();
-                p.setFallDistance(0);
                 p.setAllowFlight(false);
+                p.setFallDistance(0);
                 if (giveFlightArmor)
                     p.getInventory().setArmorContents(playerArmor.remove(p));
                 p.getWorld().playSound(p.getLocation(), Sound.AMBIENCE_RAIN, 3, 4);
                 p.sendMessage(flightWoreOff);
+                if (this.addNoCheatPlusBypass)
+                    p.addAttachment(HungergamesApi.getHungergames(), "nocheatplus.checks.moving.nofall", true, 100);
             } else
                 p.sendMessage(String.format(flightLeftMessage, flightLeft.get(p)));
         }
