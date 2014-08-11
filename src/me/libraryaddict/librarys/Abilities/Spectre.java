@@ -1,12 +1,7 @@
 package me.libraryaddict.librarys.Abilities;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Types.AbilityListener;
 
@@ -14,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -31,10 +25,6 @@ import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
-import net.minecraft.server.v1_7_R3.EntityPlayer;
-import net.minecraft.server.v1_7_R3.EntityTracker;
-import net.minecraft.server.v1_7_R3.EntityTrackerEntry;
-import net.minecraft.server.v1_7_R3.WorldServer;
 
 public class Spectre extends AbilityListener implements Disableable {
     public boolean addInvisToSpectre = true;
@@ -49,46 +39,6 @@ public class Spectre extends AbilityListener implements Disableable {
     public int spectreOffItemId = Material.SUGAR.getId();
     public int spectreOnItemId = Material.REDSTONE.getId();
 
-    private EntityPlayer getHandle(Player p) {
-        return ((CraftPlayer) p).getHandle();
-    }
-
-    private void hidePlayer(Player hider) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p == hider)
-                continue;
-            EntityPlayer observer = getHandle(p);
-            if (observer.playerConnection == null)
-                continue;
-            try {
-                Field map = CraftPlayer.class.getDeclaredField("hiddenPlayers");
-                map.setAccessible(true);
-                if (map.getType() == Set.class) {
-                    Set<UUID> hiddenPlayers = (Set<UUID>) map.get(p);
-                    if (hiddenPlayers.contains(hider.getUniqueId())) {
-                        continue;
-                    }
-                    hiddenPlayers.add(hider.getUniqueId());
-                } else {
-                    Map<String, Player> hiddenPlayers = (Map<String, Player>) map.get(p);
-                    if (hiddenPlayers.containsKey(hider.getName()))
-                        continue;
-                    hiddenPlayers.put(hider.getName(), hider);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            // remove this player from the hidden player's EntityTrackerEntry
-            EntityPlayer other = getHandle(hider);
-            EntityTracker tracker = ((WorldServer) other.world).tracker;
-            EntityTrackerEntry entry = (EntityTrackerEntry) tracker.trackedEntities.get(hider.getEntityId());
-            if (entry != null) {
-                entry.clear(observer);
-            }
-        }
-    }
-
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.isCancelled())
@@ -98,7 +48,9 @@ public class Spectre extends AbilityListener implements Disableable {
             Player p = (Player) event.getDamager();
             if (addInvisToSpectre)
                 p.removePotionEffect(PotionEffectType.INVISIBILITY);
-            showPlayer(p);
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.showPlayer(p);
+            }
         }
     }
 
@@ -111,7 +63,9 @@ public class Spectre extends AbilityListener implements Disableable {
             Player p = (Player) event.getEntity();
             if (addInvisToSpectre)
                 p.removePotionEffect(PotionEffectType.INVISIBILITY);
-            showPlayer(p);
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.showPlayer(p);
+            }
         }
     }
 
@@ -132,7 +86,9 @@ public class Spectre extends AbilityListener implements Disableable {
                     invis.put(p, currentTime + invisLength);
                     if (addInvisToSpectre)
                         p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, invisLength * 20, 0), true);
-                    hidePlayer(p);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.hidePlayer(p);
+                    }
                 }
             }
         }
@@ -195,42 +151,9 @@ public class Spectre extends AbilityListener implements Disableable {
                         ((Player) e).playSound(p.getLocation().clone(), sound, 1, 0);
             if (invis.get(p) <= hg.currentTime) {
                 itel.remove();
-                showPlayer(p);
-            }
-        }
-    }
-
-    private void showPlayer(Player hider) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p == hider)
-                continue;
-            EntityPlayer observer = getHandle(p);
-            if (observer.playerConnection == null)
-                continue;
-            try {
-                Field map = CraftPlayer.class.getDeclaredField("hiddenPlayers");
-                map.setAccessible(true);
-                if (map.getType() == Set.class) {
-                    Set<UUID> hiddenPlayers = (Set<UUID>) map.get(p);
-                    if (!hiddenPlayers.contains(hider.getUniqueId())) {
-                        continue;
-                    }
-                    hiddenPlayers.remove(hider.getUniqueId());
-                } else {
-                    Map<String, Player> hiddenPlayers = (Map<String, Player>) map.get(p);
-                    if (!hiddenPlayers.containsKey(hider.getName()))
-                        continue;
-                    hiddenPlayers.remove(hider.getName());
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.showPlayer(p);
                 }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            EntityPlayer other = getHandle(hider);
-            EntityTracker tracker = ((WorldServer) other.world).tracker;
-            EntityTrackerEntry entry = (EntityTrackerEntry) tracker.trackedEntities.get(hider.getEntityId());
-            if (entry != null && !entry.trackedPlayers.contains(observer)) {
-                entry.updatePlayer(observer);
             }
         }
     }
