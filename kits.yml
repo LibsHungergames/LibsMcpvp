@@ -187,9 +187,9 @@ Kits:
     Description: 'Warp em up. Warp em down. Warp em all around! The endermage places a enderportal and warps all players directly above and below him with a distance more then 3 to the enderportal. You are also teleported there if someone is caught. All teleported players have 5 seconds of invincibility then you fight!'
     Free: true
     Price: 0
-    Icon: ENDER_PORTAL 0 1
+    Icon: ENDER_PORTAL_FRAME 0 1
     Items:
-      - ENDER_PORTAL 0 1 Name=Endermage_Portal Unlootable 1
+      - ENDER_PORTAL_FRAME 0 1 Name=Endermage_Portal Unlootable 1
     Ability:
       - Endermage
   Explorer:
@@ -405,7 +405,7 @@ Kits:
     Description: 'Knowing you will have to fight one day you regularly rubbed strength I and speed II potions into your skin. Its activated while in water! Theres also a water breathing potion which activates everytime you move in the water!'
     Free: true
     Price: 0
-    Icon: WATER 0 1
+    Icon: WATER_BUCKET 0 1
     Ability:
       - Poseidon
   Pyro:
