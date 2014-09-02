@@ -1,9 +1,9 @@
 package me.libraryaddict.librarys.Misc;
 
 import java.util.*;
-import net.minecraft.server.v1_7_R3.*;
+import net.minecraft.server.v1_7_R4.*;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftHumanEntity;
+import org.bukkit.craftbukkit.v1_7_R4.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 
 public class FakeFurnace extends TileEntityFurnace {
@@ -130,7 +130,7 @@ public class FakeFurnace extends TileEntityFurnace {
         }
         // CUSTOM FUEL HERE
         // Lava should melt 128 items, not 100
-        if (Item.b(item.getItem()) == org.bukkit.Material.LAVA_BUCKET.getId()) {
+        if (Item.getId(item.getItem()) == org.bukkit.Material.LAVA_BUCKET.getId()) {
             return 25600;
         } else {
             return fuelTime(item);
@@ -214,7 +214,7 @@ public class FakeFurnace extends TileEntityFurnace {
     }
 
     public void tick() {
-        int newID = contents[0] == null ? 0 : Item.b(contents[0].getItem());
+        int newID = contents[0] == null ? 0 : Item.getId(contents[0].getItem());
         // Has the item been changed?
         if (newID != lastID) {
             // Then reset the progress!
