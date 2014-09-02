@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -18,36 +19,53 @@ import me.libraryaddict.Hungergames.Types.HungergamesApi;
 public class Worm extends AbilityListener implements Disableable {
     public boolean addNoCheatPlusBypass = true;
     public boolean dirtPreventsFallDamage = true;
+    public boolean canInstantSmashDirt = true;
+    public boolean gainsHealthFromSmashingDirt = true;
+    public boolean gainsHungerFromSmashingDirt = true;
+
+    private boolean onSmash(Player p, Block block) {
+        double dist = block.getLocation().distance(p.getWorld().getSpawnLocation());
+        double borderSize = HungergamesApi.getConfigManager().getMainConfig().getBorderSize();
+        if (!HungergamesApi.getConfigManager().getMainConfig().isRoundedBorder()) {
+            double i = Math.abs(block.getX() - p.getWorld().getSpawnLocation().getBlockX());
+            if (i >= borderSize)
+                dist = i;
+            i = Math.abs(block.getZ() - p.getWorld().getSpawnLocation().getBlockZ());
+            if (i >= borderSize)
+                dist += i;
+        }
+        if (dist < borderSize) {
+            if (p.getHealth() < p.getMaxHealth() && gainsHealthFromSmashingDirt) {
+                double hp = p.getHealth() + 1;
+                if (hp > p.getMaxHealth())
+                    hp = p.getMaxHealth();
+                p.setHealth(hp);
+            } else if (p.getFoodLevel() < 20 && gainsHungerFromSmashingDirt) {
+                p.setFoodLevel(p.getFoodLevel() + 1);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        if (!this.canInstantSmashDirt && hasAbility(event.getPlayer()) && event.getBlock().getType() == Material.DIRT) {
+            Player p = event.getPlayer();
+            onSmash(p, event.getBlock());
+        }
+    }
 
     @EventHandler
     public void onDamage(BlockDamageEvent event) {
-        if (hasAbility(event.getPlayer()) && event.getBlock().getType() == Material.DIRT) {
+        if (this.canInstantSmashDirt && hasAbility(event.getPlayer()) && event.getBlock().getType() == Material.DIRT) {
             Player p = event.getPlayer();
-            double dist = event.getBlock().getLocation().distance(p.getWorld().getSpawnLocation());
-            double borderSize = HungergamesApi.getConfigManager().getMainConfig().getBorderSize();
-            if (!HungergamesApi.getConfigManager().getMainConfig().isRoundedBorder()) {
-                double i = Math.abs(event.getBlock().getX() - p.getWorld().getSpawnLocation().getBlockX());
-                if (i >= borderSize)
-                    dist = i;
-                i = Math.abs(event.getBlock().getZ() - p.getWorld().getSpawnLocation().getBlockZ());
-                if (i >= borderSize)
-                    dist += i;
-            }
-            if (dist < borderSize) {
-                boolean drop = true;
-                if (p.getHealth() < p.getMaxHealth()) {
-                    double hp = p.getHealth() + 1;
-                    if (hp > p.getMaxHealth())
-                        hp = p.getMaxHealth();
-                    p.setHealth(hp);
-                    drop = false;
-                } else if (p.getFoodLevel() < 20) {
-                    p.setFoodLevel(p.getFoodLevel() + 1);
-                    drop = false;
-                }
+            boolean drop = (this.gainsHealthFromSmashingDirt && p.getHealth() < p.getMaxHealth())
+                    || (this.gainsHungerFromSmashingDirt && p.getFoodLevel() < 20);
+            if (onSmash(p, event.getBlock())) {
                 event.getBlock().getWorld().playEffect(event.getBlock().getLocation(), Effect.STEP_SOUND, Material.DIRT.getId());
                 event.getBlock().setType(Material.AIR);
-                if (drop)
+                if (!drop)
                     event.getBlock().getWorld()
                             .dropItemNaturally(event.getBlock().getLocation().add(0.5, 0, 0.5), new ItemStack(Material.DIRT));
             }
