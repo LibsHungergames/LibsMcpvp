@@ -1,11 +1,16 @@
 package me.libraryaddict.librarys.Abilities;
 
-import java.lang.reflect.InvocationTargetException;
+import me.libraryaddict.Hungergames.Events.GameStartEvent;
+import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
+import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.Hungergames.Types.HungergamesApi;
+import me.libraryaddict.librarys.nms.NMS;
+
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -14,92 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.Vector;
-
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
-import me.libraryaddict.Hungergames.Events.GameStartEvent;
-import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
-import me.libraryaddict.Hungergames.Interfaces.Disableable;
-import me.libraryaddict.Hungergames.Types.AbilityListener;
-import me.libraryaddict.Hungergames.Types.Gamer;
-import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
 public class Analyzer extends AbilityListener implements Disableable {
-    /*
-    * Attack hidden players
-    *
-    * Copyright 2012 Kristian S. Stangeland (Comphenix)
-    *
-    * This library is free software; you can redistribute it and/or
-    * modify it under the terms of the GNU Lesser General private
-    * License as published by the Free Software Foundation; either
-    * version 2.1 of the License, or (at your option) any later version.
-    *
-    * This library is distributed in the hope that it will be useful,
-    * but WITHOUT ANY WARRANTY; without even the implied warranty of
-    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-    * Lesser General private License for more details.
-    *
-    * You should have received a copy of the GNU Lesser General private
-    * License along with this library. If not, see <[url]http://www.gnu.org/licenses/>[/url].
-    */
-
-    private class Vector3D {
-
-        // Use protected members, like Bukkit
-        private final double x;
-        private final double y;
-        private final double z;
-
-        private Vector3D(double x, double y, double z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        private Vector3D(Location location) {
-            this(location.toVector());
-        }
-
-        private Vector3D(Vector vector) {
-            if (vector == null)
-                throw new IllegalArgumentException("Vector cannot be NULL.");
-            this.x = vector.getX();
-            this.y = vector.getY();
-            this.z = vector.getZ();
-        }
-
-        private Vector3D abs() {
-            return new Vector3D(Math.abs(x), Math.abs(y), Math.abs(z));
-        }
-
-        private Vector3D add(double x, double y, double z) {
-            return new Vector3D(this.x + x, this.y + y, this.z + z);
-        }
-
-        private Vector3D add(Vector3D other) {
-            if (other == null)
-                throw new IllegalArgumentException("other cannot be NULL");
-            return new Vector3D(x + other.x, y + other.y, z + other.z);
-        }
-
-        private Vector3D multiply(double factor) {
-            return new Vector3D(x * factor, y * factor, z * factor);
-        }
-
-        private Vector3D multiply(int factor) {
-            return new Vector3D(x * factor, y * factor, z * factor);
-        }
-
-        private Vector3D subtract(Vector3D other) {
-            if (other == null)
-                throw new IllegalArgumentException("other cannot be NULL");
-            return new Vector3D(x - other.x, y - other.y, z - other.z);
-        }
-    }
-
     public boolean alwaysDisplayInfo = false;
     public boolean countSoup = false;
     private HashMap<Player, String> currentNames = new HashMap<Player, String>();
@@ -159,35 +80,6 @@ public class Analyzer extends AbilityListener implements Disableable {
         return 0;
     }
 
-    private Entity getEntityInSight(Player p) {
-        Location observerPos = p.getEyeLocation();
-        Vector3D observerDir = new Vector3D(observerPos.getDirection());
-        Vector3D observerStart = new Vector3D(observerPos);
-        Vector3D observerEnd = observerStart.add(observerDir.multiply(rangeToScan));
-
-        Entity hit = null;
-
-        // Get nearby entities
-        for (Entity entity : p.getNearbyEntities(rangeToScan, rangeToScan, rangeToScan)) {
-            // Bounding box of the given player
-            if (entity instanceof Player) {
-                Gamer gamer = HungergamesApi.getPlayerManager().getGamer(entity);
-                if (gamer == null || !gamer.isAlive())
-                    continue;
-            }
-            Vector3D targetPos = new Vector3D(entity.getLocation());
-            Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-
-            if (hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (hit == null
-                        || hit.getLocation().distanceSquared(observerPos) > entity.getLocation().distanceSquared(observerPos)) {
-                    hit = entity;
-                }
-            }
-        }
-        return hit;
-    }
 
     private String getInformation(Entity entity) {
         if (entity == null)
@@ -226,7 +118,7 @@ public class Analyzer extends AbilityListener implements Disableable {
                     ItemStack item = p.getItemInHand();
                     if (item == null || item.getType() == Material.AIR)
                         continue;
-                    Entity entity = getEntityInSight(p);
+                    Entity entity = NMS.getEntityInSight(p, rangeToScan);
                     String info = getInformation(entity);
                     if (alwaysDisplayInfo) {
                         if (info != null)
@@ -248,45 +140,10 @@ public class Analyzer extends AbilityListener implements Disableable {
                         meta.setDisplayName(info);
                     item = item.clone();
                     item.setItemMeta(meta);
-                    PacketContainer packet = new PacketContainer(PacketType.Play.Server.SET_SLOT);
-                    packet.getIntegers().write(0, 0);
-                    packet.getIntegers().write(1,  44 - Math.abs(p.getInventory().getHeldItemSlot() - 8));
-                    packet.getItemModifier().write(0, item);
-                    try {
-                        ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
+                    NMS.sendFakeItem(p, 44 - Math.abs(p.getInventory().getHeldItemSlot() - 8), item);
                 }
             }
         };
-    }
-
-    // Source:
-    // [url]http://www.gamedev.net/topic/338987-aabb---line-segment-intersection-test/[/url]
-    private boolean hasIntersection(Vector3D p1, Vector3D p2, Vector3D min, Vector3D max) {
-        final double epsilon = 0.0001f;
-
-        Vector3D d = p2.subtract(p1).multiply(0.5);
-        Vector3D e = max.subtract(min).multiply(0.5);
-        Vector3D c = p1.add(d).subtract(min.add(max).multiply(0.5));
-        Vector3D ad = d.abs();
-
-        if (Math.abs(c.x) > e.x + ad.x)
-            return false;
-        if (Math.abs(c.y) > e.y + ad.y)
-            return false;
-        if (Math.abs(c.z) > e.z + ad.z)
-            return false;
-
-        if (Math.abs(d.y * c.z - d.z * c.y) > e.y * ad.z + e.z * ad.y + epsilon)
-            return false;
-        if (Math.abs(d.z * c.x - d.x * c.z) > e.z * ad.x + e.x * ad.z + epsilon)
-            return false;
-        if (Math.abs(d.x * c.y - d.y * c.x) > e.x * ad.y + e.y * ad.x + epsilon)
-            return false;
-
-        return true;
     }
 
     @EventHandler

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import me.libraryaddict.Hungergames.Hungergames;
 import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
 import me.libraryaddict.Hungergames.Managers.KitManager;
+import me.libraryaddict.Hungergames.Managers.SpectatorManager;
 import me.libraryaddict.Hungergames.Types.Gamer;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
 
@@ -116,7 +117,7 @@ public class McpvpListener implements Listener {
                     if (gamer != null) {
                         gamer.clearInventory();
                         HungergamesApi.getPlayerManager().sendToSpawn(gamer);
-                        gamer.setAlive(true);
+                        SpectatorManager.getInstance().deactiveSpectating(gamer);
                         KitManager kits = HungergamesApi.getKitManager();
                         Player p = gamer.getPlayer();
                         p.setNoDamageTicks(200);
@@ -142,7 +143,7 @@ public class McpvpListener implements Listener {
                     if (gamer != null) {
                         gamer.clearInventory();
                         HungergamesApi.getPlayerManager().sendToSpawn(gamer);
-                        gamer.setAlive(true);
+                        SpectatorManager.getInstance().deactiveSpectating(gamer);
                         KitManager kits = HungergamesApi.getKitManager();
                         Player p = gamer.getPlayer();
                         p.setNoDamageTicks(200);

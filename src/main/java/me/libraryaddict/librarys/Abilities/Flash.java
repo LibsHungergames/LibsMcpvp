@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import me.libraryaddict.Hungergames.Events.TimeSecondEvent;
 import me.libraryaddict.Hungergames.Interfaces.Disableable;
 import me.libraryaddict.Hungergames.Types.HungergamesApi;
+import me.libraryaddict.librarys.nms.NMS;
 
 public class Flash extends AbilityListener implements Disableable {
 
@@ -91,8 +92,8 @@ public class Flash extends AbilityListener implements Disableable {
                             p.teleport(loc);
                             pLoc.getWorld().playSound(pLoc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
                             pLoc.getWorld().playSound(loc, Sound.ENDERMAN_TELEPORT, 1, 1.2F);
-                            pLoc.getWorld().playEffect(pLoc, Effect.PORTAL, 0);
-                            pLoc.getWorld().playEffect(loc, Effect.PORTAL, 0);
+                            NMS.showPortalEffect(pLoc);
+                            NMS.showPortalEffect(loc);
                             if (giveWeakness)
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, (int) ((dist / 2) * 20), 1), true);
                             pLoc.getWorld().strikeLightningEffect(loc);

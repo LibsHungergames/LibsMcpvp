@@ -1,22 +1,22 @@
 package me.libraryaddict.librarys.Abilities;
 
+import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
+import me.libraryaddict.Hungergames.Interfaces.Disableable;
+import me.libraryaddict.Hungergames.Types.AbilityListener;
+import me.libraryaddict.Hungergames.Types.HungergamesApi;
+import me.libraryaddict.librarys.nms.FakeFurnace;
+import me.libraryaddict.librarys.nms.NMS;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import me.libraryaddict.Hungergames.Events.PlayerKilledEvent;
-import me.libraryaddict.Hungergames.Interfaces.Disableable;
-import me.libraryaddict.Hungergames.Types.AbilityListener;
-import me.libraryaddict.Hungergames.Types.HungergamesApi;
-import me.libraryaddict.librarys.Misc.FakeFurnace;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -32,12 +32,11 @@ public class Crafter extends AbilityListener implements Disableable {
     private transient Map<ItemStack, FakeFurnace> furnaces = new HashMap<ItemStack, FakeFurnace>();
 
     public Crafter() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(HungergamesApi.getHungergames(), new Runnable() {
-            public void run() {
-                for (FakeFurnace furnace : furnaces.values())
-                    furnace.tick();
-            }
-        }, 1, 1);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                HungergamesApi.getHungergames(),
+                () -> furnaces.values().forEach(FakeFurnace::tick),
+                1, 1
+        );
     }
 
     @EventHandler
@@ -50,9 +49,9 @@ public class Crafter extends AbilityListener implements Disableable {
                 p.openWorkbench(null, true);
             } else if (isSpecialItem(item, furnacePowderItemName) && furnacePowderItemId == item.getTypeId()) {
                 if (!furnaces.containsKey(item)) {
-                    furnaces.put(item, new FakeFurnace());
+                    furnaces.put(item, NMS.createFakeFurnace());
                 }
-                ((CraftPlayer) p).getHandle().openFurnace(furnaces.get(item));
+                furnaces.get(item).showTo(p);
             }
         }
     }
@@ -66,8 +65,9 @@ public class Crafter extends AbilityListener implements Disableable {
             if (item != null && furnaces.containsKey(item)) {
                 FakeFurnace furnace = furnaces.remove(item);
                 if (furnace != null) {
-                    for (net.minecraft.server.v1_7_R4.ItemStack i : furnace.getContents())
-                        drops.add(CraftItemStack.asBukkitCopy(i));
+                    drops.addAll(furnace.getItems().stream()
+                            .map(i -> item)
+                            .collect(Collectors.toList()));
                 }
             }
         }
